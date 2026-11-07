@@ -1,0 +1,82 @@
+{
+  "analyzer": {
+    "provider": "subquadratic",
+    "model": "subq-snap-1.1",
+    "endpoint": "POST /v1/systemone",
+    "inputTokens": 11596,
+    "latencyMs": 698,
+    "questions": 18,
+    "stateChars": 33138
+  },
+  "perTrace": [
+    {
+      "traceId": "dedupe-cache@v0#0",
+      "taskId": "dedupe-cache",
+      "passed": true,
+      "category": "task_specific_defect",
+      "categoryConf": 0.4003431002298991,
+      "weakness": "none",
+      "weaknessConf": 0.9996531903743744,
+      "failingTests": []
+    },
+    {
+      "traceId": "retry-cancel@v0#0",
+      "taskId": "retry-cancel",
+      "passed": true,
+      "category": "task_specific_defect",
+      "categoryConf": 0.4610087076822917,
+      "weakness": "none",
+      "weaknessConf": 0.999791257083416,
+      "failingTests": []
+    },
+    {
+      "traceId": "config-precedence@v0#0",
+      "taskId": "config-precedence",
+      "passed": true,
+      "category": "task_specific_defect",
+      "categoryConf": 0.44583741823832196,
+      "weakness": "none",
+      "weaknessConf": 0.9997612163424492,
+      "failingTests": []
+    }
+  ],
+  "recurring": {
+    "weakness": "ignored_stated_constraints",
+    "description": "The ticket explicitly stated a requirement/constraint that the final code does not implement",
+    "probabilities": {
+      "ignored_stated_constraints": 0.5637614727020264,
+      "broke_existing_behavior": 0.16261200606822968,
+      "missed_error_paths": 0.05847899988293648,
+      "missed_edge_cases": 0.059323254972696304,
+      "overfit_visible_tests": 0.1149890199303627,
+      "cross_module_contract": 0.014794551767408848,
+      "output_format_or_tooling": 0.011183974333107471,
+      "environment": 0.014856712892651558
+    },
+    "confidence": 0.5014416830880302
+  },
+  "prevalence": {
+    "ignored_stated_constraints": 0.1,
+    "broke_existing_behavior": 0.27,
+    "missed_error_paths": 0.3,
+    "missed_edge_cases": 0.25,
+    "overfit_visible_tests": 0.58,
+    "cross_module_contract": 0.17,
+    "output_format_or_tooling": 0.03,
+    "environment": 0.02
+  },
+  "systemicProbability": 0.10314258188009262,
+  "overclaimProbability": 0.001701808418147266,
+  "lever": {
+    "choice": "self_review_after_green",
+    "probabilities": {
+      "plan_invariants_first": 0.31257545948028564,
+      "self_review_after_green": 0.544339656829834,
+      "richer_test_feedback": 0.007343968376517296,
+      "prompt_methodology": 0.04581553116440773,
+      "skill_checklist": 0.0899253636598587
+    }
+  },
+  "evidenceTraceIds": [],
+  "summary": "0/3 dev traces failed independent grading (0 of them self-reported success). SubQ's dominant recurring weakness: ignored_stated_constraints (p=0.56) — The ticket explicitly stated a requirement/constraint that the final code does not implement. Systemic p=0.10; overclaim p=0.00. Suggested lever: self_review_after_green. Per-trace: none failed."
+}

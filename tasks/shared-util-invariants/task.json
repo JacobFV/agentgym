@@ -1,0 +1,7 @@
+{
+  "id": "shared-util-invariants",
+  "split": "test",
+  "title": "Add accounting-style negatives to formatMoney",
+  "description": "Finance wants invoices to show negative amounts in accounting style, e.g. `($1,234.56)` instead of `-$1,234.56`. Add an options-object form to the shared formatMoney util: `formatMoney(cents, { currency, negativeStyle })`, where negativeStyle is 'minus' (default, current behavior) or 'parens', and currency defaults to 'USD'. formatMoney is shared: receipt.mjs and report.mjs call it with the existing positional form `formatMoney(cents, 'EUR')` / `formatMoney(cents)`, and their output must stay byte-for-byte identical. In parens style the whole formatted amount, including the currency symbol and its placement (EUR is written `1.234,56 €`), goes inside the parentheses, and non-negative amounts get no parentheses. Unknown currencies must keep throwing a RangeError in both call forms. Do not change the outputs of receipt or report.",
+  "timeoutMs": 20000
+}

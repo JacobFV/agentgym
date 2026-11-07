@@ -1,0 +1,7 @@
+{
+  "id": "integration-failure",
+  "split": "test",
+  "title": "Latency alerts never fire",
+  "description": "On-call reports that checkAlerts() in src/alerting.mjs never raises latency alerts, even for routes whose p95 is clearly above threshold, and the error-rate alerts that do fire have nonsense route names like \"0\". The alerting module consumes the summary produced by summarize() in src/metrics.mjs, whose documented output shape is `{ windowMs, routes: [{ route, count, errors, p95 }] }` (routes is an array in descending-traffic order; p95 is in milliseconds). Fix the bug so alerts fire correctly: a 'latency' alert when a route's p95 exceeds p95ThresholdMs and an 'errors' alert when errors/count exceeds maxErrorRate, each carrying the real route name and the measured value, in the order routes appear in the summary. The summary shape is also consumed by src/dashboard.mjs and by other services that read the JSON, so it is a published contract: fix this at the right layer and do not change what summarize() produces or what the dashboard renders. Routes with zero requests should not produce error-rate alerts.",
+  "timeoutMs": 20000
+}

@@ -1,0 +1,7 @@
+{
+  "id": "resource-cleanup",
+  "split": "val",
+  "title": "Fix connection leak in withConnection and scope cleanup ordering",
+  "description": "Production pools are running dry: withConnection(pool, fn) never releases the connection when fn throws, because cleanup only runs on the success path. Fix it so the connection is released exactly once whether fn returns or throws (Pool.release throws on a double release, which is a bug we want to keep catching). withConnection also hands fn a Scope so callers can register extra cleanup (closing cursors, temp tables) with scope.defer(); those must run before the connection is released, i.e. Scope.close() must run deferred callbacks in LIFO order - it currently runs them FIFO, so release happens while cursors are still open. Scope.close() must run every callback even if some throw, then reject with the error if exactly one failed or an AggregateError (errors in the order they were thrown) if several failed; calling close() a second time is a no-op. Error precedence in withConnection: if fn throws, that original error must propagate even if cleanup also fails; if fn succeeds but cleanup fails, the cleanup error propagates. If pool.acquire() itself fails, nothing should be released.",
+  "timeoutMs": 20000
+}

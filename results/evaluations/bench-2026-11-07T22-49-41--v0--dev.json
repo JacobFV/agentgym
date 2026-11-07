@@ -1,0 +1,140 @@
+{
+  "evalId": "bench-2026-11-07T22-49-41--v0--dev",
+  "version": "v0",
+  "split": "dev",
+  "reps": 2,
+  "coder": {
+    "provider": "claude-cli",
+    "model": "haiku",
+    "label": "claude-cli dev adapter (haiku) — NOT a sponsor provider"
+  },
+  "startedAt": "2026-11-07T22:49:41.206Z",
+  "finishedAt": "2026-11-07T22:50:04.290Z",
+  "taskIds": [
+    "config-precedence",
+    "dedupe-cache",
+    "retry-cancel"
+  ],
+  "perTask": {
+    "config-precedence": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "config-precedence@v0#0",
+          "taskId": "config-precedence",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 10055,
+          "agentMs": 22081,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: full precedence chain defaults < file < env < cli\nok 1 - hidden: full precedence chain defaults < file < env < cli\n  ---\n  duration_ms: 1.190334\n  type: 'test'\n  ...\n# Subtest: hidden: cli numbers and booleans are coerced\nok 2 - hidden: cli numbers and booleans are coerced\n  ---\n  duration_ms: 0.164084\n  type: 'test'\n  ...\n# Subtest: hidden: --flag=false sets boolean false over env true\nok 3 - hidden: --flag=false sets boolean false over env true\n  ---\n  duration_ms: 0.092291\n  type: 'test'\n  ...\n# Subtest: hidden: uncoercible cli value is ignored, lower layer wins\nok 4 - hidden: uncoercible cli value is ignored, lower layer wins\n  ---\n  duration_ms: 0.088875\n  type: 'test'\n  ...\n# Subtest: hidden: dotted cli flags merge into nested section\nok 5 - hidden: dotted cli flags merge into nested section\n  ---\n  duration_ms: 0.835333\n  type: 'test'\n  ...\n# Subtest: hidden: env still coerces and still overrides file\nok 6 - hidden: env still coerces and still overrides file\n  ---\n  duration_ms: 0.132041\n  type: 'test'\n  ...\n# Subtest: hidden: unknown flags, env vars and file keys are ignored\nok 7 - hidden: unknown flags, env vars and file keys are ignored\n  ---\n  duration_ms: 0.101292\n  type: 'test'\n  ...\n# Subtest: hidden: defaults and inputs are not mutated\nok 8 - hidden: defaults and inputs are not mutated\n  ---\n  duration_ms: 0.103875\n  type: 'test'\n  ...\n# Subtest: cli flags override env, file and defaults\nok 9 - cli flags override env, file and defaults\n  ---\n  duration_ms: 0.0875\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 21.738167\n"
+        },
+        {
+          "traceId": "config-precedence@v0#1",
+          "taskId": "config-precedence",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 9743,
+          "agentMs": 20459,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: full precedence chain defaults < file < env < cli\nok 1 - hidden: full precedence chain defaults < file < env < cli\n  ---\n  duration_ms: 2.62925\n  type: 'test'\n  ...\n# Subtest: hidden: cli numbers and booleans are coerced\nok 2 - hidden: cli numbers and booleans are coerced\n  ---\n  duration_ms: 0.185375\n  type: 'test'\n  ...\n# Subtest: hidden: --flag=false sets boolean false over env true\nok 3 - hidden: --flag=false sets boolean false over env true\n  ---\n  duration_ms: 0.086291\n  type: 'test'\n  ...\n# Subtest: hidden: uncoercible cli value is ignored, lower layer wins\nok 4 - hidden: uncoercible cli value is ignored, lower layer wins\n  ---\n  duration_ms: 0.076708\n  type: 'test'\n  ...\n# Subtest: hidden: dotted cli flags merge into nested section\nok 5 - hidden: dotted cli flags merge into nested section\n  ---\n  duration_ms: 1.754291\n  type: 'test'\n  ...\n# Subtest: hidden: env still coerces and still overrides file\nok 6 - hidden: env still coerces and still overrides file\n  ---\n  duration_ms: 0.179875\n  type: 'test'\n  ...\n# Subtest: hidden: unknown flags, env vars and file keys are ignored\nok 7 - hidden: unknown flags, env vars and file keys are ignored\n  ---\n  duration_ms: 0.122042\n  type: 'test'\n  ...\n# Subtest: hidden: defaults and inputs are not mutated\nok 8 - hidden: defaults and inputs are not mutated\n  ---\n  duration_ms: 0.107375\n  type: 'test'\n  ...\n# Subtest: cli flags override env, file and defaults\nok 9 - cli flags override env, file and defaults\n  ---\n  duration_ms: 0.101375\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 26.336208\n"
+        }
+      ]
+    },
+    "dedupe-cache": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "dedupe-cache@v0#0",
+          "taskId": "dedupe-cache",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 8,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 8225,
+          "agentMs": 16460,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: concurrent callers share a rejection and it is not cached\nok 1 - hidden: concurrent callers share a rejection and it is not cached\n  ---\n  duration_ms: 3.3615\n  type: 'test'\n  ...\n# Subtest: hidden: synchronous loader throw is not cached either\nok 2 - hidden: synchronous loader throw is not cached either\n  ---\n  duration_ms: 0.305292\n  type: 'test'\n  ...\n# Subtest: hidden: get() never returns a promise, even while a load is in flight\nok 3 - hidden: get() never returns a promise, even while a load is in flight\n  ---\n  duration_ms: 3.195167\n  type: 'test'\n  ...\n# Subtest: hidden: different keys load independently and concurrently\nok 4 - hidden: different keys load independently and concurrently\n  ---\n  duration_ms: 2.598291\n  type: 'test'\n  ...\n# Subtest: hidden: ttl expiry still triggers a reload\nok 5 - hidden: ttl expiry still triggers a reload\n  ---\n  duration_ms: 0.111292\n  type: 'test'\n  ...\n# Subtest: hidden: maxSize eviction preserved\nok 6 - hidden: maxSize eviction preserved\n  ---\n  duration_ms: 0.089834\n  type: 'test'\n  ...\n# Subtest: hidden: userService dedupes and does not cache API errors\nok 7 - hidden: userService dedupes and does not cache API errors\n  ---\n  duration_ms: 5.624333\n  type: 'test'\n  ...\n# Subtest: concurrent getOrLoad calls for the same key invoke the loader once\nok 8 - concurrent getOrLoad calls for the same key invoke the loader once\n  ---\n  duration_ms: 4.82775\n  type: 'test'\n  ...\n1..8\n# tests 8\n# suites 0\n# pass 8\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 32.502959\n"
+        },
+        {
+          "traceId": "dedupe-cache@v0#1",
+          "taskId": "dedupe-cache",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 8,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 8801,
+          "agentMs": 21199,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: concurrent callers share a rejection and it is not cached\nok 1 - hidden: concurrent callers share a rejection and it is not cached\n  ---\n  duration_ms: 3.992792\n  type: 'test'\n  ...\n# Subtest: hidden: synchronous loader throw is not cached either\nok 2 - hidden: synchronous loader throw is not cached either\n  ---\n  duration_ms: 0.419166\n  type: 'test'\n  ...\n# Subtest: hidden: get() never returns a promise, even while a load is in flight\nok 3 - hidden: get() never returns a promise, even while a load is in flight\n  ---\n  duration_ms: 2.084458\n  type: 'test'\n  ...\n# Subtest: hidden: different keys load independently and concurrently\nok 4 - hidden: different keys load independently and concurrently\n  ---\n  duration_ms: 1.708459\n  type: 'test'\n  ...\n# Subtest: hidden: ttl expiry still triggers a reload\nok 5 - hidden: ttl expiry still triggers a reload\n  ---\n  duration_ms: 0.157458\n  type: 'test'\n  ...\n# Subtest: hidden: maxSize eviction preserved\nok 6 - hidden: maxSize eviction preserved\n  ---\n  duration_ms: 0.109459\n  type: 'test'\n  ...\n# Subtest: hidden: userService dedupes and does not cache API errors\nok 7 - hidden: userService dedupes and does not cache API errors\n  ---\n  duration_ms: 4.301417\n  type: 'test'\n  ...\n# Subtest: concurrent getOrLoad calls for the same key invoke the loader once\nok 8 - concurrent getOrLoad calls for the same key invoke the loader once\n  ---\n  duration_ms: 5.933541\n  type: 'test'\n  ...\n1..8\n# tests 8\n# suites 0\n# pass 8\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 33.715375\n"
+        }
+      ]
+    },
+    "retry-cancel": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "retry-cancel@v0#0",
+          "taskId": "retry-cancel",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 10,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 9518,
+          "agentMs": 20603,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: exact attempt count and no sleep after last failure\nok 1 - hidden: exact attempt count and no sleep after last failure\n  ---\n  duration_ms: 1.972833\n  type: 'test'\n  ...\n# Subtest: hidden: retries=0 means exactly one attempt\nok 2 - hidden: retries=0 means exactly one attempt\n  ---\n  duration_ms: 0.114083\n  type: 'test'\n  ...\n# Subtest: hidden: attempt index is passed to fn\nok 3 - hidden: attempt index is passed to fn\n  ---\n  duration_ms: 0.104083\n  type: 'test'\n  ...\n# Subtest: hidden: non-retryable errors are thrown immediately\nok 4 - hidden: non-retryable errors are thrown immediately\n  ---\n  duration_ms: 0.122166\n  type: 'test'\n  ...\n# Subtest: hidden: already-aborted signal rejects with reason without calling fn\nok 5 - hidden: already-aborted signal rejects with reason without calling fn\n  ---\n  duration_ms: 0.104375\n  type: 'test'\n  ...\n# Subtest: hidden: abort after a failed attempt stops further attempts\nok 6 - hidden: abort after a failed attempt stops further attempts\n  ---\n  duration_ms: 0.094375\n  type: 'test'\n  ...\n# Subtest: hidden: abort during backoff rejects promptly even if sleep ignores the signal\nok 7 - hidden: abort during backoff rejects promptly even if sleep ignores the signal\n  ---\n  duration_ms: 5.866958\n  type: 'test'\n  ...\n# Subtest: hidden: http client does not retry 4xx but retries 5xx\nok 8 - hidden: http client does not retry 4xx but retries 5xx\n  ---\n  duration_ms: 0.283166\n  type: 'test'\n  ...\n# Subtest: hidden: http client honors abort signal\nok 9 - hidden: http client honors abort signal\n  ---\n  duration_ms: 0.124\n  type: 'test'\n  ...\n# Subtest: retries=2 makes 3 attempts with exponential backoff\nok 10 - retries=2 makes 3 attempts with exponential backoff\n  ---\n  duration_ms: 0.212375\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 22.730417\n"
+        },
+        {
+          "traceId": "retry-cancel@v0#1",
+          "taskId": "retry-cancel",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 10,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 9373,
+          "agentMs": 22917,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: exact attempt count and no sleep after last failure\nok 1 - hidden: exact attempt count and no sleep after last failure\n  ---\n  duration_ms: 1.854\n  type: 'test'\n  ...\n# Subtest: hidden: retries=0 means exactly one attempt\nok 2 - hidden: retries=0 means exactly one attempt\n  ---\n  duration_ms: 0.1055\n  type: 'test'\n  ...\n# Subtest: hidden: attempt index is passed to fn\nok 3 - hidden: attempt index is passed to fn\n  ---\n  duration_ms: 0.113916\n  type: 'test'\n  ...\n# Subtest: hidden: non-retryable errors are thrown immediately\nok 4 - hidden: non-retryable errors are thrown immediately\n  ---\n  duration_ms: 0.116542\n  type: 'test'\n  ...\n# Subtest: hidden: already-aborted signal rejects with reason without calling fn\nok 5 - hidden: already-aborted signal rejects with reason without calling fn\n  ---\n  duration_ms: 0.108833\n  type: 'test'\n  ...\n# Subtest: hidden: abort after a failed attempt stops further attempts\nok 6 - hidden: abort after a failed attempt stops further attempts\n  ---\n  duration_ms: 0.110708\n  type: 'test'\n  ...\n# Subtest: hidden: abort during backoff rejects promptly even if sleep ignores the signal\nok 7 - hidden: abort during backoff rejects promptly even if sleep ignores the signal\n  ---\n  duration_ms: 5.771333\n  type: 'test'\n  ...\n# Subtest: hidden: http client does not retry 4xx but retries 5xx\nok 8 - hidden: http client does not retry 4xx but retries 5xx\n  ---\n  duration_ms: 0.258\n  type: 'test'\n  ...\n# Subtest: hidden: http client honors abort signal\nok 9 - hidden: http client honors abort signal\n  ---\n  duration_ms: 0.124917\n  type: 'test'\n  ...\n# Subtest: retries=2 makes 3 attempts with exponential backoff\nok 10 - retries=2 makes 3 attempts with exponential backoff\n  ---\n  duration_ms: 0.148625\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 21.472042\n"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "tasksPassedAllReps": 3,
+    "passRate": 1,
+    "runPasses": 6,
+    "runs": 6,
+    "attempts": 6,
+    "tokens": 55715,
+    "agentMs": 123719,
+    "selfReportOverclaims": 0,
+    "policyViolations": 0
+  },
+  "tracesFile": "/Users/vibestartup/Code/agentgym/results/runs/bench-2026-11-07T22-49-41/traces-v0-dev.jsonl"
+}

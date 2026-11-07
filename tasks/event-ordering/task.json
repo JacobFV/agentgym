@@ -1,0 +1,7 @@
+{
+  "id": "event-ordering",
+  "split": "val",
+  "title": "Apply events in sequence order, idempotently",
+  "description": "Our message bus delivers account events at-least-once and occasionally out of order, but EventProcessor.process() applies each event the moment it arrives, so ledger balances drift. Every event carries a unique `id` and a per-stream `seq` (1, 2, 3, ... with no gaps on the producer side). Change the processor so events are applied strictly in seq order starting from `startSeq` (default 1): an event that arrives early must be buffered until every lower seq has been applied, and a missing seq blocks later ones (they stay buffered) until it arrives. Delivery must be idempotent: an event whose id was already applied or is already buffered is ignored, and an event with a seq that has already been applied is ignored as stale. process() must return the array of events actually applied by that call, in the order applied (empty if it only buffered or ignored), `lastSeq` must report the highest applied seq, and `pendingCount` the number of buffered events. The ledger in src/ledger.mjs builds on the processor and must keep reporting correct balances and history.",
+  "timeoutMs": 20000
+}

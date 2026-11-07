@@ -1,0 +1,7 @@
+{
+  "id": "retry-cancel",
+  "split": "dev",
+  "title": "Fix retry attempt count, add exponential backoff and cancellation",
+  "description": "retry(fn, { retries }) is documented as 'retries = number of retries after the first attempt', but it currently makes only `retries` attempts in total, and it waits a constant baseDelayMs between attempts. Fix it so it makes exactly retries + 1 attempts and waits baseDelayMs * factor^n before retry n (n starting at 0, factor defaults to 2); it must not sleep after the final failed attempt. The options object already accepts an AbortSignal (`signal`) that httpClient passes through, but retry ignores it: if the signal is already aborted, or becomes aborted between attempts or during a backoff wait, retry must stop immediately (no further attempts, without waiting for the sleep to finish) and reject with signal.reason. Errors marked `err.retryable === false` must be rethrown right away without retrying (httpClient marks 4xx responses this way); when all attempts fail, reject with the last error. Keep the injectable `sleep(ms, signal)` option - tests use a fake one.",
+  "timeoutMs": 20000
+}

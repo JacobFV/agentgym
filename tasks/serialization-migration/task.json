@@ -1,0 +1,7 @@
+{
+  "id": "serialization-migration",
+  "split": "val",
+  "title": "Introduce v2 profile wire format with v1 read compatibility",
+  "description": "We are moving stored user profiles to wire format v2: `{ \"v\": 2, \"name\": ..., \"contact\": { \"email\": ... }, \"tags\": [\"a\", \"b\"] }` instead of v1's flat `email` and comma-joined `tags` string. Update serialize() to always write v2 (with the v field) and deserialize() to accept both formats, returning the same in-memory shape `{ name, email, tags: string[] }` as today. Millions of v1 records stay in storage, so reading v1 must keep working exactly as now, including the oldest records that have no `v` field at all and records with an empty tags string (which means no tags). Payloads written by newer services may carry extra top-level fields we don't know about (e.g. `avatarUrl`); as today, those must be kept on the deserialized object and written back unchanged by serialize, so a read-modify-write never loses data. Payloads with a version newer than we support must still be rejected with an error mentioning 'unsupported version'. ProfileStore in src/store.mjs uses these functions and must load old records and save new ones in v2.",
+  "timeoutMs": 20000
+}

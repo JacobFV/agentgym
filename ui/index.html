@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>agentgym</title>
+<style>
+  :root { --bg:#0b0d10; --panel:#12161b; --line:#232a33; --fg:#d7dde4; --dim:#7d8894; --ok:#3fd18b; --bad:#ff5d6c; --warn:#f3b343; --acc:#7aa7ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  header { display:flex; align-items:center; gap:16px; padding:14px 18px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  h1 { font-size:16px; margin:0; letter-spacing:.5px; }
+  .tag { color:var(--dim); }
+  button { background:var(--acc); color:#061021; border:0; padding:8px 14px; font:inherit; font-weight:700; border-radius:6px; cursor:pointer; }
+  button:disabled { opacity:.4; cursor:default; }
+  .mode { padding:3px 8px; border-radius:4px; font-weight:700; }
+  .mode.replay { background:#3a2e10; color:var(--warn); } .mode.live { background:#0f3324; color:var(--ok); }
+  main { display:grid; grid-template-columns: 1fr 1.2fr 1fr; gap:12px; padding:12px; }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+  section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; min-width:0; }
+  h2 { font-size:12px; text-transform:uppercase; color:var(--dim); margin:0 0 10px; letter-spacing:1px; }
+  .row { display:flex; justify-content:space-between; gap:8px; padding:4px 0; border-bottom:1px dashed var(--line); }
+  .ok { color:var(--ok); } .bad { color:var(--bad); } .warn { color:var(--warn); } .dim { color:var(--dim); }
+  pre { white-space:pre-wrap; word-break:break-word; margin:0; background:#0d1014; padding:8px; border-radius:6px; border:1px solid var(--line); max-height:280px; overflow:auto; }
+  #log { max-height:420px; }
+  .big { font-size:28px; font-weight:800; }
+  .bar { height:8px; background:#1d232b; border-radius:4px; overflow:hidden; margin:2px 0 8px; } .bar > i { display:block; height:100%; background:var(--acc); }
+  .decision { font-size:20px; font-weight:800; padding:6px 0; }
+  .card { border:1px solid var(--line); border-radius:6px; padding:8px; margin:8px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>agentgym</h1><span class="tag">coding agents improve software. agentgym improves the coding agents.</span>
+  <span id="mode" class="mode replay">REPLAY</span>
+  <span style="flex:1"></span>
+  <span id="current" class="dim"></span>
+  <button id="run">run evolution</button>
+</header>
+<main>
+  <section>
+    <h2>coding agent · tasks · traces</h2>
+    <div id="providers" class="dim"></div>
+    <div id="tasks"></div>
+    <h2 style="margin-top:12px">live event stream</h2>
+    <pre id="log">(no live run — showing last recorded run)</pre>
+  </section>
+  <section>
+    <h2>subquadratic failure diagnosis</h2>
+    <div id="diag"></div>
+    <h2 style="margin-top:12px">meta-generated mutations</h2>
+    <div id="muts"></div>
+  </section>
+  <section>
+    <h2>validation · independent grader</h2>
+    <div id="evals"></div>
+    <h2 style="margin-top:12px">decision</h2>
+    <div id="decision"></div>
+    <h2 style="margin-top:12px">version history</h2>
+    <div id="history"></div>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const live = {};
+
+function render({ record: r, versions: v, providers, running }) {
+  $("run").disabled = running;
+  $("current").textContent = v?.current ? `current: ${v.current.version}` : "";
+  $("providers").innerHTML = (providers || []).map((p) => `<div>${p.role}: <b>${esc(p.provider)}</b> ${esc(p.model)} ${p.provider === "claude-cli" ? '<span class="warn">(dev adapter, not sponsor)</span>' : ""}</div>`).join("");
+  if (!r) { $("diag").innerHTML = '<span class="dim">no runs yet</span>'; return; }
+  $("mode").textContent = running ? "LIVE" : `REPLAY · ${r.runId}`;
+  $("mode").className = "mode " + (running ? "live" : "replay");
+  const d = r.diagnosis;
+  $("tasks").innerHTML = `<div class="dim" style="margin:8px 0">${esc(r.parent)} on dev: ${r.devTotals.runPasses}/${r.devTotals.runs} passed · ${r.devTotals.selfReportOverclaims} overclaimed</div>` +
+    d.perTrace.map((t) => `<div class="row"><span class="${t.passed ? "ok" : "bad"}">${t.passed ? "PASS" : "FAIL"}</span><span>${esc(t.traceId)}</span><span class="dim">${t.passed ? "" : esc(t.weakness)}</span></div>`).join("");
+  const probs = Object.entries(d.recurring.probabilities).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  $("diag").innerHTML = `<div class="dim">${esc(d.analyzer.model)} · ${esc(d.analyzer.endpoint)} · ${d.analyzer.inputTokens} input tokens · ${d.analyzer.questions} typed questions · ${d.analyzer.latencyMs}ms</div>
+    <div style="margin:8px 0">recurring weakness: <b class="warn">${esc(d.recurring.weakness)}</b></div><div class="dim">${esc(d.recurring.description)}</div>
+    ${probs.map(([k, p]) => `<div style="margin-top:6px">${esc(k)} <span class="dim">${(p * 100).toFixed(1)}%</span><div class="bar"><i style="width:${p * 100}%"></i></div></div>`).join("")}
+    <div>systemic p=${d.systemicProbability.toFixed(2)} · overclaim p=${d.overclaimProbability.toFixed(2)} · lever: <b>${esc(d.lever.choice)}</b></div>
+    <div class="dim" style="margin-top:6px">evidence: ${esc(d.evidenceTraceIds.join(", ") || "—")}</div>`;
+  $("muts").innerHTML = `<div class="dim">${esc(r.mutator.label)} [${esc(r.mutator.model)}]</div>` + r.proposals.map((p) => `<div class="card"><b>${esc(p.candidateVersion)}</b> · ${esc(p.target)} ${p.guard.ok ? "" : '<span class="bad">GUARD REJECTED</span>'}<div>${esc(p.proposedChange)}</div><div class="dim">why: ${esc(p.rationale)}</div><div class="dim">expected: ${esc(p.expectedImpact)}</div><pre>${esc(JSON.stringify(p.patch, null, 2))}</pre></div>`).join("");
+  const rows = [{ version: r.parent, totals: r.parentVal.totals, perTask: r.parentVal.perTask }, ...r.candidateVals];
+  $("evals").innerHTML = rows.map((e) => `<div class="card"><div class="row"><b>${esc(e.version)}</b><span class="big">${e.totals.runPasses}/${e.totals.runs}</span></div>${Object.entries(e.perTask).map(([k, s]) => `<div class="row"><span>${esc(k)}</span><span class="${s.startsWith("0/") ? "bad" : s.split("/")[0] === s.split("/")[1] ? "ok" : "warn"}">${s}</span></div>`).join("")}<div class="dim">tokens ${e.totals.tokens} · attempts ${e.totals.attempts} · overclaims ${e.totals.selfReportOverclaims}</div></div>`).join("");
+  $("decision").innerHTML = r.decisions.map((x) => `<div class="decision ${x.decision === "PROMOTE" ? "ok" : "bad"}">${esc(x.candidate)}: ${x.decision}</div><div class="dim">${esc(x.reasons.join("; "))}</div>`).join("") +
+    `<div style="margin-top:8px">${r.promoted ? `<b class="ok">promoted ${esc(r.promoted)}</b> · parent ${esc(r.parent)} preserved for rollback` : `<b class="warn">no promotion — ${esc(r.parent)} preserved</b>`}</div>`;
+  $("history").innerHTML = (v.history || []).slice(-8).reverse().map((h) => `<div class="row"><span>${esc(h.event)}</span><b>${esc(h.version)}</b><span class="dim">${esc(h.reason || h.runId || "")}</span></div>`).join("");
+}
+
+async function refresh() { render(await (await fetch("/api/latest")).json()); }
+$("run").onclick = async () => { $("log").textContent = ""; await fetch("/api/evolve", { method: "POST" }); $("mode").textContent = "LIVE"; $("mode").className = "mode live"; $("run").disabled = true; };
+const es = new EventSource("/api/events");
+es.onmessage = (m) => {
+  const e = JSON.parse(m.data);
+  const line = e.type === "log" ? e.msg : e.type === "task_graded" ? `graded ${e.taskId}@${e.version}#${e.rep}: ${e.passed ? "PASS" : "FAIL"}${e.selfReported && !e.passed ? " (agent claimed success)" : ""} ${(e.failing || []).join(" | ")}` :
+    e.type === "llm_end" ? `${e.role} ← ${e.provider} [${e.model}] ${e.latencyMs}ms ${JSON.stringify(e.usage || {})}` :
+    e.type === "attempt_end" ? `${e.traceId} attempt ${e.attempt}: visible ${e.visiblePassed ? "green" : "red"}` : e.type === "error" ? `ERROR ${e.msg}` : null;
+  if (line) { $("log").textContent += `[${e.t.slice(11, 19)}] ${line}\n`; $("log").scrollTop = 1e9; }
+  if (e.type === "evolution_end" || e.type === "error") setTimeout(refresh, 300);
+};
+refresh();
+</script>
+</body>
+</html>

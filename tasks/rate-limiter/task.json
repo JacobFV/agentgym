@@ -1,0 +1,7 @@
+{
+  "id": "rate-limiter",
+  "split": "test",
+  "title": "Fix token bucket refill math",
+  "description": "Our per-client rate limiter is far too strict: TokenBucket only adds tokens for whole elapsed seconds and then resets its refill timestamp, so callers polling every 500ms never get tokens back at refillPerSec = 2. Fix the refill so tokens accrue continuously and fractionally (elapsed ms / 1000 * refillPerSec) using the injected `now()` clock, without losing partial time between calls. The bucket's invariants must hold: tokens never exceed `capacity` (that is the maximum burst, no matter how long the client was idle), never go negative, and a tryRemove(n) that is rejected must not consume anything. If the clock goes backwards, treat elapsed time as zero. RateLimiter in src/limiter.mjs builds per-key buckets on top of TokenBucket; its allow() and retryAfterMs() (milliseconds until one token is available, rounded up, 0 if one is available now) must be correct with fractional token counts, and keys must stay independent.",
+  "timeoutMs": 20000
+}

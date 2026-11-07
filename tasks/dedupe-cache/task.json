@@ -1,0 +1,7 @@
+{
+  "id": "dedupe-cache",
+  "split": "dev",
+  "title": "Deduplicate concurrent cache loads",
+  "description": "Under load we see the user API hammered with identical requests: when several callers ask TtlCache.getOrLoad() for the same missing key at the same time, each one invokes the loader. Change getOrLoad so concurrent callers for the same key share a single in-flight load and all receive the same result. Constraints: a load that rejects must not be cached - every caller waiting on it gets the rejection, and the next getOrLoad for that key must call the loader again. Other code calls cache.get() synchronously and relies on it returning plain values (never promises), and has() / size must keep reflecting only stored values. Existing TTL expiry (measured from when the value is stored, using the injected clock) and maxSize eviction must keep working as before. Different keys must still load independently.",
+  "timeoutMs": 20000
+}

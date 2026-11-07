@@ -1,0 +1,7 @@
+{
+  "id": "config-precedence",
+  "split": "dev",
+  "title": "Wire CLI flags into loadConfig with correct precedence",
+  "description": "loadConfig({ file, env, argv }) currently ignores argv even though src/cli.mjs already parses flags like `--port=8080`, `--db.host=db1` and bare `--debug`. Make CLI flags part of config resolution so the precedence is defaults < config file < environment < CLI flags. CLI values must be handled exactly like env values are today: coerced to the type of the corresponding default (numbers become numbers, 'true'/'false' become booleans, a bare boolean flag means true), and values that cannot be coerced (e.g. `--port=abc`) are ignored so the lower-precedence value stays. Dotted flags address nested keys and must be merged into the section, not replace it (`--db.host=x` keeps db.port from the file/env/defaults). Flags and file keys that do not correspond to a known key in the defaults schema are ignored, matching how unknown APP_* env vars are already treated. loadConfig must not mutate the shared defaults object or the inputs.",
+  "timeoutMs": 20000
+}

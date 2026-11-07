@@ -1,0 +1,51 @@
+{
+  "evalId": "bench-2026-11-07T22-49-23--v0--dev",
+  "version": "v0",
+  "split": "dev",
+  "reps": 1,
+  "coder": {
+    "provider": "claude-cli",
+    "model": "haiku",
+    "label": "claude-cli dev adapter (haiku) — NOT a sponsor provider"
+  },
+  "startedAt": "2026-11-07T22:49:23.188Z",
+  "finishedAt": "2026-11-07T22:49:35.091Z",
+  "taskIds": [
+    "dedupe-cache"
+  ],
+  "perTask": {
+    "dedupe-cache": {
+      "passes": 1,
+      "reps": 1,
+      "runs": [
+        {
+          "traceId": "dedupe-cache@v0#0",
+          "taskId": "dedupe-cache",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 8,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 4380,
+          "agentMs": 11808,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: concurrent callers share a rejection and it is not cached\nok 1 - hidden: concurrent callers share a rejection and it is not cached\n  ---\n  duration_ms: 3.261667\n  type: 'test'\n  ...\n# Subtest: hidden: synchronous loader throw is not cached either\nok 2 - hidden: synchronous loader throw is not cached either\n  ---\n  duration_ms: 0.248625\n  type: 'test'\n  ...\n# Subtest: hidden: get() never returns a promise, even while a load is in flight\nok 3 - hidden: get() never returns a promise, even while a load is in flight\n  ---\n  duration_ms: 2.03775\n  type: 'test'\n  ...\n# Subtest: hidden: different keys load independently and concurrently\nok 4 - hidden: different keys load independently and concurrently\n  ---\n  duration_ms: 1.476916\n  type: 'test'\n  ...\n# Subtest: hidden: ttl expiry still triggers a reload\nok 5 - hidden: ttl expiry still triggers a reload\n  ---\n  duration_ms: 0.107042\n  type: 'test'\n  ...\n# Subtest: hidden: maxSize eviction preserved\nok 6 - hidden: maxSize eviction preserved\n  ---\n  duration_ms: 0.089667\n  type: 'test'\n  ...\n# Subtest: hidden: userService dedupes and does not cache API errors\nok 7 - hidden: userService dedupes and does not cache API errors\n  ---\n  duration_ms: 3.981208\n  type: 'test'\n  ...\n# Subtest: concurrent getOrLoad calls for the same key invoke the loader once\nok 8 - concurrent getOrLoad calls for the same key invoke the loader once\n  ---\n  duration_ms: 5.973083\n  type: 'test'\n  ...\n1..8\n# tests 8\n# suites 0\n# pass 8\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 28.736417\n"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "tasksPassedAllReps": 1,
+    "passRate": 1,
+    "runPasses": 1,
+    "runs": 1,
+    "attempts": 1,
+    "tokens": 4380,
+    "agentMs": 11808,
+    "selfReportOverclaims": 0,
+    "policyViolations": 0
+  },
+  "tracesFile": "/Users/vibestartup/Code/agentgym/results/runs/bench-2026-11-07T22-49-23/traces-v0-dev.jsonl"
+}

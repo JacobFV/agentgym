@@ -1,0 +1,26 @@
+{
+  "name": "agentgym",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "coding agents improve software. agentgym improves the coding agents.",
+  "scripts": {
+    "test": "node tasks/validate-fixtures.mjs && vitest run",
+    "benchmark": "tsx src/cli.ts benchmark",
+    "evolve": "tsx src/cli.ts evolve",
+    "demo": "tsx src/cli.ts demo",
+    "providers": "tsx src/cli.ts providers",
+    "ui": "tsx src/server.ts"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "dotenv": "^18.0.9",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.12"
+  }
+}

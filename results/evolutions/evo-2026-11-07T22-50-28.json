@@ -1,0 +1,274 @@
+{
+  "runId": "evo-2026-11-07T22-50-28",
+  "parent": "v0",
+  "coder": {
+    "id": "claude-cli",
+    "model": "haiku",
+    "label": "claude-cli dev adapter (haiku) — NOT a sponsor provider"
+  },
+  "mutator": {
+    "id": "claude-cli",
+    "model": "haiku",
+    "label": "claude-cli dev adapter (haiku) — NOT a sponsor provider"
+  },
+  "devEval": "evo-2026-11-07T22-50-28--v0--dev",
+  "devTotals": {
+    "tasksPassedAllReps": 3,
+    "passRate": 1,
+    "runPasses": 3,
+    "runs": 3,
+    "attempts": 3,
+    "tokens": 28847,
+    "agentMs": 47931,
+    "selfReportOverclaims": 0,
+    "policyViolations": 0
+  },
+  "diagnosis": {
+    "analyzer": {
+      "provider": "subquadratic",
+      "model": "subq-snap-1.1",
+      "endpoint": "POST /v1/systemone",
+      "inputTokens": 11596,
+      "latencyMs": 698,
+      "questions": 18,
+      "stateChars": 33138
+    },
+    "perTrace": [
+      {
+        "traceId": "dedupe-cache@v0#0",
+        "taskId": "dedupe-cache",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.4003431002298991,
+        "weakness": "none",
+        "weaknessConf": 0.9996531903743744,
+        "failingTests": []
+      },
+      {
+        "traceId": "retry-cancel@v0#0",
+        "taskId": "retry-cancel",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.4610087076822917,
+        "weakness": "none",
+        "weaknessConf": 0.999791257083416,
+        "failingTests": []
+      },
+      {
+        "traceId": "config-precedence@v0#0",
+        "taskId": "config-precedence",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.44583741823832196,
+        "weakness": "none",
+        "weaknessConf": 0.9997612163424492,
+        "failingTests": []
+      }
+    ],
+    "recurring": {
+      "weakness": "ignored_stated_constraints",
+      "description": "The ticket explicitly stated a requirement/constraint that the final code does not implement",
+      "probabilities": {
+        "ignored_stated_constraints": 0.5637614727020264,
+        "broke_existing_behavior": 0.16261200606822968,
+        "missed_error_paths": 0.05847899988293648,
+        "missed_edge_cases": 0.059323254972696304,
+        "overfit_visible_tests": 0.1149890199303627,
+        "cross_module_contract": 0.014794551767408848,
+        "output_format_or_tooling": 0.011183974333107471,
+        "environment": 0.014856712892651558
+      },
+      "confidence": 0.5014416830880302
+    },
+    "prevalence": {
+      "ignored_stated_constraints": 0.1,
+      "broke_existing_behavior": 0.27,
+      "missed_error_paths": 0.3,
+      "missed_edge_cases": 0.25,
+      "overfit_visible_tests": 0.58,
+      "cross_module_contract": 0.17,
+      "output_format_or_tooling": 0.03,
+      "environment": 0.02
+    },
+    "systemicProbability": 0.10314258188009262,
+    "overclaimProbability": 0.001701808418147266,
+    "lever": {
+      "choice": "self_review_after_green",
+      "probabilities": {
+        "plan_invariants_first": 0.31257545948028564,
+        "self_review_after_green": 0.544339656829834,
+        "richer_test_feedback": 0.007343968376517296,
+        "prompt_methodology": 0.04581553116440773,
+        "skill_checklist": 0.0899253636598587
+      }
+    },
+    "evidenceTraceIds": [],
+    "summary": "0/3 dev traces failed independent grading (0 of them self-reported success). SubQ's dominant recurring weakness: ignored_stated_constraints (p=0.56) — The ticket explicitly stated a requirement/constraint that the final code does not implement. Systemic p=0.10; overclaim p=0.00. Suggested lever: self_review_after_green. Per-trace: none failed."
+  },
+  "proposals": [
+    {
+      "id": "mut-mw6zz1ak-0",
+      "parentVersion": "v0",
+      "candidateVersion": "v0.1",
+      "target": "systemPrompt, toolPolicy.selfReview",
+      "diagnosis": "The final code sometimes leaves out a requirement that the ticket states explicitly. Passing visible tests does not catch this, because the tests may not exercise that requirement.",
+      "rationale": "A review pass after the visible tests go green, run against the full ticket text rather than only the tests, gives the agent a second look at stated requirements. Asking it to map each explicit requirement to code makes the check concrete, so it does not reduce to a general skim.",
+      "proposedChange": "Enable a post-green self-review pass and have the system prompt require listing every explicit requirement in the ticket and confirming each one is implemented in the final code, with edits limited to closing gaps.",
+      "expectedImpact": "Could modestly reduce unimplemented stated constraints. Costs one extra LLM call per task. Risk: the review could over-edit and break existing behavior, so the prompt limits changes to closing confirmed gaps. The supporting evidence is weak (0 of 3 dev traces failed, systemic probability about 0.10), so the effect may be small or unmeasurable.",
+      "supportingTraceIds": [
+        "dedupe-cache@v0#0",
+        "retry-cancel@v0#0",
+        "config-precedence@v0#0"
+      ],
+      "patch": {
+        "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Before finishing, list every explicit requirement and constraint stated in the ticket and confirm that the final code implements each one, not just the parts the tests exercise. If a stated requirement is missing, add it. Make only edits that close confirmed gaps or fix breakage. Return the full contents of every file you modify.",
+        "toolPolicy": {
+          "selfReview": true
+        }
+      },
+      "generator": {
+        "provider": "claude-cli",
+        "model": "claude-haiku-5-5",
+        "latencyMs": 13434,
+        "usage": {
+          "inputTokens": 6320,
+          "outputTokens": 2331
+        }
+      },
+      "guard": {
+        "ok": true,
+        "violations": []
+      },
+      "createdAt": "2026-11-07T22:51:03.116Z"
+    },
+    {
+      "id": "mut-mw6zz1ak-1",
+      "parentVersion": "v0",
+      "candidateVersion": "v0.2",
+      "target": "systemPrompt, toolPolicy.planFirst",
+      "diagnosis": "Constraints stated in the ticket are not converted into explicit checks before editing begins, so they are dropped during implementation and not rediscovered later.",
+      "rationale": "Writing a short plan before any edit forces the agent to extract the ticket's stated constraints, invariants, and edge cases up front, pairing each with the place in the code that will satisfy it. Those items then serve as a checklist during implementation instead of being recalled from memory.",
+      "proposedChange": "Enable an explicit pre-edit plan and instruct the agent to list each stated constraint and invariant, the code location that will satisfy it, and the error paths it must cover, before editing.",
+      "expectedImpact": "Targets the same weakness earlier in the workflow. Costs one extra LLM call per task. Risk: an overlong or drifting plan could add noise, so the prompt asks for a concise checklist. Evidence is limited, as in the other proposal, with no failing dev traces to confirm the diagnosis.",
+      "supportingTraceIds": [
+        "dedupe-cache@v0#0",
+        "retry-cancel@v0#0",
+        "config-precedence@v0#0"
+      ],
+      "patch": {
+        "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Before editing, write a concise plan: list each requirement and constraint stated in the ticket, the invariants they imply, and the edge and error cases they cover, and name the part of the code that will satisfy each item. Then implement the change and check the code against that list. Return the full contents of every file you modify.",
+        "toolPolicy": {
+          "planFirst": true
+        }
+      },
+      "generator": {
+        "provider": "claude-cli",
+        "model": "claude-haiku-5-5",
+        "latencyMs": 13434,
+        "usage": {
+          "inputTokens": 6320,
+          "outputTokens": 2331
+        }
+      },
+      "guard": {
+        "ok": true,
+        "violations": []
+      },
+      "createdAt": "2026-11-07T22:51:03.116Z"
+    }
+  ],
+  "reviews": {},
+  "parentVal": {
+    "evalId": "evo-2026-11-07T22-50-28--v0--val",
+    "totals": {
+      "tasksPassedAllReps": 3,
+      "passRate": 1,
+      "runPasses": 3,
+      "runs": 3,
+      "attempts": 3,
+      "tokens": 25619,
+      "agentMs": 44271,
+      "selfReportOverclaims": 0,
+      "policyViolations": 0
+    },
+    "perTask": {
+      "event-ordering": "1/1",
+      "resource-cleanup": "1/1",
+      "serialization-migration": "1/1"
+    }
+  },
+  "candidateVals": [
+    {
+      "version": "v0.1",
+      "evalId": "evo-2026-11-07T22-50-28--v0.1--val",
+      "totals": {
+        "tasksPassedAllReps": 3,
+        "passRate": 1,
+        "runPasses": 3,
+        "runs": 3,
+        "attempts": 6,
+        "tokens": 54512,
+        "agentMs": 94547,
+        "selfReportOverclaims": 0,
+        "policyViolations": 0
+      },
+      "perTask": {
+        "event-ordering": "1/1",
+        "resource-cleanup": "1/1",
+        "serialization-migration": "1/1"
+      }
+    },
+    {
+      "version": "v0.2",
+      "evalId": "evo-2026-11-07T22-50-28--v0.2--val",
+      "totals": {
+        "tasksPassedAllReps": 3,
+        "passRate": 1,
+        "runPasses": 3,
+        "runs": 3,
+        "attempts": 3,
+        "tokens": 39179,
+        "agentMs": 147777,
+        "selfReportOverclaims": 0,
+        "policyViolations": 0
+      },
+      "perTask": {
+        "event-ordering": "1/1",
+        "resource-cleanup": "1/1",
+        "serialization-migration": "1/1"
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "candidate": "v0.1",
+      "parent": "v0",
+      "decision": "REJECT",
+      "reasons": [
+        "no improvement on validation: 3/3 vs parent 3/3"
+      ],
+      "parentScore": 3,
+      "candidateScore": 3,
+      "runs": 3,
+      "newlyPassing": [],
+      "regressions": [],
+      "tokenDelta": 28893
+    },
+    {
+      "candidate": "v0.2",
+      "parent": "v0",
+      "decision": "REJECT",
+      "reasons": [
+        "no improvement on validation: 3/3 vs parent 3/3"
+      ],
+      "parentScore": 3,
+      "candidateScore": 3,
+      "runs": 3,
+      "newlyPassing": [],
+      "regressions": [],
+      "tokenDelta": 13560
+    }
+  ],
+  "promoted": null,
+  "finishedAt": "2026-11-07T22:52:09.088Z"
+}

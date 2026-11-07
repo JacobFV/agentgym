@@ -1,0 +1,53 @@
+{
+  "proposal": {
+    "id": "mut-mw6zz1ak-1",
+    "parentVersion": "v0",
+    "candidateVersion": "v0.2",
+    "target": "systemPrompt, toolPolicy.planFirst",
+    "diagnosis": "Constraints stated in the ticket are not converted into explicit checks before editing begins, so they are dropped during implementation and not rediscovered later.",
+    "rationale": "Writing a short plan before any edit forces the agent to extract the ticket's stated constraints, invariants, and edge cases up front, pairing each with the place in the code that will satisfy it. Those items then serve as a checklist during implementation instead of being recalled from memory.",
+    "proposedChange": "Enable an explicit pre-edit plan and instruct the agent to list each stated constraint and invariant, the code location that will satisfy it, and the error paths it must cover, before editing.",
+    "expectedImpact": "Targets the same weakness earlier in the workflow. Costs one extra LLM call per task. Risk: an overlong or drifting plan could add noise, so the prompt asks for a concise checklist. Evidence is limited, as in the other proposal, with no failing dev traces to confirm the diagnosis.",
+    "supportingTraceIds": [
+      "dedupe-cache@v0#0",
+      "retry-cancel@v0#0",
+      "config-precedence@v0#0"
+    ],
+    "patch": {
+      "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Before editing, write a concise plan: list each requirement and constraint stated in the ticket, the invariants they imply, and the edge and error cases they cover, and name the part of the code that will satisfy each item. Then implement the change and check the code against that list. Return the full contents of every file you modify.",
+      "toolPolicy": {
+        "planFirst": true
+      }
+    },
+    "generator": {
+      "provider": "claude-cli",
+      "model": "claude-haiku-5-5",
+      "latencyMs": 13434,
+      "usage": {
+        "inputTokens": 6320,
+        "outputTokens": 2331
+      }
+    },
+    "guard": {
+      "ok": true,
+      "violations": []
+    },
+    "createdAt": "2026-11-07T22:51:03.116Z"
+  },
+  "decision": {
+    "candidate": "v0.2",
+    "parent": "v0",
+    "decision": "REJECT",
+    "reasons": [
+      "no improvement on validation: 3/3 vs parent 3/3"
+    ],
+    "parentScore": 3,
+    "candidateScore": 3,
+    "runs": 3,
+    "newlyPassing": [],
+    "regressions": [],
+    "tokenDelta": 13560
+  },
+  "review": null,
+  "evaluation": "evo-2026-11-07T22-50-28--v0.2--val"
+}

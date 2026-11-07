@@ -1,0 +1,53 @@
+{
+  "proposal": {
+    "id": "mut-mw6zz1ak-0",
+    "parentVersion": "v0",
+    "candidateVersion": "v0.1",
+    "target": "systemPrompt, toolPolicy.selfReview",
+    "diagnosis": "The final code sometimes leaves out a requirement that the ticket states explicitly. Passing visible tests does not catch this, because the tests may not exercise that requirement.",
+    "rationale": "A review pass after the visible tests go green, run against the full ticket text rather than only the tests, gives the agent a second look at stated requirements. Asking it to map each explicit requirement to code makes the check concrete, so it does not reduce to a general skim.",
+    "proposedChange": "Enable a post-green self-review pass and have the system prompt require listing every explicit requirement in the ticket and confirming each one is implemented in the final code, with edits limited to closing gaps.",
+    "expectedImpact": "Could modestly reduce unimplemented stated constraints. Costs one extra LLM call per task. Risk: the review could over-edit and break existing behavior, so the prompt limits changes to closing confirmed gaps. The supporting evidence is weak (0 of 3 dev traces failed, systemic probability about 0.10), so the effect may be small or unmeasurable.",
+    "supportingTraceIds": [
+      "dedupe-cache@v0#0",
+      "retry-cancel@v0#0",
+      "config-precedence@v0#0"
+    ],
+    "patch": {
+      "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Before finishing, list every explicit requirement and constraint stated in the ticket and confirm that the final code implements each one, not just the parts the tests exercise. If a stated requirement is missing, add it. Make only edits that close confirmed gaps or fix breakage. Return the full contents of every file you modify.",
+      "toolPolicy": {
+        "selfReview": true
+      }
+    },
+    "generator": {
+      "provider": "claude-cli",
+      "model": "claude-haiku-5-5",
+      "latencyMs": 13434,
+      "usage": {
+        "inputTokens": 6320,
+        "outputTokens": 2331
+      }
+    },
+    "guard": {
+      "ok": true,
+      "violations": []
+    },
+    "createdAt": "2026-11-07T22:51:03.116Z"
+  },
+  "decision": {
+    "candidate": "v0.1",
+    "parent": "v0",
+    "decision": "REJECT",
+    "reasons": [
+      "no improvement on validation: 3/3 vs parent 3/3"
+    ],
+    "parentScore": 3,
+    "candidateScore": 3,
+    "runs": 3,
+    "newlyPassing": [],
+    "regressions": [],
+    "tokenDelta": 28893
+  },
+  "review": null,
+  "evaluation": "evo-2026-11-07T22-50-28--v0.1--val"
+}

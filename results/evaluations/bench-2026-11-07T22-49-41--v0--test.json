@@ -1,0 +1,144 @@
+{
+  "evalId": "bench-2026-11-07T22-49-41--v0--test",
+  "version": "v0",
+  "split": "test",
+  "reps": 2,
+  "coder": {
+    "provider": "claude-cli",
+    "model": "haiku",
+    "label": "claude-cli dev adapter (haiku) — NOT a sponsor provider"
+  },
+  "startedAt": "2026-11-07T22:49:41.206Z",
+  "finishedAt": "2026-11-07T22:50:06.969Z",
+  "taskIds": [
+    "integration-failure",
+    "rate-limiter",
+    "shared-util-invariants"
+  ],
+  "perTask": {
+    "integration-failure": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "integration-failure@v0#0",
+          "taskId": "integration-failure",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 7108,
+          "agentMs": 13606,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: summarize output contract is unchanged\nok 1 - hidden: summarize output contract is unchanged\n  ---\n  duration_ms: 9.32925\n  type: 'test'\n  ...\n# Subtest: hidden: error-rate and latency alerts carry real route names in summary order\nok 2 - hidden: error-rate and latency alerts carry real route names in summary order\n  ---\n  duration_ms: 0.137541\n  type: 'test'\n  ...\n# Subtest: hidden: no alerts when within thresholds\nok 3 - hidden: no alerts when within thresholds\n  ---\n  duration_ms: 0.082625\n  type: 'test'\n  ...\n# Subtest: hidden: default thresholds are used\nok 4 - hidden: default thresholds are used\n  ---\n  duration_ms: 0.094708\n  type: 'test'\n  ...\n# Subtest: hidden: alerting works on a summary read back from JSON (external contract)\nok 5 - hidden: alerting works on a summary read back from JSON (external contract)\n  ---\n  duration_ms: 0.085625\n  type: 'test'\n  ...\n# Subtest: hidden: zero-count route produces no error alert\nok 6 - hidden: zero-count route produces no error alert\n  ---\n  duration_ms: 0.057917\n  type: 'test'\n  ...\n# Subtest: hidden: empty summary\nok 7 - hidden: empty summary\n  ---\n  duration_ms: 0.051333\n  type: 'test'\n  ...\n# Subtest: hidden: dashboard rendering unchanged\nok 8 - hidden: dashboard rendering unchanged\n  ---\n  duration_ms: 0.109292\n  type: 'test'\n  ...\n# Subtest: latency alert fires for a slow route\nok 9 - latency alert fires for a slow route\n  ---\n  duration_ms: 0.09275\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 25.257042\n"
+        },
+        {
+          "traceId": "integration-failure@v0#1",
+          "taskId": "integration-failure",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 7023,
+          "agentMs": 11344,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: summarize output contract is unchanged\nok 1 - hidden: summarize output contract is unchanged\n  ---\n  duration_ms: 9.387209\n  type: 'test'\n  ...\n# Subtest: hidden: error-rate and latency alerts carry real route names in summary order\nok 2 - hidden: error-rate and latency alerts carry real route names in summary order\n  ---\n  duration_ms: 0.136083\n  type: 'test'\n  ...\n# Subtest: hidden: no alerts when within thresholds\nok 3 - hidden: no alerts when within thresholds\n  ---\n  duration_ms: 0.085708\n  type: 'test'\n  ...\n# Subtest: hidden: default thresholds are used\nok 4 - hidden: default thresholds are used\n  ---\n  duration_ms: 0.092542\n  type: 'test'\n  ...\n# Subtest: hidden: alerting works on a summary read back from JSON (external contract)\nok 5 - hidden: alerting works on a summary read back from JSON (external contract)\n  ---\n  duration_ms: 0.082209\n  type: 'test'\n  ...\n# Subtest: hidden: zero-count route produces no error alert\nok 6 - hidden: zero-count route produces no error alert\n  ---\n  duration_ms: 0.057042\n  type: 'test'\n  ...\n# Subtest: hidden: empty summary\nok 7 - hidden: empty summary\n  ---\n  duration_ms: 0.049625\n  type: 'test'\n  ...\n# Subtest: hidden: dashboard rendering unchanged\nok 8 - hidden: dashboard rendering unchanged\n  ---\n  duration_ms: 0.104709\n  type: 'test'\n  ...\n# Subtest: latency alert fires for a slow route\nok 9 - latency alert fires for a slow route\n  ---\n  duration_ms: 0.0965\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 25.312417\n"
+        }
+      ]
+    },
+    "rate-limiter": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "rate-limiter@v0#0",
+          "taskId": "rate-limiter",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 9882,
+          "agentMs": 23134,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: partial time is not lost across frequent polls\nok 1 - hidden: partial time is not lost across frequent polls\n  ---\n  duration_ms: 1.117042\n  type: 'test'\n  ...\n# Subtest: hidden: fractional token counts are exposed\nok 2 - hidden: fractional token counts are exposed\n  ---\n  duration_ms: 0.088875\n  type: 'test'\n  ...\n# Subtest: hidden: burst capped at capacity after long idle\nok 3 - hidden: burst capped at capacity after long idle\n  ---\n  duration_ms: 0.078666\n  type: 'test'\n  ...\n# Subtest: hidden: rejected requests do not consume tokens / go negative\nok 4 - hidden: rejected requests do not consume tokens / go negative\n  ---\n  duration_ms: 0.065584\n  type: 'test'\n  ...\n# Subtest: hidden: request larger than available is rejected without consuming\nok 5 - hidden: request larger than available is rejected without consuming\n  ---\n  duration_ms: 0.058208\n  type: 'test'\n  ...\n# Subtest: hidden: clock going backwards does not remove or add tokens\nok 6 - hidden: clock going backwards does not remove or add tokens\n  ---\n  duration_ms: 0.0555\n  type: 'test'\n  ...\n# Subtest: hidden: limiter keys are independent\nok 7 - hidden: limiter keys are independent\n  ---\n  duration_ms: 0.088292\n  type: 'test'\n  ...\n# Subtest: hidden: retryAfterMs with fractional tokens\nok 8 - hidden: retryAfterMs with fractional tokens\n  ---\n  duration_ms: 0.0825\n  type: 'test'\n  ...\n# Subtest: tokens refill fractionally between polls\nok 9 - tokens refill fractionally between polls\n  ---\n  duration_ms: 0.079875\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.382583\n"
+        },
+        {
+          "traceId": "rate-limiter@v0#1",
+          "taskId": "rate-limiter",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 9930,
+          "agentMs": 25666,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: partial time is not lost across frequent polls\nok 1 - hidden: partial time is not lost across frequent polls\n  ---\n  duration_ms: 0.844625\n  type: 'test'\n  ...\n# Subtest: hidden: fractional token counts are exposed\nok 2 - hidden: fractional token counts are exposed\n  ---\n  duration_ms: 0.076333\n  type: 'test'\n  ...\n# Subtest: hidden: burst capped at capacity after long idle\nok 3 - hidden: burst capped at capacity after long idle\n  ---\n  duration_ms: 0.076667\n  type: 'test'\n  ...\n# Subtest: hidden: rejected requests do not consume tokens / go negative\nok 4 - hidden: rejected requests do not consume tokens / go negative\n  ---\n  duration_ms: 0.073333\n  type: 'test'\n  ...\n# Subtest: hidden: request larger than available is rejected without consuming\nok 5 - hidden: request larger than available is rejected without consuming\n  ---\n  duration_ms: 0.060583\n  type: 'test'\n  ...\n# Subtest: hidden: clock going backwards does not remove or add tokens\nok 6 - hidden: clock going backwards does not remove or add tokens\n  ---\n  duration_ms: 0.0595\n  type: 'test'\n  ...\n# Subtest: hidden: limiter keys are independent\nok 7 - hidden: limiter keys are independent\n  ---\n  duration_ms: 0.078583\n  type: 'test'\n  ...\n# Subtest: hidden: retryAfterMs with fractional tokens\nok 8 - hidden: retryAfterMs with fractional tokens\n  ---\n  duration_ms: 0.076167\n  type: 'test'\n  ...\n# Subtest: tokens refill fractionally between polls\nok 9 - tokens refill fractionally between polls\n  ---\n  duration_ms: 0.0705\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 16.107542\n"
+        }
+      ]
+    },
+    "shared-util-invariants": {
+      "passes": 0,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "shared-util-invariants@v0#0",
+          "taskId": "shared-util-invariants",
+          "rep": 0,
+          "passed": false,
+          "selfReportedSuccess": true,
+          "failingTests": [
+            "hidden: report output is byte-identical"
+          ],
+          "pass": 8,
+          "fail": 1,
+          "attempts": 1,
+          "tokens": 8544,
+          "agentMs": 17008,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: options form with parens works for every currency placement\nok 1 - hidden: options form with parens works for every currency placement\n  ---\n  duration_ms: 0.953083\n  type: 'test'\n  ...\n# Subtest: hidden: parens style leaves non-negative amounts alone\nok 2 - hidden: parens style leaves non-negative amounts alone\n  ---\n  duration_ms: 0.093042\n  type: 'test'\n  ...\n# Subtest: hidden: options form defaults\nok 3 - hidden: options form defaults\n  ---\n  duration_ms: 0.07675\n  type: 'test'\n  ...\n# Subtest: hidden: positional currency form unchanged\nok 4 - hidden: positional currency form unchanged\n  ---\n  duration_ms: 0.092584\n  type: 'test'\n  ...\n# Subtest: hidden: unknown currency throws RangeError in both forms\nok 5 - hidden: unknown currency throws RangeError in both forms\n  ---\n  duration_ms: 0.236042\n  type: 'test'\n  ...\n# Subtest: hidden: non-integer cents still rejected\nok 6 - hidden: non-integer cents still rejected\n  ---\n  duration_ms: 0.074458\n  type: 'test'\n  ...\n# Subtest: hidden: receipt output is byte-identical\nok 7 - hidden: receipt output is byte-identical\n  ---\n  duration_ms: 0.103458\n  type: 'test'\n  ...\n# Subtest: hidden: report output is byte-identical\nnot ok 8 - hidden: report output is byte-identical\n  ---\n  duration_ms: 1.149708\n  type: 'test'\n  location: '/Users/vibestartup/Code/agentgym/results/workspaces/bench-2026-11-07T22-49-41/v0/shared-util-invariants-r0/grade/test/hidden.test.mjs:52:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n      'Sales           $12,345.67\\n' +\n    +   'Refunds           -$450.00\\n' +\n    +   'Fees               -$19.99\\n' +\n    -   'Refunds          -$450.00\\n' +\n    -   'Fees              -$19.99\\n' +\n        'NET             $11,875.68'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: |-\n    Sales           $12,345.67\n    Refunds          -$450.00\n    Fees              -$19.99\n    NET             $11,875.68\n  actual: |-\n    Sales           $12,345.67\n    Refunds           -$450.00\n    Fees               -$19.99\n    NET             $11,875.68\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/vibestartup/Code/agentgym/results/workspaces/bench-2026-11-07T22-49-41/v0/shared-util-invariants-r0/grade/test/hidden.test.mjs:58:10)\n    Test.runInAsyncScope (node:async_hooks:213:14)\n    Test.run (node:internal/test_runner/test:1106:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n    Test.postRun (node:internal/test_runner/test:1235:19)\n    Test.run (node:internal/test_runner/test:1163:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)\n  ...\n# Subtest: parens negative style\nok 9 - parens negative style\n  ---\n  duration_ms: 0.078459\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 8\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 20.333792\n"
+        },
+        {
+          "traceId": "shared-util-invariants@v0#1",
+          "taskId": "shared-util-invariants",
+          "rep": 1,
+          "passed": false,
+          "selfReportedSuccess": true,
+          "failingTests": [
+            "hidden: report output is byte-identical"
+          ],
+          "pass": 8,
+          "fail": 1,
+          "attempts": 1,
+          "tokens": 8064,
+          "agentMs": 15893,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: options form with parens works for every currency placement\nok 1 - hidden: options form with parens works for every currency placement\n  ---\n  duration_ms: 0.897375\n  type: 'test'\n  ...\n# Subtest: hidden: parens style leaves non-negative amounts alone\nok 2 - hidden: parens style leaves non-negative amounts alone\n  ---\n  duration_ms: 0.07925\n  type: 'test'\n  ...\n# Subtest: hidden: options form defaults\nok 3 - hidden: options form defaults\n  ---\n  duration_ms: 0.066583\n  type: 'test'\n  ...\n# Subtest: hidden: positional currency form unchanged\nok 4 - hidden: positional currency form unchanged\n  ---\n  duration_ms: 0.118791\n  type: 'test'\n  ...\n# Subtest: hidden: unknown currency throws RangeError in both forms\nok 5 - hidden: unknown currency throws RangeError in both forms\n  ---\n  duration_ms: 0.233958\n  type: 'test'\n  ...\n# Subtest: hidden: non-integer cents still rejected\nok 6 - hidden: non-integer cents still rejected\n  ---\n  duration_ms: 0.08425\n  type: 'test'\n  ...\n# Subtest: hidden: receipt output is byte-identical\nok 7 - hidden: receipt output is byte-identical\n  ---\n  duration_ms: 0.100125\n  type: 'test'\n  ...\n# Subtest: hidden: report output is byte-identical\nnot ok 8 - hidden: report output is byte-identical\n  ---\n  duration_ms: 0.967208\n  type: 'test'\n  location: '/Users/vibestartup/Code/agentgym/results/workspaces/bench-2026-11-07T22-49-41/v0/shared-util-invariants-r1/grade/test/hidden.test.mjs:52:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n      'Sales           $12,345.67\\n' +\n    +   'Refunds           -$450.00\\n' +\n    +   'Fees               -$19.99\\n' +\n    -   'Refunds          -$450.00\\n' +\n    -   'Fees              -$19.99\\n' +\n        'NET             $11,875.68'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: |-\n    Sales           $12,345.67\n    Refunds          -$450.00\n    Fees              -$19.99\n    NET             $11,875.68\n  actual: |-\n    Sales           $12,345.67\n    Refunds           -$450.00\n    Fees               -$19.99\n    NET             $11,875.68\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/vibestartup/Code/agentgym/results/workspaces/bench-2026-11-07T22-49-41/v0/shared-util-invariants-r1/grade/test/hidden.test.mjs:58:10)\n    Test.runInAsyncScope (node:async_hooks:213:14)\n    Test.run (node:internal/test_runner/test:1106:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:788:18)\n    Test.postRun (node:internal/test_runner/test:1235:19)\n    Test.run (node:internal/test_runner/test:1163:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)\n  ...\n# Subtest: parens negative style\nok 9 - parens negative style\n  ---\n  duration_ms: 0.070375\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 8\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.1005\n"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "tasksPassedAllReps": 2,
+    "passRate": 0.6666666666666666,
+    "runPasses": 4,
+    "runs": 6,
+    "attempts": 6,
+    "tokens": 50551,
+    "agentMs": 106651,
+    "selfReportOverclaims": 2,
+    "policyViolations": 0
+  },
+  "tracesFile": "/Users/vibestartup/Code/agentgym/results/runs/bench-2026-11-07T22-49-41/traces-v0-test.jsonl"
+}

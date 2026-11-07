@@ -1,0 +1,140 @@
+{
+  "evalId": "bench-2026-11-07T22-49-41--v0--val",
+  "version": "v0",
+  "split": "val",
+  "reps": 2,
+  "coder": {
+    "provider": "claude-cli",
+    "model": "haiku",
+    "label": "claude-cli dev adapter (haiku) — NOT a sponsor provider"
+  },
+  "startedAt": "2026-11-07T22:49:41.206Z",
+  "finishedAt": "2026-11-07T22:50:05.660Z",
+  "taskIds": [
+    "event-ordering",
+    "resource-cleanup",
+    "serialization-migration"
+  ],
+  "perTask": {
+    "event-ordering": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "event-ordering@v0#0",
+          "taskId": "event-ordering",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 8224,
+          "agentMs": 16719,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: process returns events applied by this call\nok 1 - hidden: process returns events applied by this call\n  ---\n  duration_ms: 1.500625\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of an applied event is ignored\nok 2 - hidden: duplicate delivery of an applied event is ignored\n  ---\n  duration_ms: 0.092833\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of a buffered event is ignored\nok 3 - hidden: duplicate delivery of a buffered event is ignored\n  ---\n  duration_ms: 0.093167\n  type: 'test'\n  ...\n# Subtest: hidden: stale seq with a new id is ignored\nok 4 - hidden: stale seq with a new id is ignored\n  ---\n  duration_ms: 0.064458\n  type: 'test'\n  ...\n# Subtest: hidden: a gap blocks later events until it is filled\nok 5 - hidden: a gap blocks later events until it is filled\n  ---\n  duration_ms: 0.104291\n  type: 'test'\n  ...\n# Subtest: hidden: startSeq is honored\nok 6 - hidden: startSeq is honored\n  ---\n  duration_ms: 0.072\n  type: 'test'\n  ...\n# Subtest: hidden: ledger balance is correct under reordering and redelivery\nok 7 - hidden: ledger balance is correct under reordering and redelivery\n  ---\n  duration_ms: 0.133416\n  type: 'test'\n  ...\n# Subtest: hidden: ledger does not apply withdraw before an earlier deposit arrives\nok 8 - hidden: ledger does not apply withdraw before an earlier deposit arrives\n  ---\n  duration_ms: 0.054583\n  type: 'test'\n  ...\n# Subtest: out-of-order events are applied in seq order\nok 9 - out-of-order events are applied in seq order\n  ---\n  duration_ms: 0.077375\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 17.227\n"
+        },
+        {
+          "traceId": "event-ordering@v0#1",
+          "taskId": "event-ordering",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 8307,
+          "agentMs": 19113,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: process returns events applied by this call\nok 1 - hidden: process returns events applied by this call\n  ---\n  duration_ms: 1.781916\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of an applied event is ignored\nok 2 - hidden: duplicate delivery of an applied event is ignored\n  ---\n  duration_ms: 0.1315\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of a buffered event is ignored\nok 3 - hidden: duplicate delivery of a buffered event is ignored\n  ---\n  duration_ms: 0.104416\n  type: 'test'\n  ...\n# Subtest: hidden: stale seq with a new id is ignored\nok 4 - hidden: stale seq with a new id is ignored\n  ---\n  duration_ms: 0.068\n  type: 'test'\n  ...\n# Subtest: hidden: a gap blocks later events until it is filled\nok 5 - hidden: a gap blocks later events until it is filled\n  ---\n  duration_ms: 0.238791\n  type: 'test'\n  ...\n# Subtest: hidden: startSeq is honored\nok 6 - hidden: startSeq is honored\n  ---\n  duration_ms: 0.074583\n  type: 'test'\n  ...\n# Subtest: hidden: ledger balance is correct under reordering and redelivery\nok 7 - hidden: ledger balance is correct under reordering and redelivery\n  ---\n  duration_ms: 0.165083\n  type: 'test'\n  ...\n# Subtest: hidden: ledger does not apply withdraw before an earlier deposit arrives\nok 8 - hidden: ledger does not apply withdraw before an earlier deposit arrives\n  ---\n  duration_ms: 0.056083\n  type: 'test'\n  ...\n# Subtest: out-of-order events are applied in seq order\nok 9 - out-of-order events are applied in seq order\n  ---\n  duration_ms: 0.080625\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 19.278208\n"
+        }
+      ]
+    },
+    "resource-cleanup": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "resource-cleanup@v0#0",
+          "taskId": "resource-cleanup",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 12,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 7911,
+          "agentMs": 15677,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: success path releases exactly once and returns result\nok 1 - hidden: success path releases exactly once and returns result\n  ---\n  duration_ms: 1.16825\n  type: 'test'\n  ...\n# Subtest: hidden: throw path releases exactly once\nok 2 - hidden: throw path releases exactly once\n  ---\n  duration_ms: 0.300625\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups run LIFO, before release\nok 3 - hidden: deferred cleanups run LIFO, before release\n  ---\n  duration_ms: 1.0605\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups also run before release when fn throws\nok 4 - hidden: deferred cleanups also run before release when fn throws\n  ---\n  duration_ms: 0.264542\n  type: 'test'\n  ...\n# Subtest: hidden: fn error wins over cleanup error, and release still happens\nok 5 - hidden: fn error wins over cleanup error, and release still happens\n  ---\n  duration_ms: 0.176584\n  type: 'test'\n  ...\n# Subtest: hidden: cleanup error propagates on success path, release still happens\nok 6 - hidden: cleanup error propagates on success path, release still happens\n  ---\n  duration_ms: 0.131666\n  type: 'test'\n  ...\n# Subtest: hidden: acquire failure does not release\nok 7 - hidden: acquire failure does not release\n  ---\n  duration_ms: 0.115334\n  type: 'test'\n  ...\n# Subtest: hidden: pool does not drain after many failures\nok 8 - hidden: pool does not drain after many failures\n  ---\n  duration_ms: 0.240083\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close runs all callbacks LIFO and rejects with the single error\nok 9 - hidden: Scope.close runs all callbacks LIFO and rejects with the single error\n  ---\n  duration_ms: 0.862542\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close aggregates multiple errors in run order\nok 10 - hidden: Scope.close aggregates multiple errors in run order\n  ---\n  duration_ms: 0.22525\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close is idempotent\nok 11 - hidden: Scope.close is idempotent\n  ---\n  duration_ms: 0.076083\n  type: 'test'\n  ...\n# Subtest: connection is released when fn throws\nok 12 - connection is released when fn throws\n  ---\n  duration_ms: 0.393291\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 25.804\n"
+        },
+        {
+          "traceId": "resource-cleanup@v0#1",
+          "taskId": "resource-cleanup",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 12,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 8124,
+          "agentMs": 16002,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: success path releases exactly once and returns result\nok 1 - hidden: success path releases exactly once and returns result\n  ---\n  duration_ms: 1.111541\n  type: 'test'\n  ...\n# Subtest: hidden: throw path releases exactly once\nok 2 - hidden: throw path releases exactly once\n  ---\n  duration_ms: 0.2905\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups run LIFO, before release\nok 3 - hidden: deferred cleanups run LIFO, before release\n  ---\n  duration_ms: 0.885667\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups also run before release when fn throws\nok 4 - hidden: deferred cleanups also run before release when fn throws\n  ---\n  duration_ms: 0.217417\n  type: 'test'\n  ...\n# Subtest: hidden: fn error wins over cleanup error, and release still happens\nok 5 - hidden: fn error wins over cleanup error, and release still happens\n  ---\n  duration_ms: 0.1505\n  type: 'test'\n  ...\n# Subtest: hidden: cleanup error propagates on success path, release still happens\nok 6 - hidden: cleanup error propagates on success path, release still happens\n  ---\n  duration_ms: 0.123167\n  type: 'test'\n  ...\n# Subtest: hidden: acquire failure does not release\nok 7 - hidden: acquire failure does not release\n  ---\n  duration_ms: 0.111375\n  type: 'test'\n  ...\n# Subtest: hidden: pool does not drain after many failures\nok 8 - hidden: pool does not drain after many failures\n  ---\n  duration_ms: 0.219084\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close runs all callbacks LIFO and rejects with the single error\nok 9 - hidden: Scope.close runs all callbacks LIFO and rejects with the single error\n  ---\n  duration_ms: 0.187792\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close aggregates multiple errors in run order\nok 10 - hidden: Scope.close aggregates multiple errors in run order\n  ---\n  duration_ms: 0.211917\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close is idempotent\nok 11 - hidden: Scope.close is idempotent\n  ---\n  duration_ms: 0.073291\n  type: 'test'\n  ...\n# Subtest: connection is released when fn throws\nok 12 - connection is released when fn throws\n  ---\n  duration_ms: 0.089833\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 21.030625\n"
+        }
+      ]
+    },
+    "serialization-migration": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "serialization-migration@v0#0",
+          "taskId": "serialization-migration",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 10,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 9351,
+          "agentMs": 24315,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: v1 payloads still deserialize\nok 1 - hidden: v1 payloads still deserialize\n  ---\n  duration_ms: 1.469667\n  type: 'test'\n  ...\n# Subtest: hidden: legacy payload without v field is treated as v1\nok 2 - hidden: legacy payload without v field is treated as v1\n  ---\n  duration_ms: 0.079125\n  type: 'test'\n  ...\n# Subtest: hidden: v1 empty tags string means no tags\nok 3 - hidden: v1 empty tags string means no tags\n  ---\n  duration_ms: 0.071041\n  type: 'test'\n  ...\n# Subtest: hidden: v1 record re-serializes to v2 and round-trips\nok 4 - hidden: v1 record re-serializes to v2 and round-trips\n  ---\n  duration_ms: 0.123041\n  type: 'test'\n  ...\n# Subtest: hidden: v2 empty tags round-trips\nok 5 - hidden: v2 empty tags round-trips\n  ---\n  duration_ms: 0.076667\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v2 payload\nok 6 - hidden: unknown fields preserved from v2 payload\n  ---\n  duration_ms: 0.097083\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v1 payload\nok 7 - hidden: unknown fields preserved from v1 payload\n  ---\n  duration_ms: 0.063125\n  type: 'test'\n  ...\n# Subtest: hidden: future versions are rejected\nok 8 - hidden: future versions are rejected\n  ---\n  duration_ms: 0.184\n  type: 'test'\n  ...\n# Subtest: hidden: store loads legacy records and writes v2 on update\nok 9 - hidden: store loads legacy records and writes v2 on update\n  ---\n  duration_ms: 0.142042\n  type: 'test'\n  ...\n# Subtest: serialize writes v2 format and round-trips\nok 10 - serialize writes v2 format and round-trips\n  ---\n  duration_ms: 0.119125\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 17.341833\n"
+        },
+        {
+          "traceId": "serialization-migration@v0#1",
+          "taskId": "serialization-migration",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 10,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 9469,
+          "agentMs": 22155,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: v1 payloads still deserialize\nok 1 - hidden: v1 payloads still deserialize\n  ---\n  duration_ms: 1.637875\n  type: 'test'\n  ...\n# Subtest: hidden: legacy payload without v field is treated as v1\nok 2 - hidden: legacy payload without v field is treated as v1\n  ---\n  duration_ms: 0.086208\n  type: 'test'\n  ...\n# Subtest: hidden: v1 empty tags string means no tags\nok 3 - hidden: v1 empty tags string means no tags\n  ---\n  duration_ms: 0.070792\n  type: 'test'\n  ...\n# Subtest: hidden: v1 record re-serializes to v2 and round-trips\nok 4 - hidden: v1 record re-serializes to v2 and round-trips\n  ---\n  duration_ms: 0.133584\n  type: 'test'\n  ...\n# Subtest: hidden: v2 empty tags round-trips\nok 5 - hidden: v2 empty tags round-trips\n  ---\n  duration_ms: 0.090291\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v2 payload\nok 6 - hidden: unknown fields preserved from v2 payload\n  ---\n  duration_ms: 0.091292\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v1 payload\nok 7 - hidden: unknown fields preserved from v1 payload\n  ---\n  duration_ms: 0.065875\n  type: 'test'\n  ...\n# Subtest: hidden: future versions are rejected\nok 8 - hidden: future versions are rejected\n  ---\n  duration_ms: 0.205291\n  type: 'test'\n  ...\n# Subtest: hidden: store loads legacy records and writes v2 on update\nok 9 - hidden: store loads legacy records and writes v2 on update\n  ---\n  duration_ms: 0.153625\n  type: 'test'\n  ...\n# Subtest: serialize writes v2 format and round-trips\nok 10 - serialize writes v2 format and round-trips\n  ---\n  duration_ms: 0.126625\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 19.050833\n"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "tasksPassedAllReps": 3,
+    "passRate": 1,
+    "runPasses": 6,
+    "runs": 6,
+    "attempts": 6,
+    "tokens": 51386,
+    "agentMs": 113981,
+    "selfReportOverclaims": 0,
+    "policyViolations": 0
+  },
+  "tracesFile": "/Users/vibestartup/Code/agentgym/results/runs/bench-2026-11-07T22-49-41/traces-v0-val.jsonl"
+}
