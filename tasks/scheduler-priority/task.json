@@ -1,0 +1,7 @@
+{
+  "id": "scheduler-priority",
+  "split": "val",
+  "title": "Add job priorities to the scheduler",
+  "description": "Add a `priority` option to Scheduler.schedule(name, fn, { delayMs, priority }): an integer from 0 to 9, default 5, where higher values run first. Priority only orders jobs that are due in the same tick - a high-priority job scheduled for later must never delay or block jobs that are already due. Jobs with equal priority must keep running in the order they were scheduled (existing callers depend on FIFO), and `priority: 0` is a valid value (the lowest), not 'missing'. Invalid priorities (non-integers, out of range, non-numbers) must throw RangeError with the message 'priority must be an integer between 0 and 9', and the job must not be scheduled. Everything else stays as is: cancel() semantics, jobs scheduled during a tick run on a later tick, a throwing job is logged as an error without stopping the rest. The run log is rendered by src/report.mjs for an external log parser and its output must stay byte-identical, so don't add fields to log entries.",
+  "timeoutMs": 20000
+}

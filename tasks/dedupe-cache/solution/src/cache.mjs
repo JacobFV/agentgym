@@ -59,15 +59,17 @@ export class TtlCache {
     const pending = this.inflight.get(key);
     if (pending) return pending;
 
-    const p = (async () => {
-      try {
-        const value = await loader(key);
+    // Register the in-flight promise before the loader runs; a loader that throws
+    // synchronously must not leave a settled rejection behind in the map.
+    const p = Promise.resolve()
+      .then(() => loader(key))
+      .then((value) => {
         this.set(key, value);
         return value;
-      } finally {
+      })
+      .finally(() => {
         this.inflight.delete(key);
-      }
-    })();
+      });
     this.inflight.set(key, p);
     return p;
   }

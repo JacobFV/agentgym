@@ -1,0 +1,7 @@
+{
+  "id": "ledger-rounding",
+  "split": "dev",
+  "title": "Use banker's rounding for invoice tax",
+  "description": "Accounting requires invoice tax to use banker's rounding (round half to even) on each line's tax instead of the current half-up behaviour: a line tax of exactly 2.5 cents becomes 2, 3.5 becomes 4, anything not exactly on a half still rounds to nearest. Tax stays computed per line (netCents * taxBps / 10000, tax rates are integer basis points) and then summed; do not switch to taxing the subtotal. Credit notes (src/creditNote.mjs) build negative lines through the same buildInvoice, and a credit note's tax must be exactly the negation of the original invoice's tax, so rounding must be symmetric for negative amounts (-2.5 -> -2, -3.5 -> -4). Only invoice tax changes: roundCents in src/rounding.mjs is also used for statement late fees, which are contractually half-up, so renderStatement output must stay byte-identical. buildInvoice must keep returning new line objects without mutating the caller's input.",
+  "timeoutMs": 20000
+}

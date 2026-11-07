@@ -7,6 +7,8 @@
 //   (h) initial/ + hidden test ONLY     -> hidden test alone must FAIL (stronger check)
 //   (c) initial/ + solution/ + hidden   -> tests must PASS
 //   (s) task.json sanity (id matches dir, split valid, required fields)
+//   (n) optional naive/ overlay (a plausible "make visible green" patch, never shown to agents):
+//       initial + naive must PASS visible tests and FAIL once hidden tests are added.
 //
 // Tests are run with the same command line the agentgym runner uses.
 // Usage: node tasks/validate-fixtures.mjs [taskId ...]
@@ -38,14 +40,16 @@ function runTests(ws, pattern = 'test/**/*.test.mjs', timeoutMs = 20000) {
   });
   const out = `${res.stdout ?? ''}${res.stderr ?? ''}`;
   const num = (k) => Number(out.match(new RegExp(`^# ${k} (\\d+)`, 'm'))?.[1] ?? NaN);
-  return { code: res.status ?? (res.signal ? 124 : 1), pass: num('pass'), fail: num('fail'), out };
+  const timedOut = res.error?.code === 'ETIMEDOUT' || (res.status === null && !!res.signal);
+  return { code: res.status ?? 124, timedOut, pass: num('pass'), fail: num('fail'), out };
 }
 
-function makeWorkspace(taskDir, { solution = false, hidden = false, visible = true } = {}) {
+function makeWorkspace(taskDir, { solution = false, naive = false, hidden = false, visible = true } = {}) {
   // realpath matters: on macOS tmpdir() is a /var symlink and --allow-fs-read needs the real path.
   const ws = realpathSync(mkdtempSync(join(tmpdir(), 'agentgym-fixture-')));
   cpSync(join(taskDir, 'initial'), ws, { recursive: true });
   if (solution) cpSync(join(taskDir, 'solution'), ws, { recursive: true });
+  if (naive) cpSync(join(taskDir, 'naive'), ws, { recursive: true });
   mkdirSync(join(ws, 'test'), { recursive: true });
   if (hidden) cpSync(join(taskDir, 'hidden', 'hidden.test.mjs'), join(ws, 'test', 'hidden.test.mjs'));
   if (!visible) unlinkSync(join(ws, 'test', 'visible.test.mjs'));
@@ -91,6 +95,12 @@ for (const id of taskIds) {
     { name: 'h', opts: { hidden: true, visible: false }, expectPass: false },
     { name: 'c', opts: { hidden: true, solution: true }, expectPass: true },
   ];
+  if (existsSync(join(taskDir, 'naive'))) {
+    scenarios.push(
+      { name: 'nv', opts: { naive: true }, expectPass: true },
+      { name: 'nh', opts: { naive: true, hidden: true }, expectPass: false },
+    );
+  }
   const cells = {};
   const details = [];
   for (const s of scenarios) {
@@ -100,8 +110,8 @@ for (const id of taskIds) {
       // An expected failure must be a real assertion failure (fail > 0), not a crash/loader error.
       const ok = s.expectPass
         ? r.code === 0 && r.fail === 0 && r.pass > 0
-        : r.code !== 0 && r.fail > 0;
-      cells[s.name] = `${ok ? 'OK' : 'XX'} ${r.pass}/${r.pass + r.fail}`;
+        : r.code !== 0 && r.fail > 0 && !r.timedOut;
+      cells[s.name] = r.timedOut ? 'XX TIMEOUT' : `${ok ? 'OK' : 'XX'} ${r.pass}/${r.pass + r.fail}`;
       if (!ok) {
         failures++;
         details.push(`--- ${id} (${s.name}) expected ${s.expectPass ? 'pass' : 'fail'}, exit=${r.code}\n${r.out.split('\n').filter((l) => /^not ok|^\s+(error|expected|actual|message):|Error/.test(l)).slice(0, 40).join('\n')}`);
@@ -111,11 +121,11 @@ for (const id of taskIds) {
     }
   }
   if (metaProblems.length) failures++;
-  rows.push({ id, split: meta.split, meta: metaProblems.length ? 'XX' : 'OK', ...cells, details, metaProblems });
+  rows.push({ id, split: meta.split, meta: metaProblems.length ? 'XX' : 'OK', nv: '-', nh: '-', ...cells, details, metaProblems });
 }
 
-const headers = ['task', 'split', 'meta', '(a) initial fails', '(b) init+hidden fails', '(h) hidden-only fails', '(c) solution passes'];
-const table = rows.map((r) => [r.id, r.split, r.meta, r.a, r.b, r.h, r.c]);
+const headers = ['task', 'split', 'meta', '(a) initial fails', '(b) init+hidden fails', '(h) hidden-only fails', '(c) solution passes', '(nv) naive passes visible', '(nh) naive fails hidden'];
+const table = rows.map((r) => [r.id, r.split, r.meta, r.a, r.b, r.h, r.c, r.nv, r.nh]);
 const widths = headers.map((h, i) => Math.max(h.length, ...table.map((row) => String(row[i]).length)));
 const line = (cols) => cols.map((c, i) => String(c).padEnd(widths[i])).join(' | ');
 console.log(line(headers));

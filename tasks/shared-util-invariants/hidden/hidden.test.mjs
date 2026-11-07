@@ -57,8 +57,8 @@ test('hidden: report output is byte-identical', () => {
   ]);
   assert.equal(out, [
     'Sales           $12,345.67',
-    'Refunds          -$450.00',
-    'Fees              -$19.99',
+    'Refunds           -$450.00',
+    'Fees               -$19.99',
     'NET             $11,875.68',
   ].join('\n'));
 });

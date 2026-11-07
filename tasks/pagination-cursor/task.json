@@ -1,0 +1,7 @@
+{
+  "id": "pagination-cursor",
+  "split": "dev",
+  "title": "Add cursor pagination to listItems",
+  "description": "Mobile clients see duplicated and skipped items while scrolling because listItems only supports offset pagination and new items are constantly inserted at the top. Add cursor pagination: clients opt in by sending a `cursor` query param - an empty `cursor` (`?cursor=`) means the first page - and get back `{ items, nextCursor }`, where nextCursor is an opaque string built with the helpers in src/cursor.mjs, and is exactly null when there are no further items (including when the last page happens to be exactly full). Items are ordered newest first (createdAt desc, then id desc) and createdAt is NOT unique, so paging must never skip or repeat an item even when items with equal createdAt straddle a page boundary, or when new items are inserted between requests. Legacy clients that send `page` (or neither param) must keep getting the existing offset response `{ items, page, pageSize, total }` byte-for-byte. pageSize parsing, defaults and error messages are shared by both modes. A malformed or tampered cursor must be rejected with ApiError(400, 'invalid cursor'), and sending both page and cursor with ApiError(400, 'page and cursor are mutually exclusive'). Query values arrive as strings; don't mutate the query object or the db rows.",
+  "timeoutMs": 20000
+}

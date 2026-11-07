@@ -1,0 +1,7 @@
+{
+  "id": "permission-inheritance",
+  "split": "val",
+  "title": "Inherit folder permissions from ancestors",
+  "description": "Sharing a folder currently has no effect on anything inside it: effectivePermissions(node, user) only looks at the node's own ACL. Make permissions inherit: a user's effective permissions on a node are the union of the allow entries on the node and on each ancestor, walking up until the root or until a node whose `inherit` is false (that node's own entries still apply, its ancestors' do not). Deny entries on that same chain win over allows from any level. Role expansion and group principals work exactly as they do today for direct entries. The share dialog (listAccess in src/share.mjs) must reflect this too: inherited allow entries are listed as `<principal>: <role> (inherited from <path>)` using the ancestor's node.path(); direct entries keep their current format exactly; if the same principal+role is granted at several levels only the nearest one is shown (a direct grant beats an inherited one); and the list stays sorted the way it is today. Querying permissions must not modify any node's acl array.",
+  "timeoutMs": 20000
+}

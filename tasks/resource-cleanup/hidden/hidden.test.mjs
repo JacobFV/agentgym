@@ -4,6 +4,14 @@ import { Pool } from '../src/pool.mjs';
 import { Scope } from '../src/scope.mjs';
 import { withConnection } from '../src/withConnection.mjs';
 
+
+// Fails (instead of hanging the whole run) if a promise never settles.
+function settleWithin(promise, ms = 300) {
+  let t;
+  const timeout = new Promise((_, rej) => { t = setTimeout(() => rej(new Error(`did not settle within ${ms}ms`)), ms); });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(t));
+}
+
 function spyPool() {
   const pool = new Pool();
   const releases = [];
@@ -86,9 +94,9 @@ test('hidden: acquire failure does not release', async () => {
 test('hidden: pool does not drain after many failures', async () => {
   const pool = new Pool({ max: 1 });
   for (let i = 0; i < 5; i++) {
-    await assert.rejects(withConnection(pool, async () => { throw new Error('x'); }));
+    await assert.rejects(settleWithin(withConnection(pool, async () => { throw new Error('x'); })), (e) => e.message === 'x');
   }
-  assert.equal(await withConnection(pool, async (c) => c.id), 1);
+  assert.equal(await settleWithin(withConnection(pool, async (c) => c.id)), 1);
   assert.equal(pool.stats.created, 1);
 });
 

@@ -1,0 +1,7 @@
+{
+  "id": "csv-dialect-compat",
+  "split": "val",
+  "title": "Support European Excel CSV (semicolon dialect)",
+  "description": "German and French customers open our CSV exports in Excel, which expects `;` as the delimiter and `,` as the decimal separator, and their bank imports arrive in that format too. (1) Add an 'excel-eu' dialect in src/dialects.mjs: delimiter ';', quote '\"', CRLF line endings, decimal ','. (2) parse() in src/csv.mjs currently only understands comma-separated input; make it accept the same dialect options as stringify() ({ dialect, ...overrides } via resolveDialect) so importBankFile(text, { dialect: 'excel-eu' }) works, including amounts written with a decimal comma. (3) exportReport(rows, { locale }) should use excel-eu with decimal commas for numbers when locale is 'de' or 'fr'; output for the default/'en' locale must stay byte-identical. Quoting must stay minimal: a field is quoted only if it contains the active dialect's delimiter, its quote character, CR or LF (so `1234,5` is not quoted in excel-eu, but `a;b` is). Parsing must keep accepting both CRLF and LF line endings whatever the dialect, quoted fields may contain delimiters, doubled quotes and newlines, and a trailing newline must not produce an empty row. Unknown dialect names must throw `unknown CSV dialect: <name>` from both parse and stringify, and dialect overrides must never modify the shared DIALECTS definitions.",
+  "timeoutMs": 20000
+}

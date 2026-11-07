@@ -53,6 +53,10 @@ export function providerFor(role: Role): Provider | null {
 
 export function describeProviders() {
   return (["coder", "analyzer", "mutator", "verifier"] as Role[]).map((r) => {
+    if (r === "analyzer")
+      return process.env.SUBQ_API_KEY
+        ? { role: r, provider: "subquadratic", model: process.env.SUBQ_SNAP_MODEL || "subq-snap-1.1", label: "SubQ Snap Decisions API (POST /v1/systemone)" }
+        : { role: r, provider: "MISSING", model: "-", label: "SUBQ_API_KEY not set" };
     try {
       const p = providerFor(r);
       return { role: r, provider: p?.id ?? "none", model: p?.model ?? "-", label: p?.label ?? "disabled" };

@@ -1,0 +1,7 @@
+{
+  "id": "lru-eviction-hooks",
+  "split": "dev",
+  "title": "Add eviction hooks to LRU and persist evicted sessions",
+  "description": "Sessions silently vanish when the in-memory LRU fills up. Add an `onEvict(key, value, reason)` option to the LRU in src/lru.mjs and use it in SessionStore so that sessions pushed out of memory are saved to the backing store, and SessionStore.get() rehydrates them (moving them back into memory and removing them from the backing store). Hook semantics: reason is 'capacity' when set() pushes out the least-recently-used entry, 'delete' for an explicit delete() of an existing key, and 'clear' for each entry removed by clear(), oldest first. Overwriting an existing key with set() is an update, not an eviction, and must not fire the hook; delete() of a missing key returns false and fires nothing. The hook runs after the entry is removed, so lru.has(key) is already false inside it. Logout calls SessionStore.destroy(): a destroyed session must never be written to the backing store, and if it had been evicted earlier it must be removed from there too. Existing LRU behaviour (get() refreshes recency, peek() does not, hit/miss stats) must not change.",
+  "timeoutMs": 20000
+}

@@ -3,6 +3,14 @@ import assert from 'node:assert/strict';
 import { retry } from '../src/retry.mjs';
 import { createClient } from '../src/httpClient.mjs';
 
+
+// Fails (instead of hanging the whole run) if a promise never settles.
+function settleWithin(promise, ms = 300) {
+  let t;
+  const timeout = new Promise((_, rej) => { t = setTimeout(() => rej(new Error(`did not settle within ${ms}ms`)), ms); });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(t));
+}
+
 const fakeSleep = (delays) => async (ms) => { delays.push(ms); };
 
 test('hidden: exact attempt count and no sleep after last failure', async () => {
@@ -79,7 +87,7 @@ test('hidden: abort during backoff rejects promptly even if sleep ignores the si
     return new Promise(() => {}); // ignores the signal and never resolves
   };
   await assert.rejects(
-    retry(async () => { attempts++; throw new Error('flaky'); }, { retries: 3, sleep: neverSleep, signal: ac.signal }),
+    settleWithin(retry(async () => { attempts++; throw new Error('flaky'); }, { retries: 3, sleep: neverSleep, signal: ac.signal })),
     (e) => e === reason,
   );
   assert.equal(attempts, 1);
