@@ -1,0 +1,182 @@
+{
+  "analyzer": {
+    "provider": "subquadratic",
+    "model": "subq-snap-1.1",
+    "endpoint": "POST /v1/systemone",
+    "inputTokens": 42204,
+    "latencyMs": 1291,
+    "questions": 36,
+    "stateChars": 123294
+  },
+  "perTrace": [
+    {
+      "traceId": "retry-cancel@v0#1",
+      "taskId": "retry-cancel",
+      "passed": false,
+      "category": "model_reasoning",
+      "categoryConf": 0.9226738611857096,
+      "weakness": "missed_error_paths",
+      "weaknessConf": 0.9004049524664879,
+      "failingTests": [
+        "hidden: abort during backoff rejects promptly even if sleep ignores the signal"
+      ]
+    },
+    {
+      "traceId": "dedupe-cache@v0#0",
+      "taskId": "dedupe-cache",
+      "passed": false,
+      "category": "model_reasoning",
+      "categoryConf": 0.9292213916778564,
+      "weakness": "missed_error_paths",
+      "weaknessConf": 0.8585609495639801,
+      "failingTests": [
+        "hidden: synchronous loader throw is not cached either"
+      ]
+    },
+    {
+      "traceId": "lru-eviction-hooks@v0#0",
+      "taskId": "lru-eviction-hooks",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.45728198687235516,
+      "weakness": "none",
+      "weaknessConf": 0.9991063550114632,
+      "failingTests": []
+    },
+    {
+      "traceId": "ledger-rounding@v0#0",
+      "taskId": "ledger-rounding",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.36006736755371094,
+      "weakness": "none",
+      "weaknessConf": 0.9974762424826622,
+      "failingTests": []
+    },
+    {
+      "traceId": "config-precedence@v0#0",
+      "taskId": "config-precedence",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.3300052483876546,
+      "weakness": "none",
+      "weaknessConf": 0.9995007738471031,
+      "failingTests": []
+    },
+    {
+      "traceId": "retry-cancel@v0#0",
+      "taskId": "retry-cancel",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.6688339710235596,
+      "weakness": "none",
+      "weaknessConf": 0.998623825609684,
+      "failingTests": []
+    },
+    {
+      "traceId": "pagination-cursor@v0#0",
+      "taskId": "pagination-cursor",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.35433101654052734,
+      "weakness": "none",
+      "weaknessConf": 0.9971350654959679,
+      "failingTests": []
+    },
+    {
+      "traceId": "pagination-cursor@v0#1",
+      "taskId": "pagination-cursor",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.34953896204630536,
+      "weakness": "none",
+      "weaknessConf": 0.999063640832901,
+      "failingTests": []
+    },
+    {
+      "traceId": "ledger-rounding@v0#1",
+      "taskId": "ledger-rounding",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.5105931758880615,
+      "weakness": "none",
+      "weaknessConf": 0.9967226758599281,
+      "failingTests": []
+    },
+    {
+      "traceId": "config-precedence@v0#1",
+      "taskId": "config-precedence",
+      "passed": true,
+      "category": "task_specific_defect",
+      "categoryConf": 0.4514147440592448,
+      "weakness": "none",
+      "weaknessConf": 0.9981646314263344,
+      "failingTests": []
+    },
+    {
+      "traceId": "dedupe-cache@v0#1",
+      "taskId": "dedupe-cache",
+      "passed": false,
+      "category": "model_reasoning",
+      "categoryConf": 0.9194339911142985,
+      "weakness": "missed_error_paths",
+      "weaknessConf": 0.9102162718772888,
+      "failingTests": [
+        "hidden: synchronous loader throw is not cached either"
+      ]
+    },
+    {
+      "traceId": "lru-eviction-hooks@v0#1",
+      "taskId": "lru-eviction-hooks",
+      "passed": true,
+      "category": "model_reasoning",
+      "categoryConf": 0.4419538180033366,
+      "weakness": "none",
+      "weaknessConf": 0.998646154999733,
+      "failingTests": []
+    }
+  ],
+  "recurring": {
+    "weakness": "missed_error_paths",
+    "description": "Failure, rejection, cancellation, abort, or cleanup paths are not handled correctly",
+    "probabilities": {
+      "ignored_stated_constraints": 0.008100445382297039,
+      "broke_existing_behavior": 0.005338738206773996,
+      "missed_error_paths": 0.9550394415855408,
+      "missed_edge_cases": 0.010330761782824993,
+      "overfit_visible_tests": 0.019038282334804535,
+      "cross_module_contract": 0.0010141826933249831,
+      "output_format_or_tooling": 0.0003602955839596689,
+      "environment": 0.0007778882281854749
+    },
+    "confidence": 0.9486165046691895
+  },
+  "prevalence": {
+    "ignored_stated_constraints": 0.89,
+    "broke_existing_behavior": 0.39,
+    "missed_error_paths": 1.96,
+    "missed_edge_cases": 1.06,
+    "overfit_visible_tests": 1.36,
+    "cross_module_contract": 0.41,
+    "output_format_or_tooling": 0.03,
+    "environment": 0.14
+  },
+  "systemicProbability": 0.9768776893615723,
+  "overclaimProbability": 0.9989995360374451,
+  "lever": {
+    "choice": "self_review_after_green",
+    "probabilities": {
+      "plan_invariants_first": 0.10541698336601257,
+      "self_review_after_green": 0.4392602741718292,
+      "richer_test_feedback": 0.15285642445087433,
+      "prompt_methodology": 0.17809350788593292,
+      "skill_checklist": 0.12437277287244797
+    }
+  },
+  "evidenceTraceIds": [
+    "retry-cancel@v0#1",
+    "dedupe-cache@v0#0",
+    "dedupe-cache@v0#1"
+  ],
+  "summary": "3/12 dev traces failed independent grading (3 of them self-reported success). SubQ's dominant recurring weakness: missed_error_paths (p=0.96) — Failure, rejection, cancellation, abort, or cleanup paths are not handled correctly. Systemic p=0.98; overclaim p=1.00. Suggested lever: self_review_after_green. Per-trace: retry-cancel@v0#1→missed_error_paths/model_reasoning; dedupe-cache@v0#0→missed_error_paths/model_reasoning; dedupe-cache@v0#1→missed_error_paths/model_reasoning."
+}

@@ -13,10 +13,10 @@ const DEFAULT_ROLE_PROVIDER: Record<Role, string> = {
   verifier: "gemini",
 };
 
-function build(name: string): Provider | null {
+function build(name: string, role?: Role): Provider | null {
   switch (name) {
     case "meta":
-      return metaProvider();
+      return metaProvider(role ? process.env[`META_${role.toUpperCase()}_MODEL`] : undefined);
     case "subquadratic":
       return subqProvider();
     case "gemini":
@@ -38,7 +38,7 @@ function build(name: string): Provider | null {
 export function providerFor(role: Role): Provider | null {
   const explicit = process.env[`${role.toUpperCase()}_PROVIDER`];
   const name = explicit || DEFAULT_ROLE_PROVIDER[role];
-  const p = build(name);
+  const p = build(name, role);
   if (p) return p;
   if (role === "verifier") return null; // optional
   if (process.env.ALLOW_DEV_FALLBACK === "1") {

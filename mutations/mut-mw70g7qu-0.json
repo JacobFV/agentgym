@@ -1,0 +1,66 @@
+{
+  "proposal": {
+    "id": "mut-mw70g7qu-0",
+    "parentVersion": "v0",
+    "candidateVersion": "v0.3",
+    "target": "systemPrompt, skills",
+    "diagnosis": "Agent correctly handles asynchronous failure but misses the equivalent synchronous failure mode, leaving temporary coordination state uncleared and treating failures as settled outcomes",
+    "rationale": "A reusable checklist that forces equivalence between synchronous and asynchronous failures and explicit per-exit-path cleanup generalizes to any ticket with failure, rejection, cancellation, or abort behavior",
+    "proposedChange": "Add a reusable error-path checklist skill and require consulting it before editing and before finishing",
+    "expectedImpact": "More complete handling of rejection/cancellation/cleanup paths on unseen tickets; small prompt overhead with low overfitting risk",
+    "supportingTraceIds": [
+      "dedupe-cache@v0#1",
+      "dedupe-cache@v0#0"
+    ],
+    "patch": {
+      "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify. Before editing and again before finishing, consult the error-path-checklist skill: normalize synchronous and asynchronous failures, release temporary state on every exit path, and never persist failures as successes.",
+      "skills": {
+        "error-path-checklist": "For any operation that can fail, reject, cancel, or abort: 1) Normalize synchronous throws and asynchronous rejections to the same failure handling. 2) List every exit path - success, synchronous failure, asynchronous failure, cancellation/abort - and state how temporary bookkeeping is released on each. 3) Never record a failure outcome as a successful result; ensure the next attempt retries cleanly. 4) Verify cleanup executes even when failure happens before any asynchronous boundary."
+      }
+    },
+    "generator": {
+      "provider": "meta",
+      "model": "muse-spark-1.3",
+      "latencyMs": 28589,
+      "usage": {
+        "inputTokens": 2525,
+        "outputTokens": 3530,
+        "totalTokens": 6055
+      }
+    },
+    "guard": {
+      "ok": true,
+      "violations": []
+    },
+    "createdAt": "2026-11-07T23:04:24.631Z"
+  },
+  "decision": {
+    "candidate": "v0.3",
+    "parent": "v0",
+    "decision": "REJECT",
+    "reasons": [
+      "no improvement on validation: 12/12 vs parent 12/12"
+    ],
+    "parentScore": 12,
+    "candidateScore": 12,
+    "runs": 12,
+    "newlyPassing": [],
+    "regressions": [],
+    "tokenDelta": 12336
+  },
+  "review": {
+    "provider": "gemini",
+    "model": "gemini-3.8-flash",
+    "report": {
+      "risk": "high",
+      "overfittingConcerns": "The patch is hyper-tailored to the specific 'dedupe-cache' task where both failures occurred. The checklist points (handling sync throws vs async rejections, releasing bookkeeping state, retrying cleanly, and cleanup before async boundaries) read like a bespoke specification for an in-flight promise deduplication/caching bug rather than a general engineering guideline.",
+      "overlookedAssumptions": "Assumes that prompt-level checklist instructions will solve the 0.99 overclaim rate without adding actual verification mechanisms or test execution loops (the diagnosis suggested 'self_review_after_green', but only prompt text was added). Additionally, it assumes failures should never be cached or recorded, which directly contradicts valid patterns like negative caching, circuit breakers, or permanent error status tracking.",
+      "suggestedAdversarialChecks": [
+        "Run on tasks requiring negative caching or rate-limiting error persistence to verify the agent does not force clean retries when errors are intended to be cached.",
+        "Evaluate on purely synchronous or non-caching tasks (e.g., file parsers, CLI utilities) to see if prompt bloat causes hallucinated async wrappers, unnecessary defensive boilerplate, or performance regressions.",
+        "Check agent behavior on tasks with subtle edge cases to see if the agent still overclaims success without actually running or verifying tests post-implementation."
+      ]
+    }
+  },
+  "evaluation": "evo-2026-11-07T23-02-26--v0.3--val"
+}

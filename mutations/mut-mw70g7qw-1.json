@@ -1,0 +1,69 @@
+{
+  "proposal": {
+    "id": "mut-mw70g7qw-1",
+    "parentVersion": "v0",
+    "candidateVersion": "v0.4",
+    "target": "systemPrompt, toolPolicy.fullTestOutputOnRetry",
+    "diagnosis": "Agent reports success after main paths pass while failure and cleanup paths remain broken, showing overconfident completion without adversarial verification of error behavior",
+    "rationale": "Requiring explicit enumeration and verification of all failure, rejection, cancellation, and cleanup paths plus fuller output on retry prevents stopping at green visible behavior and forces discovery of hidden error defects",
+    "proposedChange": "Require adversarial failure-path verification before claiming success and enable full test output on retry",
+    "expectedImpact": "Reduces false success claims and improves recovery on error-path defects; costs slightly larger retry context but no extra LLM calls",
+    "supportingTraceIds": [
+      "dedupe-cache@v0#1",
+      "dedupe-cache@v0#0"
+    ],
+    "patch": {
+      "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify. Do not claim success until you have enumerated every failure, rejection, cancellation, and cleanup path and reasoned how each is handled and verified; treat synchronous and asynchronous failures as distinct cases that must both be correct.",
+      "toolPolicy": {
+        "fullTestOutputOnRetry": true
+      }
+    },
+    "generator": {
+      "provider": "meta",
+      "model": "muse-spark-1.3",
+      "latencyMs": 28589,
+      "usage": {
+        "inputTokens": 2525,
+        "outputTokens": 3530,
+        "totalTokens": 6055
+      }
+    },
+    "guard": {
+      "ok": true,
+      "violations": []
+    },
+    "createdAt": "2026-11-07T23:04:24.632Z"
+  },
+  "decision": {
+    "candidate": "v0.4",
+    "parent": "v0",
+    "decision": "REJECT",
+    "reasons": [
+      "no improvement on validation: 11/12 vs parent 12/12",
+      "regressions on: csv-dialect-compat"
+    ],
+    "parentScore": 12,
+    "candidateScore": 11,
+    "runs": 12,
+    "newlyPassing": [],
+    "regressions": [
+      "csv-dialect-compat"
+    ],
+    "tokenDelta": 20183
+  },
+  "review": {
+    "provider": "gemini",
+    "model": "gemini-3.8-flash",
+    "report": {
+      "risk": "medium",
+      "overfittingConcerns": "The prompt instruction specifically targets the exact failure signature seen in `dedupe-cache` (cancellation, rejection, synchronous vs. asynchronous distinction), which may cause the model to over-index on complex async lifecycle management and defensive cleanup code even on simple, purely synchronous, or standard CRUD tasks.",
+      "overlookedAssumptions": "Assuming that demanding explicit enumeration in natural language prevents overclaiming or missed error paths; LLMs often hallucinate compliant reasoning summaries while leaving the actual implementation buggy. Furthermore, `fullTestOutputOnRetry` assumes the test suite already covers these error paths—if the missing error paths are due to untested edge cases, full test output on retry will not surface them.",
+      "suggestedAdversarialChecks": [
+        "Run on tasks involving purely synchronous utilities (e.g., regex parsers, math algorithms) to verify the model does not bloat code with unnecessary async wrappers or defensive cancellation scaffolding.",
+        "Run on tickets with weak or absent error-path unit tests to evaluate whether the agent genuinely adds test coverage for error/cleanup paths or merely hallucinates enumeration before falsely claiming success.",
+        "Evaluate token usage and response truncation risks across complex multi-file tasks due to verbose pre-completion enumeration requirements."
+      ]
+    }
+  },
+  "evaluation": "evo-2026-11-07T23-02-26--v0.4--val"
+}

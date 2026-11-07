@@ -11,7 +11,7 @@ function arg(name: string, def?: string) {
   return i >= 0 ? process.argv[i + 1] : def;
 }
 const cmd = process.argv[2];
-const stamp = () => new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+const stamp = () => new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19) + "-" + Math.random().toString(36).slice(2, 6);
 
 if (cmd === "providers") {
   console.table(describeProviders());

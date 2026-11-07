@@ -1,0 +1,251 @@
+{
+  "evalId": "evo-2026-11-07T23-02-26--v0.3--val",
+  "version": "v0.3",
+  "split": "val",
+  "reps": 2,
+  "coder": {
+    "provider": "meta",
+    "model": "muse-spark-1.3",
+    "label": "Meta Model API"
+  },
+  "startedAt": "2026-11-07T23:04:42.996Z",
+  "finishedAt": "2026-11-07T23:07:40.205Z",
+  "taskIds": [
+    "csv-dialect-compat",
+    "event-ordering",
+    "permission-inheritance",
+    "resource-cleanup",
+    "scheduler-priority",
+    "serialization-migration"
+  ],
+  "perTask": {
+    "csv-dialect-compat": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "csv-dialect-compat@v0.3#0",
+          "taskId": "csv-dialect-compat",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 12,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 12874,
+          "agentMs": 83913,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: en export is byte-identical to before\nok 1 - hidden: en export is byte-identical to before\n  ---\n  duration_ms: 0.935959\n  type: 'test'\n  ...\n# Subtest: hidden: de export uses excel-eu with decimal comma and minimal quoting\nok 2 - hidden: de export uses excel-eu with decimal comma and minimal quoting\n  ---\n  duration_ms: 0.097375\n  type: 'test'\n  ...\n# Subtest: hidden: stringify quotes by the active delimiter\nok 3 - hidden: stringify quotes by the active delimiter\n  ---\n  duration_ms: 0.063917\n  type: 'test'\n  ...\n# Subtest: hidden: parse quoted fields with delimiter, doubled quotes and newlines in excel-eu\nok 4 - hidden: parse quoted fields with delimiter, doubled quotes and newlines in excel-eu\n  ---\n  duration_ms: 0.783958\n  type: 'test'\n  ...\n# Subtest: hidden: parse accepts LF endings in a CRLF dialect and ignores trailing newline\nok 5 - hidden: parse accepts LF endings in a CRLF dialect and ignores trailing newline\n  ---\n  duration_ms: 0.089959\n  type: 'test'\n  ...\n# Subtest: hidden: parse default is still comma, semicolons are data\nok 6 - hidden: parse default is still comma, semicolons are data\n  ---\n  duration_ms: 0.056917\n  type: 'test'\n  ...\n# Subtest: hidden: round trip in excel-eu\nok 7 - hidden: round trip in excel-eu\n  ---\n  duration_ms: 0.072875\n  type: 'test'\n  ...\n# Subtest: hidden: unknown dialect message from both functions\nok 8 - hidden: unknown dialect message from both functions\n  ---\n  duration_ms: 0.230916\n  type: 'test'\n  ...\n# Subtest: hidden: overrides do not modify shared dialects\nok 9 - hidden: overrides do not modify shared dialects\n  ---\n  duration_ms: 0.173458\n  type: 'test'\n  ...\n# Subtest: hidden: importer reads excel-eu bank files with decimal comma\nok 10 - hidden: importer reads excel-eu bank files with decimal comma\n  ---\n  duration_ms: 0.186167\n  type: 'test'\n  ...\n# Subtest: hidden: importer default (excel) unchanged and round-trips en export\nok 11 - hidden: importer default (excel) unchanged and round-trips en export\n  ---\n  duration_ms: 0.561292\n  type: 'test'\n  ...\n# Subtest: parse understands the excel-eu dialect\nok 12 - parse understands the excel-eu dialect\n  ---\n  duration_ms: 0.092042\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.718458\n"
+        },
+        {
+          "traceId": "csv-dialect-compat@v0.3#1",
+          "taskId": "csv-dialect-compat",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 12,
+          "fail": 0,
+          "attempts": 2,
+          "tokens": 21643,
+          "agentMs": 146942,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: en export is byte-identical to before\nok 1 - hidden: en export is byte-identical to before\n  ---\n  duration_ms: 0.894166\n  type: 'test'\n  ...\n# Subtest: hidden: de export uses excel-eu with decimal comma and minimal quoting\nok 2 - hidden: de export uses excel-eu with decimal comma and minimal quoting\n  ---\n  duration_ms: 0.103416\n  type: 'test'\n  ...\n# Subtest: hidden: stringify quotes by the active delimiter\nok 3 - hidden: stringify quotes by the active delimiter\n  ---\n  duration_ms: 0.060917\n  type: 'test'\n  ...\n# Subtest: hidden: parse quoted fields with delimiter, doubled quotes and newlines in excel-eu\nok 4 - hidden: parse quoted fields with delimiter, doubled quotes and newlines in excel-eu\n  ---\n  duration_ms: 0.749792\n  type: 'test'\n  ...\n# Subtest: hidden: parse accepts LF endings in a CRLF dialect and ignores trailing newline\nok 5 - hidden: parse accepts LF endings in a CRLF dialect and ignores trailing newline\n  ---\n  duration_ms: 0.090834\n  type: 'test'\n  ...\n# Subtest: hidden: parse default is still comma, semicolons are data\nok 6 - hidden: parse default is still comma, semicolons are data\n  ---\n  duration_ms: 0.057416\n  type: 'test'\n  ...\n# Subtest: hidden: round trip in excel-eu\nok 7 - hidden: round trip in excel-eu\n  ---\n  duration_ms: 0.070542\n  type: 'test'\n  ...\n# Subtest: hidden: unknown dialect message from both functions\nok 8 - hidden: unknown dialect message from both functions\n  ---\n  duration_ms: 0.230333\n  type: 'test'\n  ...\n# Subtest: hidden: overrides do not modify shared dialects\nok 9 - hidden: overrides do not modify shared dialects\n  ---\n  duration_ms: 0.173291\n  type: 'test'\n  ...\n# Subtest: hidden: importer reads excel-eu bank files with decimal comma\nok 10 - hidden: importer reads excel-eu bank files with decimal comma\n  ---\n  duration_ms: 0.193208\n  type: 'test'\n  ...\n# Subtest: hidden: importer default (excel) unchanged and round-trips en export\nok 11 - hidden: importer default (excel) unchanged and round-trips en export\n  ---\n  duration_ms: 0.085792\n  type: 'test'\n  ...\n# Subtest: parse understands the excel-eu dialect\nok 12 - parse understands the excel-eu dialect\n  ---\n  duration_ms: 0.466875\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.409417\n"
+        }
+      ]
+    },
+    "event-ordering": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "event-ordering@v0.3#0",
+          "taskId": "event-ordering",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 2,
+          "tokens": 18161,
+          "agentMs": 167165,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: process returns events applied by this call\nok 1 - hidden: process returns events applied by this call\n  ---\n  duration_ms: 1.526625\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of an applied event is ignored\nok 2 - hidden: duplicate delivery of an applied event is ignored\n  ---\n  duration_ms: 0.098459\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of a buffered event is ignored\nok 3 - hidden: duplicate delivery of a buffered event is ignored\n  ---\n  duration_ms: 0.093416\n  type: 'test'\n  ...\n# Subtest: hidden: stale seq with a new id is ignored\nok 4 - hidden: stale seq with a new id is ignored\n  ---\n  duration_ms: 0.061709\n  type: 'test'\n  ...\n# Subtest: hidden: a gap blocks later events until it is filled\nok 5 - hidden: a gap blocks later events until it is filled\n  ---\n  duration_ms: 0.096375\n  type: 'test'\n  ...\n# Subtest: hidden: startSeq is honored\nok 6 - hidden: startSeq is honored\n  ---\n  duration_ms: 0.08425\n  type: 'test'\n  ...\n# Subtest: hidden: ledger balance is correct under reordering and redelivery\nok 7 - hidden: ledger balance is correct under reordering and redelivery\n  ---\n  duration_ms: 0.13625\n  type: 'test'\n  ...\n# Subtest: hidden: ledger does not apply withdraw before an earlier deposit arrives\nok 8 - hidden: ledger does not apply withdraw before an earlier deposit arrives\n  ---\n  duration_ms: 0.0585\n  type: 'test'\n  ...\n# Subtest: out-of-order events are applied in seq order\nok 9 - out-of-order events are applied in seq order\n  ---\n  duration_ms: 0.076834\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 17.981459\n"
+        },
+        {
+          "traceId": "event-ordering@v0.3#1",
+          "taskId": "event-ordering",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 2,
+          "tokens": 19662,
+          "agentMs": 177123,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: process returns events applied by this call\nok 1 - hidden: process returns events applied by this call\n  ---\n  duration_ms: 1.511833\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of an applied event is ignored\nok 2 - hidden: duplicate delivery of an applied event is ignored\n  ---\n  duration_ms: 0.0925\n  type: 'test'\n  ...\n# Subtest: hidden: duplicate delivery of a buffered event is ignored\nok 3 - hidden: duplicate delivery of a buffered event is ignored\n  ---\n  duration_ms: 0.096333\n  type: 'test'\n  ...\n# Subtest: hidden: stale seq with a new id is ignored\nok 4 - hidden: stale seq with a new id is ignored\n  ---\n  duration_ms: 0.064375\n  type: 'test'\n  ...\n# Subtest: hidden: a gap blocks later events until it is filled\nok 5 - hidden: a gap blocks later events until it is filled\n  ---\n  duration_ms: 0.096125\n  type: 'test'\n  ...\n# Subtest: hidden: startSeq is honored\nok 6 - hidden: startSeq is honored\n  ---\n  duration_ms: 0.076459\n  type: 'test'\n  ...\n# Subtest: hidden: ledger balance is correct under reordering and redelivery\nok 7 - hidden: ledger balance is correct under reordering and redelivery\n  ---\n  duration_ms: 0.136416\n  type: 'test'\n  ...\n# Subtest: hidden: ledger does not apply withdraw before an earlier deposit arrives\nok 8 - hidden: ledger does not apply withdraw before an earlier deposit arrives\n  ---\n  duration_ms: 0.05325\n  type: 'test'\n  ...\n# Subtest: out-of-order events are applied in seq order\nok 9 - out-of-order events are applied in seq order\n  ---\n  duration_ms: 0.074\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 17.616875\n"
+        }
+      ]
+    },
+    "permission-inheritance": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "permission-inheritance@v0.3#0",
+          "taskId": "permission-inheritance",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 11,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 5414,
+          "agentMs": 35895,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: union across multiple levels and groups\nok 1 - hidden: union across multiple levels and groups\n  ---\n  duration_ms: 1.563875\n  type: 'test'\n  ...\n# Subtest: hidden: inherit:false stops at that node but keeps its own entries\nok 2 - hidden: inherit:false stops at that node but keeps its own entries\n  ---\n  duration_ms: 0.088458\n  type: 'test'\n  ...\n# Subtest: hidden: deny on an ancestor beats allow on the node\nok 3 - hidden: deny on an ancestor beats allow on the node\n  ---\n  duration_ms: 0.105125\n  type: 'test'\n  ...\n# Subtest: hidden: deny on the node beats inherited allow\nok 4 - hidden: deny on the node beats inherited allow\n  ---\n  duration_ms: 0.068375\n  type: 'test'\n  ...\n# Subtest: hidden: deny above an inherit:false boundary does not apply\nok 5 - hidden: deny above an inherit:false boundary does not apply\n  ---\n  duration_ms: 0.073\n  type: 'test'\n  ...\n# Subtest: hidden: direct-only behaviour unchanged for root nodes\nok 6 - hidden: direct-only behaviour unchanged for root nodes\n  ---\n  duration_ms: 0.070041\n  type: 'test'\n  ...\n# Subtest: hidden: share dialog lists inherited entries with their source path\nok 7 - hidden: share dialog lists inherited entries with their source path\n  ---\n  duration_ms: 0.103042\n  type: 'test'\n  ...\n# Subtest: hidden: share dialog shows nearest grant only and respects inherit:false\nok 8 - hidden: share dialog shows nearest grant only and respects inherit:false\n  ---\n  duration_ms: 0.078291\n  type: 'test'\n  ...\n# Subtest: hidden: share dialog unchanged for nodes without inherited entries\nok 9 - hidden: share dialog unchanged for nodes without inherited entries\n  ---\n  duration_ms: 0.072459\n  type: 'test'\n  ...\n# Subtest: hidden: acl arrays are not mutated\nok 10 - hidden: acl arrays are not mutated\n  ---\n  duration_ms: 0.241\n  type: 'test'\n  ...\n# Subtest: permissions granted on a folder apply to its children\nok 11 - permissions granted on a folder apply to its children\n  ---\n  duration_ms: 0.078375\n  type: 'test'\n  ...\n1..11\n# tests 11\n# suites 0\n# pass 11\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.162083\n"
+        },
+        {
+          "traceId": "permission-inheritance@v0.3#1",
+          "taskId": "permission-inheritance",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 11,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 5863,
+          "agentMs": 43227,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: union across multiple levels and groups\nok 1 - hidden: union across multiple levels and groups\n  ---\n  duration_ms: 1.667042\n  type: 'test'\n  ...\n# Subtest: hidden: inherit:false stops at that node but keeps its own entries\nok 2 - hidden: inherit:false stops at that node but keeps its own entries\n  ---\n  duration_ms: 0.093125\n  type: 'test'\n  ...\n# Subtest: hidden: deny on an ancestor beats allow on the node\nok 3 - hidden: deny on an ancestor beats allow on the node\n  ---\n  duration_ms: 0.105333\n  type: 'test'\n  ...\n# Subtest: hidden: deny on the node beats inherited allow\nok 4 - hidden: deny on the node beats inherited allow\n  ---\n  duration_ms: 0.07025\n  type: 'test'\n  ...\n# Subtest: hidden: deny above an inherit:false boundary does not apply\nok 5 - hidden: deny above an inherit:false boundary does not apply\n  ---\n  duration_ms: 0.072708\n  type: 'test'\n  ...\n# Subtest: hidden: direct-only behaviour unchanged for root nodes\nok 6 - hidden: direct-only behaviour unchanged for root nodes\n  ---\n  duration_ms: 0.072792\n  type: 'test'\n  ...\n# Subtest: hidden: share dialog lists inherited entries with their source path\nok 7 - hidden: share dialog lists inherited entries with their source path\n  ---\n  duration_ms: 0.111375\n  type: 'test'\n  ...\n# Subtest: hidden: share dialog shows nearest grant only and respects inherit:false\nok 8 - hidden: share dialog shows nearest grant only and respects inherit:false\n  ---\n  duration_ms: 0.078875\n  type: 'test'\n  ...\n# Subtest: hidden: share dialog unchanged for nodes without inherited entries\nok 9 - hidden: share dialog unchanged for nodes without inherited entries\n  ---\n  duration_ms: 0.08175\n  type: 'test'\n  ...\n# Subtest: hidden: acl arrays are not mutated\nok 10 - hidden: acl arrays are not mutated\n  ---\n  duration_ms: 0.251125\n  type: 'test'\n  ...\n# Subtest: permissions granted on a folder apply to its children\nok 11 - permissions granted on a folder apply to its children\n  ---\n  duration_ms: 0.069708\n  type: 'test'\n  ...\n1..11\n# tests 11\n# suites 0\n# pass 11\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 19.2925\n"
+        }
+      ]
+    },
+    "resource-cleanup": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "resource-cleanup@v0.3#0",
+          "taskId": "resource-cleanup",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 12,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 6908,
+          "agentMs": 54066,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: success path releases exactly once and returns result\nok 1 - hidden: success path releases exactly once and returns result\n  ---\n  duration_ms: 0.950333\n  type: 'test'\n  ...\n# Subtest: hidden: throw path releases exactly once\nok 2 - hidden: throw path releases exactly once\n  ---\n  duration_ms: 0.2525\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups run LIFO, before release\nok 3 - hidden: deferred cleanups run LIFO, before release\n  ---\n  duration_ms: 0.767\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups also run before release when fn throws\nok 4 - hidden: deferred cleanups also run before release when fn throws\n  ---\n  duration_ms: 0.183292\n  type: 'test'\n  ...\n# Subtest: hidden: fn error wins over cleanup error, and release still happens\nok 5 - hidden: fn error wins over cleanup error, and release still happens\n  ---\n  duration_ms: 0.1415\n  type: 'test'\n  ...\n# Subtest: hidden: cleanup error propagates on success path, release still happens\nok 6 - hidden: cleanup error propagates on success path, release still happens\n  ---\n  duration_ms: 0.116583\n  type: 'test'\n  ...\n# Subtest: hidden: acquire failure does not release\nok 7 - hidden: acquire failure does not release\n  ---\n  duration_ms: 0.10575\n  type: 'test'\n  ...\n# Subtest: hidden: pool does not drain after many failures\nok 8 - hidden: pool does not drain after many failures\n  ---\n  duration_ms: 1.0085\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close runs all callbacks LIFO and rejects with the single error\nok 9 - hidden: Scope.close runs all callbacks LIFO and rejects with the single error\n  ---\n  duration_ms: 0.124917\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close aggregates multiple errors in run order\nok 10 - hidden: Scope.close aggregates multiple errors in run order\n  ---\n  duration_ms: 0.177916\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close is idempotent\nok 11 - hidden: Scope.close is idempotent\n  ---\n  duration_ms: 0.064542\n  type: 'test'\n  ...\n# Subtest: connection is released when fn throws\nok 12 - connection is released when fn throws\n  ---\n  duration_ms: 0.082084\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 19.124292\n"
+        },
+        {
+          "traceId": "resource-cleanup@v0.3#1",
+          "taskId": "resource-cleanup",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 12,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 6932,
+          "agentMs": 50105,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: success path releases exactly once and returns result\nok 1 - hidden: success path releases exactly once and returns result\n  ---\n  duration_ms: 0.949291\n  type: 'test'\n  ...\n# Subtest: hidden: throw path releases exactly once\nok 2 - hidden: throw path releases exactly once\n  ---\n  duration_ms: 0.247375\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups run LIFO, before release\nok 3 - hidden: deferred cleanups run LIFO, before release\n  ---\n  duration_ms: 0.765875\n  type: 'test'\n  ...\n# Subtest: hidden: deferred cleanups also run before release when fn throws\nok 4 - hidden: deferred cleanups also run before release when fn throws\n  ---\n  duration_ms: 0.186834\n  type: 'test'\n  ...\n# Subtest: hidden: fn error wins over cleanup error, and release still happens\nok 5 - hidden: fn error wins over cleanup error, and release still happens\n  ---\n  duration_ms: 0.137542\n  type: 'test'\n  ...\n# Subtest: hidden: cleanup error propagates on success path, release still happens\nok 6 - hidden: cleanup error propagates on success path, release still happens\n  ---\n  duration_ms: 0.115583\n  type: 'test'\n  ...\n# Subtest: hidden: acquire failure does not release\nok 7 - hidden: acquire failure does not release\n  ---\n  duration_ms: 0.110417\n  type: 'test'\n  ...\n# Subtest: hidden: pool does not drain after many failures\nok 8 - hidden: pool does not drain after many failures\n  ---\n  duration_ms: 2.30625\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close runs all callbacks LIFO and rejects with the single error\nok 9 - hidden: Scope.close runs all callbacks LIFO and rejects with the single error\n  ---\n  duration_ms: 0.127709\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close aggregates multiple errors in run order\nok 10 - hidden: Scope.close aggregates multiple errors in run order\n  ---\n  duration_ms: 0.190166\n  type: 'test'\n  ...\n# Subtest: hidden: Scope.close is idempotent\nok 11 - hidden: Scope.close is idempotent\n  ---\n  duration_ms: 0.063083\n  type: 'test'\n  ...\n# Subtest: connection is released when fn throws\nok 12 - connection is released when fn throws\n  ---\n  duration_ms: 0.095291\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 20.28\n"
+        }
+      ]
+    },
+    "scheduler-priority": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "scheduler-priority@v0.3#0",
+          "taskId": "scheduler-priority",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 4753,
+          "agentMs": 29218,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: equal priority keeps FIFO order\nok 1 - hidden: equal priority keeps FIFO order\n  ---\n  duration_ms: 1.682\n  type: 'test'\n  ...\n# Subtest: hidden: priority 0 is valid and lowest\nok 2 - hidden: priority 0 is valid and lowest\n  ---\n  duration_ms: 0.11475\n  type: 'test'\n  ...\n# Subtest: hidden: a future high-priority job does not block due jobs\nok 3 - hidden: a future high-priority job does not block due jobs\n  ---\n  duration_ms: 0.146167\n  type: 'test'\n  ...\n# Subtest: hidden: priority orders only within a tick; earlier ticks are not reordered\nok 4 - hidden: priority orders only within a tick; earlier ticks are not reordered\n  ---\n  duration_ms: 0.090417\n  type: 'test'\n  ...\n# Subtest: hidden: invalid priorities throw RangeError and do not schedule\nok 5 - hidden: invalid priorities throw RangeError and do not schedule\n  ---\n  duration_ms: 0.286542\n  type: 'test'\n  ...\n# Subtest: hidden: cancel still works with priorities\nok 6 - hidden: cancel still works with priorities\n  ---\n  duration_ms: 0.086\n  type: 'test'\n  ...\n# Subtest: hidden: jobs scheduled during a tick run on the next tick\nok 7 - hidden: jobs scheduled during a tick run on the next tick\n  ---\n  duration_ms: 0.104917\n  type: 'test'\n  ...\n# Subtest: hidden: errors are logged and the log format is unchanged\nok 8 - hidden: errors are logged and the log format is unchanged\n  ---\n  duration_ms: 0.124208\n  type: 'test'\n  ...\n# Subtest: higher priority due jobs run first\nok 9 - higher priority due jobs run first\n  ---\n  duration_ms: 0.114583\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 19.166\n"
+        },
+        {
+          "traceId": "scheduler-priority@v0.3#1",
+          "taskId": "scheduler-priority",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 9,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 5945,
+          "agentMs": 42379,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: equal priority keeps FIFO order\nok 1 - hidden: equal priority keeps FIFO order\n  ---\n  duration_ms: 1.771125\n  type: 'test'\n  ...\n# Subtest: hidden: priority 0 is valid and lowest\nok 2 - hidden: priority 0 is valid and lowest\n  ---\n  duration_ms: 0.114541\n  type: 'test'\n  ...\n# Subtest: hidden: a future high-priority job does not block due jobs\nok 3 - hidden: a future high-priority job does not block due jobs\n  ---\n  duration_ms: 0.160167\n  type: 'test'\n  ...\n# Subtest: hidden: priority orders only within a tick; earlier ticks are not reordered\nok 4 - hidden: priority orders only within a tick; earlier ticks are not reordered\n  ---\n  duration_ms: 0.093084\n  type: 'test'\n  ...\n# Subtest: hidden: invalid priorities throw RangeError and do not schedule\nok 5 - hidden: invalid priorities throw RangeError and do not schedule\n  ---\n  duration_ms: 0.297667\n  type: 'test'\n  ...\n# Subtest: hidden: cancel still works with priorities\nok 6 - hidden: cancel still works with priorities\n  ---\n  duration_ms: 0.087417\n  type: 'test'\n  ...\n# Subtest: hidden: jobs scheduled during a tick run on the next tick\nok 7 - hidden: jobs scheduled during a tick run on the next tick\n  ---\n  duration_ms: 0.10475\n  type: 'test'\n  ...\n# Subtest: hidden: errors are logged and the log format is unchanged\nok 8 - hidden: errors are logged and the log format is unchanged\n  ---\n  duration_ms: 0.128417\n  type: 'test'\n  ...\n# Subtest: higher priority due jobs run first\nok 9 - higher priority due jobs run first\n  ---\n  duration_ms: 0.116958\n  type: 'test'\n  ...\n1..9\n# tests 9\n# suites 0\n# pass 9\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 17.986958\n"
+        }
+      ]
+    },
+    "serialization-migration": {
+      "passes": 2,
+      "reps": 2,
+      "runs": [
+        {
+          "traceId": "serialization-migration@v0.3#0",
+          "taskId": "serialization-migration",
+          "rep": 0,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 10,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 8241,
+          "agentMs": 63017,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: v1 payloads still deserialize\nok 1 - hidden: v1 payloads still deserialize\n  ---\n  duration_ms: 1.49025\n  type: 'test'\n  ...\n# Subtest: hidden: legacy payload without v field is treated as v1\nok 2 - hidden: legacy payload without v field is treated as v1\n  ---\n  duration_ms: 0.078791\n  type: 'test'\n  ...\n# Subtest: hidden: v1 empty tags string means no tags\nok 3 - hidden: v1 empty tags string means no tags\n  ---\n  duration_ms: 0.066042\n  type: 'test'\n  ...\n# Subtest: hidden: v1 record re-serializes to v2 and round-trips\nok 4 - hidden: v1 record re-serializes to v2 and round-trips\n  ---\n  duration_ms: 0.1095\n  type: 'test'\n  ...\n# Subtest: hidden: v2 empty tags round-trips\nok 5 - hidden: v2 empty tags round-trips\n  ---\n  duration_ms: 0.077458\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v2 payload\nok 6 - hidden: unknown fields preserved from v2 payload\n  ---\n  duration_ms: 0.109291\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v1 payload\nok 7 - hidden: unknown fields preserved from v1 payload\n  ---\n  duration_ms: 0.06725\n  type: 'test'\n  ...\n# Subtest: hidden: future versions are rejected\nok 8 - hidden: future versions are rejected\n  ---\n  duration_ms: 0.191708\n  type: 'test'\n  ...\n# Subtest: hidden: store loads legacy records and writes v2 on update\nok 9 - hidden: store loads legacy records and writes v2 on update\n  ---\n  duration_ms: 0.151208\n  type: 'test'\n  ...\n# Subtest: serialize writes v2 format and round-trips\nok 10 - serialize writes v2 format and round-trips\n  ---\n  duration_ms: 0.118333\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.7585\n"
+        },
+        {
+          "traceId": "serialization-migration@v0.3#1",
+          "taskId": "serialization-migration",
+          "rep": 1,
+          "passed": true,
+          "selfReportedSuccess": true,
+          "failingTests": [],
+          "pass": 10,
+          "fail": 0,
+          "attempts": 1,
+          "tokens": 6315,
+          "agentMs": 48610,
+          "policyViolations": [],
+          "gradeOutputHead": "TAP version 13\n# Subtest: hidden: v1 payloads still deserialize\nok 1 - hidden: v1 payloads still deserialize\n  ---\n  duration_ms: 1.514416\n  type: 'test'\n  ...\n# Subtest: hidden: legacy payload without v field is treated as v1\nok 2 - hidden: legacy payload without v field is treated as v1\n  ---\n  duration_ms: 0.078792\n  type: 'test'\n  ...\n# Subtest: hidden: v1 empty tags string means no tags\nok 3 - hidden: v1 empty tags string means no tags\n  ---\n  duration_ms: 0.065833\n  type: 'test'\n  ...\n# Subtest: hidden: v1 record re-serializes to v2 and round-trips\nok 4 - hidden: v1 record re-serializes to v2 and round-trips\n  ---\n  duration_ms: 0.151792\n  type: 'test'\n  ...\n# Subtest: hidden: v2 empty tags round-trips\nok 5 - hidden: v2 empty tags round-trips\n  ---\n  duration_ms: 0.089208\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v2 payload\nok 6 - hidden: unknown fields preserved from v2 payload\n  ---\n  duration_ms: 0.102541\n  type: 'test'\n  ...\n# Subtest: hidden: unknown fields preserved from v1 payload\nok 7 - hidden: unknown fields preserved from v1 payload\n  ---\n  duration_ms: 0.068375\n  type: 'test'\n  ...\n# Subtest: hidden: future versions are rejected\nok 8 - hidden: future versions are rejected\n  ---\n  duration_ms: 0.188292\n  type: 'test'\n  ...\n# Subtest: hidden: store loads legacy records and writes v2 on update\nok 9 - hidden: store loads legacy records and writes v2 on update\n  ---\n  duration_ms: 0.150958\n  type: 'test'\n  ...\n# Subtest: serialize writes v2 format and round-trips\nok 10 - serialize writes v2 format and round-trips\n  ---\n  duration_ms: 0.12275\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.119625\n"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "tasksPassedAllReps": 6,
+    "passRate": 1,
+    "runPasses": 12,
+    "runs": 12,
+    "attempts": 15,
+    "tokens": 122711,
+    "agentMs": 941660,
+    "selfReportOverclaims": 0,
+    "policyViolations": 0
+  },
+  "tracesFile": "/Users/vibestartup/Code/agentgym/results/runs/evo-2026-11-07T23-02-26/traces-v0.3-val.jsonl"
+}

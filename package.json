@@ -10,7 +10,8 @@
     "evolve": "tsx src/cli.ts evolve",
     "demo": "tsx src/cli.ts demo",
     "providers": "tsx src/cli.ts providers",
-    "ui": "tsx src/server.ts"
+    "ui": "tsx src/server.ts",
+    "usage": "node scripts/usage.mjs"
   },
   "engines": {
     "node": ">=22"

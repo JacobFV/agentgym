@@ -1,0 +1,14 @@
+{
+  "version": "v0.4",
+  "parent": "v0",
+  "createdAt": "2026-11-07T23:04:42.970Z",
+  "createdBy": "mutation:mut-mw70g7qw-1",
+  "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify. Do not claim success until you have enumerated every failure, rejection, cancellation, and cleanup path and reasoned how each is handled and verified; treat synchronous and asynchronous failures as distinct cases that must both be correct.",
+  "skills": {},
+  "toolPolicy": {
+    "maxAttempts": 2,
+    "planFirst": false,
+    "selfReview": false,
+    "fullTestOutputOnRetry": true
+  }
+}

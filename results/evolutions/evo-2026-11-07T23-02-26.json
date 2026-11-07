@@ -1,0 +1,412 @@
+{
+  "runId": "evo-2026-11-07T23-02-26",
+  "parent": "v0",
+  "coder": {
+    "id": "meta",
+    "model": "muse-spark-1.3",
+    "label": "Meta Model API"
+  },
+  "mutator": {
+    "id": "meta",
+    "model": "muse-spark-1.3",
+    "label": "Meta Model API"
+  },
+  "devEval": "evo-2026-11-07T23-02-26--v0--dev",
+  "devTotals": {
+    "tasksPassedAllReps": 5,
+    "passRate": 0.8333333333333334,
+    "runPasses": 10,
+    "runs": 12,
+    "attempts": 12,
+    "tokens": 96313,
+    "agentMs": 657646,
+    "selfReportOverclaims": 2,
+    "policyViolations": 0
+  },
+  "diagnosis": {
+    "analyzer": {
+      "provider": "subquadratic",
+      "model": "subq-snap-1.1",
+      "endpoint": "POST /v1/systemone",
+      "inputTokens": 41544,
+      "latencyMs": 1236,
+      "questions": 36,
+      "stateChars": 120318
+    },
+    "perTrace": [
+      {
+        "traceId": "dedupe-cache@v0#1",
+        "taskId": "dedupe-cache",
+        "passed": false,
+        "category": "model_reasoning",
+        "categoryConf": 0.9295117855072021,
+        "weakness": "missed_error_paths",
+        "weaknessConf": 0.8124808669090271,
+        "failingTests": [
+          "hidden: synchronous loader throw is not cached either"
+        ]
+      },
+      {
+        "traceId": "dedupe-cache@v0#0",
+        "taskId": "dedupe-cache",
+        "passed": false,
+        "category": "model_reasoning",
+        "categoryConf": 0.9160146713256836,
+        "weakness": "missed_error_paths",
+        "weaknessConf": 0.7634991705417633,
+        "failingTests": [
+          "hidden: synchronous loader throw is not cached either"
+        ]
+      },
+      {
+        "traceId": "retry-cancel@v0#1",
+        "taskId": "retry-cancel",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.5512099266052246,
+        "weakness": "none",
+        "weaknessConf": 0.9994294941425323,
+        "failingTests": []
+      },
+      {
+        "traceId": "config-precedence@v0#0",
+        "taskId": "config-precedence",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.3565529982248942,
+        "weakness": "none",
+        "weaknessConf": 0.9987474754452705,
+        "failingTests": []
+      },
+      {
+        "traceId": "config-precedence@v0#1",
+        "taskId": "config-precedence",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.6089811325073242,
+        "weakness": "none",
+        "weaknessConf": 0.9997146800160408,
+        "failingTests": []
+      },
+      {
+        "traceId": "pagination-cursor@v0#0",
+        "taskId": "pagination-cursor",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.4002834955851237,
+        "weakness": "none",
+        "weaknessConf": 0.9988161399960518,
+        "failingTests": []
+      },
+      {
+        "traceId": "retry-cancel@v0#0",
+        "taskId": "retry-cancel",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.5689265727996826,
+        "weakness": "none",
+        "weaknessConf": 0.9981410950422287,
+        "failingTests": []
+      },
+      {
+        "traceId": "pagination-cursor@v0#1",
+        "taskId": "pagination-cursor",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.6749136447906494,
+        "weakness": "none",
+        "weaknessConf": 0.9995736628770828,
+        "failingTests": []
+      },
+      {
+        "traceId": "ledger-rounding@v0#0",
+        "taskId": "ledger-rounding",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.3148908217748006,
+        "weakness": "none",
+        "weaknessConf": 0.9976029098033905,
+        "failingTests": []
+      },
+      {
+        "traceId": "ledger-rounding@v0#1",
+        "taskId": "ledger-rounding",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.4085817337036133,
+        "weakness": "none",
+        "weaknessConf": 0.9998184144496918,
+        "failingTests": []
+      },
+      {
+        "traceId": "lru-eviction-hooks@v0#0",
+        "taskId": "lru-eviction-hooks",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.6085447470347086,
+        "weakness": "none",
+        "weaknessConf": 0.9948300421237946,
+        "failingTests": []
+      },
+      {
+        "traceId": "lru-eviction-hooks@v0#1",
+        "taskId": "lru-eviction-hooks",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.781174103418986,
+        "weakness": "none",
+        "weaknessConf": 0.9998212307691574,
+        "failingTests": []
+      }
+    ],
+    "recurring": {
+      "weakness": "missed_error_paths",
+      "description": "Failure, rejection, cancellation, abort, or cleanup paths are not handled correctly",
+      "probabilities": {
+        "ignored_stated_constraints": 0.025410465896129608,
+        "broke_existing_behavior": 0.02509244717657566,
+        "missed_error_paths": 0.7919210195541382,
+        "missed_edge_cases": 0.07010436058044434,
+        "overfit_visible_tests": 0.08004634827375412,
+        "cross_module_contract": 0.0032679690048098564,
+        "output_format_or_tooling": 0.001452679862268269,
+        "environment": 0.0027045777533203363
+      },
+      "confidence": 0.7621954509190151
+    },
+    "prevalence": {
+      "ignored_stated_constraints": 0.64,
+      "broke_existing_behavior": 0.41,
+      "missed_error_paths": 1.58,
+      "missed_edge_cases": 0.94,
+      "overfit_visible_tests": 1.31,
+      "cross_module_contract": 0.42,
+      "output_format_or_tooling": 0.04,
+      "environment": 0.06
+    },
+    "systemicProbability": 0.7882784008979797,
+    "overclaimProbability": 0.9861867427825928,
+    "lever": {
+      "choice": "self_review_after_green",
+      "probabilities": {
+        "plan_invariants_first": 0.09021050482988358,
+        "self_review_after_green": 0.4416385889053345,
+        "richer_test_feedback": 0.1613386869430542,
+        "prompt_methodology": 0.10198435187339783,
+        "skill_checklist": 0.20482784509658813
+      }
+    },
+    "evidenceTraceIds": [
+      "dedupe-cache@v0#1",
+      "dedupe-cache@v0#0"
+    ],
+    "summary": "2/12 dev traces failed independent grading (2 of them self-reported success). SubQ's dominant recurring weakness: missed_error_paths (p=0.79) — Failure, rejection, cancellation, abort, or cleanup paths are not handled correctly. Systemic p=0.79; overclaim p=0.99. Suggested lever: self_review_after_green. Per-trace: dedupe-cache@v0#1→missed_error_paths/model_reasoning; dedupe-cache@v0#0→missed_error_paths/model_reasoning."
+  },
+  "proposals": [
+    {
+      "id": "mut-mw70g7qu-0",
+      "parentVersion": "v0",
+      "candidateVersion": "v0.3",
+      "target": "systemPrompt, skills",
+      "diagnosis": "Agent correctly handles asynchronous failure but misses the equivalent synchronous failure mode, leaving temporary coordination state uncleared and treating failures as settled outcomes",
+      "rationale": "A reusable checklist that forces equivalence between synchronous and asynchronous failures and explicit per-exit-path cleanup generalizes to any ticket with failure, rejection, cancellation, or abort behavior",
+      "proposedChange": "Add a reusable error-path checklist skill and require consulting it before editing and before finishing",
+      "expectedImpact": "More complete handling of rejection/cancellation/cleanup paths on unseen tickets; small prompt overhead with low overfitting risk",
+      "supportingTraceIds": [
+        "dedupe-cache@v0#1",
+        "dedupe-cache@v0#0"
+      ],
+      "patch": {
+        "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify. Before editing and again before finishing, consult the error-path-checklist skill: normalize synchronous and asynchronous failures, release temporary state on every exit path, and never persist failures as successes.",
+        "skills": {
+          "error-path-checklist": "For any operation that can fail, reject, cancel, or abort: 1) Normalize synchronous throws and asynchronous rejections to the same failure handling. 2) List every exit path - success, synchronous failure, asynchronous failure, cancellation/abort - and state how temporary bookkeeping is released on each. 3) Never record a failure outcome as a successful result; ensure the next attempt retries cleanly. 4) Verify cleanup executes even when failure happens before any asynchronous boundary."
+        }
+      },
+      "generator": {
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "latencyMs": 28589,
+        "usage": {
+          "inputTokens": 2525,
+          "outputTokens": 3530,
+          "totalTokens": 6055
+        }
+      },
+      "guard": {
+        "ok": true,
+        "violations": []
+      },
+      "createdAt": "2026-11-07T23:04:24.631Z"
+    },
+    {
+      "id": "mut-mw70g7qw-1",
+      "parentVersion": "v0",
+      "candidateVersion": "v0.4",
+      "target": "systemPrompt, toolPolicy.fullTestOutputOnRetry",
+      "diagnosis": "Agent reports success after main paths pass while failure and cleanup paths remain broken, showing overconfident completion without adversarial verification of error behavior",
+      "rationale": "Requiring explicit enumeration and verification of all failure, rejection, cancellation, and cleanup paths plus fuller output on retry prevents stopping at green visible behavior and forces discovery of hidden error defects",
+      "proposedChange": "Require adversarial failure-path verification before claiming success and enable full test output on retry",
+      "expectedImpact": "Reduces false success claims and improves recovery on error-path defects; costs slightly larger retry context but no extra LLM calls",
+      "supportingTraceIds": [
+        "dedupe-cache@v0#1",
+        "dedupe-cache@v0#0"
+      ],
+      "patch": {
+        "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify. Do not claim success until you have enumerated every failure, rejection, cancellation, and cleanup path and reasoned how each is handled and verified; treat synchronous and asynchronous failures as distinct cases that must both be correct.",
+        "toolPolicy": {
+          "fullTestOutputOnRetry": true
+        }
+      },
+      "generator": {
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "latencyMs": 28589,
+        "usage": {
+          "inputTokens": 2525,
+          "outputTokens": 3530,
+          "totalTokens": 6055
+        }
+      },
+      "guard": {
+        "ok": true,
+        "violations": []
+      },
+      "createdAt": "2026-11-07T23:04:24.632Z"
+    }
+  ],
+  "reviews": {
+    "mut-mw70g7qu-0": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "report": {
+        "risk": "high",
+        "overfittingConcerns": "The patch is hyper-tailored to the specific 'dedupe-cache' task where both failures occurred. The checklist points (handling sync throws vs async rejections, releasing bookkeeping state, retrying cleanly, and cleanup before async boundaries) read like a bespoke specification for an in-flight promise deduplication/caching bug rather than a general engineering guideline.",
+        "overlookedAssumptions": "Assumes that prompt-level checklist instructions will solve the 0.99 overclaim rate without adding actual verification mechanisms or test execution loops (the diagnosis suggested 'self_review_after_green', but only prompt text was added). Additionally, it assumes failures should never be cached or recorded, which directly contradicts valid patterns like negative caching, circuit breakers, or permanent error status tracking.",
+        "suggestedAdversarialChecks": [
+          "Run on tasks requiring negative caching or rate-limiting error persistence to verify the agent does not force clean retries when errors are intended to be cached.",
+          "Evaluate on purely synchronous or non-caching tasks (e.g., file parsers, CLI utilities) to see if prompt bloat causes hallucinated async wrappers, unnecessary defensive boilerplate, or performance regressions.",
+          "Check agent behavior on tasks with subtle edge cases to see if the agent still overclaims success without actually running or verifying tests post-implementation."
+        ]
+      }
+    },
+    "mut-mw70g7qw-1": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "report": {
+        "risk": "medium",
+        "overfittingConcerns": "The prompt instruction specifically targets the exact failure signature seen in `dedupe-cache` (cancellation, rejection, synchronous vs. asynchronous distinction), which may cause the model to over-index on complex async lifecycle management and defensive cleanup code even on simple, purely synchronous, or standard CRUD tasks.",
+        "overlookedAssumptions": "Assuming that demanding explicit enumeration in natural language prevents overclaiming or missed error paths; LLMs often hallucinate compliant reasoning summaries while leaving the actual implementation buggy. Furthermore, `fullTestOutputOnRetry` assumes the test suite already covers these error paths—if the missing error paths are due to untested edge cases, full test output on retry will not surface them.",
+        "suggestedAdversarialChecks": [
+          "Run on tasks involving purely synchronous utilities (e.g., regex parsers, math algorithms) to verify the model does not bloat code with unnecessary async wrappers or defensive cancellation scaffolding.",
+          "Run on tickets with weak or absent error-path unit tests to evaluate whether the agent genuinely adds test coverage for error/cleanup paths or merely hallucinates enumeration before falsely claiming success.",
+          "Evaluate token usage and response truncation risks across complex multi-file tasks due to verbose pre-completion enumeration requirements."
+        ]
+      }
+    }
+  },
+  "parentVal": {
+    "evalId": "evo-2026-11-07T23-02-26--v0--val",
+    "totals": {
+      "tasksPassedAllReps": 6,
+      "passRate": 1,
+      "runPasses": 12,
+      "runs": 12,
+      "attempts": 14,
+      "tokens": 110375,
+      "agentMs": 776077,
+      "selfReportOverclaims": 0,
+      "policyViolations": 0
+    },
+    "perTask": {
+      "csv-dialect-compat": "2/2",
+      "event-ordering": "2/2",
+      "permission-inheritance": "2/2",
+      "resource-cleanup": "2/2",
+      "scheduler-priority": "2/2",
+      "serialization-migration": "2/2"
+    }
+  },
+  "candidateVals": [
+    {
+      "version": "v0.3",
+      "evalId": "evo-2026-11-07T23-02-26--v0.3--val",
+      "totals": {
+        "tasksPassedAllReps": 6,
+        "passRate": 1,
+        "runPasses": 12,
+        "runs": 12,
+        "attempts": 15,
+        "tokens": 122711,
+        "agentMs": 941660,
+        "selfReportOverclaims": 0,
+        "policyViolations": 0
+      },
+      "perTask": {
+        "csv-dialect-compat": "2/2",
+        "event-ordering": "2/2",
+        "permission-inheritance": "2/2",
+        "resource-cleanup": "2/2",
+        "scheduler-priority": "2/2",
+        "serialization-migration": "2/2"
+      }
+    },
+    {
+      "version": "v0.4",
+      "evalId": "evo-2026-11-07T23-02-26--v0.4--val",
+      "totals": {
+        "tasksPassedAllReps": 5,
+        "passRate": 0.9166666666666666,
+        "runPasses": 11,
+        "runs": 12,
+        "attempts": 14,
+        "tokens": 130558,
+        "agentMs": 1046310,
+        "selfReportOverclaims": 0,
+        "policyViolations": 0
+      },
+      "perTask": {
+        "csv-dialect-compat": "1/2",
+        "event-ordering": "2/2",
+        "permission-inheritance": "2/2",
+        "resource-cleanup": "2/2",
+        "scheduler-priority": "2/2",
+        "serialization-migration": "2/2"
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "candidate": "v0.3",
+      "parent": "v0",
+      "decision": "REJECT",
+      "reasons": [
+        "no improvement on validation: 12/12 vs parent 12/12"
+      ],
+      "parentScore": 12,
+      "candidateScore": 12,
+      "runs": 12,
+      "newlyPassing": [],
+      "regressions": [],
+      "tokenDelta": 12336
+    },
+    {
+      "candidate": "v0.4",
+      "parent": "v0",
+      "decision": "REJECT",
+      "reasons": [
+        "no improvement on validation: 11/12 vs parent 12/12",
+        "regressions on: csv-dialect-compat"
+      ],
+      "parentScore": 12,
+      "candidateScore": 11,
+      "runs": 12,
+      "newlyPassing": [],
+      "regressions": [
+        "csv-dialect-compat"
+      ],
+      "tokenDelta": 20183
+    }
+  ],
+  "promoted": null,
+  "finishedAt": "2026-11-07T23:08:06.562Z"
+}

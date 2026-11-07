@@ -28,7 +28,7 @@ export async function evolve(opts: { reps: number; candidates: number; iteration
 }
 
 async function evolveOnce(opts: { reps: number; candidates: number }) {
-  const runId = `evo-${new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19)}`;
+  const runId = `evo-${new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19) + "-" + Math.random().toString(36).slice(2, 6)}`;
   const parent = currentVersion();
   const coder = providerFor("coder")!;
   const mutator = providerFor("mutator")!;
