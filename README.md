@@ -30,6 +30,11 @@ npm run benchmark -- --split val --versions v0      # pinned config vs a split
 npm run evolve -- --reps 2 --candidates 2           # one full evolution cycle
 npm run demo                # replays the latest recorded evolution report (labeled REPLAY)
 npm run ui                  # http://localhost:4317 — live "run evolution" + replay
+npm run usage               # per-provider call/token audit from results/llm-calls.jsonl
+node scripts/results.mjs    # regenerate RESULTS.md from recorded runs
+
+# reproduce evolution run #2 exactly (older Meta coder, newest Meta mutator):
+META_CODER_MODEL=muse-spark-1.1 npm run evolve -- --reps 2 --candidates 3
 ```
 
 Role routing is set in `.env`: `CODER_PROVIDER`, `MUTATOR_PROVIDER`, `VERIFIER_PROVIDER` ∈ `meta | gemini | claude-cli | none`. `claude-cli` is a **local dev adapter** that shells out to the Claude Code CLI. Every log, report and UI panel labels it as such, and it is never presented as a sponsor provider.
@@ -83,6 +88,17 @@ Full tables are in [`RESULTS.md`](RESULTS.md), generated from `results/evolution
 | mutator | Meta · muse-spark-1.3 | 2 calls |
 | verifier | Gemini · gemini-3.8-flash | 5 calls (advisory only) |
 | dev adapter | claude-cli · claude-haiku-5-5 | 38 calls, early harness development only, labeled in every record |
+
+## what was built here vs pre-existing
+
+Everything in `src/`, `tasks/`, `tests/`, `ui/` and `scripts/`, plus all fixtures, results and docs, was written on Nov 7 2026 during the hackathon. Third-party pieces used as-is: Node.js, npm packages `tsx`, `typescript`, `vitest`, `dotenv`, `@types/node` (dev tooling only, with no runtime deps beyond `dotenv`), the Geist fonts from Google Fonts in the UI, and the sponsor APIs (Subquadratic, Meta Model API, Google Gemini). Design guidance for the UI came from tasteskill.dev. The local `claude` CLI was used only as a labeled dev adapter before sponsor keys arrived.
+
+## not done
+
+- fetch.ai integration: skipped for time.
+- Docker isolation (`ISOLATION=docker`) is implemented but was not exercised. All recorded runs used the Node permission-model subprocess sandbox.
+- One evolution iteration per run. Multi-iteration lineage is supported (`--iterations n`) but was not run.
+- The UI was checked visually at 1440px only. The live "run evolution" button was not exercised from the UI; all runs were launched from the CLI.
 
 ## limitations (honest)
 
