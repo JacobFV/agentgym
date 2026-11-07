@@ -1,3 +1,4 @@
 {"t":"2026-11-07T22:49:23.178Z","event":"set_current","version":"v0","reason":"seed"}
 {"t":"2026-11-07T22:52:09.088Z","event":"rollback_preserved","version":"v0","runId":"evo-2026-11-07T22-50-28","reason":"no candidate passed the gate"}
 {"t":"2026-11-07T23:08:06.561Z","event":"rollback_preserved","version":"v0","runId":"evo-2026-11-07T23-02-26","reason":"no candidate passed the gate"}
+{"t":"2026-11-07T23:15:16.626Z","event":"rollback_preserved","version":"v0","runId":"evo-2026-11-07T23-11-20-iup6","reason":"no candidate passed the gate"}

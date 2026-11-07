@@ -1,0 +1,67 @@
+{
+  "proposal": {
+    "id": "mut-mw70qt7o-0",
+    "parentVersion": "v0",
+    "candidateVersion": "v0.5",
+    "target": "systemPrompt, toolPolicy.selfReview",
+    "diagnosis": "agent assumes invoked operations correctly propagate failures and honor cancellation, leaving rejection and abort and cleanup paths unverified after visible checks pass",
+    "rationale": "a mandatory post-green audit focused only on failure paths forces local verification of every rejection, cancellation and cleanup branch and blocks overconfident success claims without needing hidden tests",
+    "proposedChange": "Enable post-green self-review and require a failure-path audit that enforces local handling even if collaborators misbehave",
+    "expectedImpact": "more robust handling of rejection and cancellation paths; costs one extra call only after green with low regression risk",
+    "supportingTraceIds": [
+      "retry-cancel@v0#1",
+      "dedupe-cache@v0#0",
+      "dedupe-cache@v0#1"
+    ],
+    "patch": {
+      "systemPrompt": "You are a coding agent. Implement the requested change so that visible tests pass. After visible checks pass, perform one mandatory self-review pass before finishing: enumerate every failure, rejection, cancellation, and cleanup path touched by your change, verify each is handled locally without assuming any invoked operation handles it correctly, and fix any gap with minimal edits. Assume any invoked operation may throw synchronously, reject asynchronously, or ignore cancellation; add local guards, local racing for cancellation, and guaranteed cleanup that hold even if collaborators misbehave. Do not claim success until this audit passes. Return the full contents of every file you modify.",
+      "toolPolicy": {
+        "selfReview": true
+      }
+    },
+    "generator": {
+      "provider": "meta",
+      "model": "muse-spark-1.3",
+      "latencyMs": 45258,
+      "usage": {
+        "inputTokens": 2904,
+        "outputTokens": 5723,
+        "totalTokens": 8627
+      }
+    },
+    "guard": {
+      "ok": true,
+      "violations": []
+    },
+    "createdAt": "2026-11-07T23:12:39.013Z"
+  },
+  "decision": {
+    "candidate": "v0.5",
+    "parent": "v0",
+    "decision": "REJECT",
+    "reasons": [
+      "no improvement on validation: 12/12 vs parent 12/12"
+    ],
+    "parentScore": 12,
+    "candidateScore": 12,
+    "runs": 12,
+    "newlyPassing": [],
+    "regressions": [],
+    "tokenDelta": 129202
+  },
+  "review": {
+    "provider": "gemini",
+    "model": "gemini-3.8-flash",
+    "report": {
+      "risk": "high",
+      "overfittingConcerns": "The prompt is heavily over-indexed on the specific failure modes of retry-cancel and dedupe-cache. Forcing the model to assume every collaborator misbehaves and to locally race every cancellation will lead to excessive defensive bloat, boilerplate error handling, and broken API contracts in tasks that require clean error bubbling or standard idiomatic patterns.",
+      "overlookedAssumptions": "1. Assumes that 'toolPolicy.selfReview' is a valid, recognized configuration option rather than an unparsed no-op. 2. Assumes local error handling and racing is always desirable; in many software architectures, operations are designed to fail fast and let errors propagate to higher-level orchestrators. 3. Assumes returning full contents of every modified file will not exceed context windows or trigger truncation on larger files.",
+      "suggestedAdversarialChecks": [
+        "Run tests on tasks with strict error-propagation contracts (e.g., functions expected to rethrow or bubble specific errors up to the caller) to verify the model doesn't swallow or intercept expected exceptions.",
+        "Evaluate on high-throughput or lightweight tasks to check if defensive wrappers (e.g., redundant Promise.race, AbortController allocations, and nested try/catch blocks) cause performance regressions or memory leaks.",
+        "Evaluate on tasks modifying large legacy files (>1,000 LOC) to check if the 'Return full contents of every file' instruction causes token truncation or partial generation failures."
+      ]
+    }
+  },
+  "evaluation": "evo-2026-11-07T23-11-20-iup6--v0.5--val"
+}

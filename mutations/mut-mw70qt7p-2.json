@@ -1,0 +1,71 @@
+{
+  "proposal": {
+    "id": "mut-mw70qt7p-2",
+    "parentVersion": "v0",
+    "candidateVersion": "v0.7",
+    "target": "systemPrompt, skills",
+    "diagnosis": "agent lacks reusable defensive idioms and repeatedly delegates error and cancellation responsibility to helpers",
+    "rationale": "a persistent skill encoding untrusted-invocation, local cancellation racing, and guaranteed cleanup gives concrete reusable patterns to apply on every ticket, persisting beyond a single reminder",
+    "proposedChange": "Add a defensive failure-handling skill with concrete patterns and require consulting it before editing and before finishing",
+    "expectedImpact": "consistent defensive coding across tickets with no extra calls; risk is low if prompt enforcement is explicit",
+    "supportingTraceIds": [
+      "retry-cancel@v0#1",
+      "dedupe-cache@v0#0",
+      "dedupe-cache@v0#1"
+    ],
+    "patch": {
+      "systemPrompt": "You are a coding agent. Implement the requested change so that tests pass. You must consult the defensive_error_paths skill before editing and again before finishing, applying its invocation, cancellation, and cleanup patterns to every boundary you touch. Do not trust invoked operations to throw, reject, or respect cancellation correctly; enforce handling locally. Return the full contents of every file you modify.",
+      "skills": {
+        "defensive_error_paths": "Defensive failure handling - apply to every change: 1. Untrusted invocation: wrap every invoked operation so both synchronous throws and asynchronous rejections are captured and handled on the caller side; never assume it returns a well-formed async value. 2. Untrusted cancellation: never delegate cancellation to a helper; keep a local cancellation race and listener that settles promptly even if the helper ignores the signal, and ensure resources are released. 3. Guaranteed cleanup: release tracking state and resources with finally-style guarantees so both success and failure leave no stale entries. 4. Failure isolation: never persist failure results as if they were successes; share in-flight failures with current waiters but allow future attempts. Consult before editing and re-apply before finishing."
+      }
+    },
+    "generator": {
+      "provider": "meta",
+      "model": "muse-spark-1.3",
+      "latencyMs": 45258,
+      "usage": {
+        "inputTokens": 2904,
+        "outputTokens": 5723,
+        "totalTokens": 8627
+      }
+    },
+    "guard": {
+      "ok": true,
+      "violations": []
+    },
+    "createdAt": "2026-11-07T23:12:39.014Z"
+  },
+  "decision": {
+    "candidate": "v0.7",
+    "parent": "v0",
+    "decision": "REJECT",
+    "reasons": [
+      "no improvement on validation: 11/12 vs parent 12/12",
+      "regressions on: resource-cleanup"
+    ],
+    "parentScore": 12,
+    "candidateScore": 11,
+    "runs": 12,
+    "newlyPassing": [],
+    "regressions": [
+      "resource-cleanup"
+    ],
+    "tokenDelta": 63034
+  },
+  "review": {
+    "provider": "gemini",
+    "model": "gemini-3.8-flash",
+    "report": {
+      "risk": "high",
+      "overfittingConcerns": "The patch is hyper-tailored to the two specific failing benchmarks (`retry-cancel` and `dedupe-cache`). Directive rules like 'never persist failure results... share in-flight failures with current waiters but allow future attempts' directly mirror dedupe-cache requirements, while 'never delegate cancellation to a helper' mirrors retry-cancel. Imposing these hardcoded architectural patterns globally will corrupt normal, idiomatic codebases where negative caching is desired or where helpers manage their own abort lifecycles.",
+      "overlookedAssumptions": "Assumes every invoked boundary requires defensive local wrapping and local cancellation races. Applying 'untrusted invocation' to every call creates severe code bloat, potentially masks errors or swallows specific exception types upstream callers depend on, and can lead to unhandled promise rejections if helper promises reject after a local race settles. Furthermore, the patch completely ignores the suggested lever (`self_review_after_green`) and fails to address the root cause of the 1.00 overclaim rate (agent falsely self-reporting success without executing or verifying error path tests).",
+      "suggestedAdversarialChecks": [
+        "Run on a task specifying negative caching (e.g., memoizing 404s or failed lookups to prevent downstream thundering herd) to verify if rule 4 incorrectly prevents caching failures.",
+        "Evaluate on tasks requiring exact custom error propagation and stack preservation to check if blanket untrusted invocation wrapping alters error types or hides original stacks.",
+        "Test on tasks with large multi-thousand-line source files to check if the strict requirement to 'Return the full contents of every file you modify' causes context exhaustion or incomplete code output.",
+        "Test cancellation handling where helper abort cleanup is asynchronous to verify that a prompt caller-side race does not abandon unmanaged dangling background processes."
+      ]
+    }
+  },
+  "evaluation": "evo-2026-11-07T23-11-20-iup6--v0.7--val"
+}

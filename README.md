@@ -52,9 +52,37 @@ Role routing is set in `.env`: `CODER_PROVIDER`, `MUTATOR_PROVIDER`, `VERIFIER_P
 
 SubQ Snap 1.1 is a *decisions* model, not a chat model. It takes up to 384K tokens of state and up to 128 typed questions (`choice` / `score` / `noul`) and returns calibrated probabilities. agentgym puts **every dev trace in one call**: tickets, original source, each attempt's reasoning and edits, visible results, final source, and the grader's hidden-test failures. It then asks per-trace questions (failure category: model reasoning vs tool vs environment vs task-specific, plus which weakness) and collection-level questions (dominant *recurring* weakness, prevalence of each weakness, is it systemic, does the agent overclaim, which intervention lever). The answers are cross-trace judgments that no single failure would show. Every answer is linked back to trace ids as evidence.
 
-## results
+## demo video
 
-See `RESULTS.md` (generated from actual runs) and `results/evolutions/*.md`.
+[`docs/agentgym-demo.mp4`](docs/agentgym-demo.mp4) is a 60s walkthrough of a real recorded run. Scripts are in [`DEMO.md`](DEMO.md).
+
+## results (actual executions, Nov 7 2026)
+
+Full tables are in [`RESULTS.md`](RESULTS.md), generated from `results/evolutions/*.json`.
+
+| run | coder | dev (parent) | SubQ recurring weakness | validation parent → candidates | decision |
+|---|---|---|---|---|---|
+| evo-…23-02-26 | Meta muse-spark-1.3 | 10/12 (2 overclaims) | missed_error_paths p=0.79, systemic 0.79 | 12/12 → 12/12, **11/12 (regression)** | REJECT all |
+| evo-…23-11-20 | Meta muse-spark-1.1 | 9/12 (3 overclaims) | missed_error_paths p=0.96, systemic 0.98 | 12/12 → 12/12, 12/12, **11/12 (regression)** | REJECT all |
+
+**What we can honestly claim:**
+- The loop runs end to end on real sponsor APIs: Meta coder, SubQ Snap analysis, Meta mutation, Gemini review, independent grading, gate and versioning.
+- Every failure the grader caught was one the agent had **claimed as a success**, which is what "trust but verify" means here. SubQ put the overclaim probability at 0.99–1.00.
+- SubQ's cross-trace diagnosis matched the hidden-test evidence: both failing tickets lacked abort/rejection-path handling.
+- The gate rejected two Meta mutations that **regressed** unseen tasks, and rejected ties.
+- In-distribution diagnostic (not used for promotion): Meta's v0.6 "plan-first boundary/failure mapping" mutation raised dev 15/18 → 17/18 and cut overclaims 3 → 1. It tied on saturated validation, so it was **not** promoted. See `results/final/dev-diagnostic.md`.
+
+**What we can't claim:** a validated generalizing improvement. Our validation and test splits are saturated by current Meta models (12/12, 6/6), so this benchmark can't yet tell a better methodology from the baseline on unseen tasks. We report that instead of reshaping the tests after seeing results.
+
+## sponsor usage (from `npm run usage`, i.e. `results/llm-calls.jsonl`)
+
+| role | provider · model | calls |
+|---|---|---|
+| analyzer | Subquadratic · subq-snap-1.1 (Decisions API) | 4 calls, ~95K input tokens, 36 typed questions per evolution |
+| coder | Meta · muse-spark-1.1 / 1.2 / 1.3 | 280 calls |
+| mutator | Meta · muse-spark-1.3 | 2 calls |
+| verifier | Gemini · gemini-3.8-flash | 5 calls (advisory only) |
+| dev adapter | claude-cli · claude-haiku-5-5 | 38 calls, early harness development only, labeled in every record |
 
 ## limitations (honest)
 

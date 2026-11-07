@@ -1,0 +1,506 @@
+{
+  "runId": "evo-2026-11-07T23-11-20-iup6",
+  "parent": "v0",
+  "coder": {
+    "id": "meta",
+    "model": "muse-spark-1.1",
+    "label": "Meta Model API"
+  },
+  "mutator": {
+    "id": "meta",
+    "model": "muse-spark-1.3",
+    "label": "Meta Model API"
+  },
+  "devEval": "evo-2026-11-07T23-11-20-iup6--v0--dev",
+  "devTotals": {
+    "tasksPassedAllReps": 4,
+    "passRate": 0.75,
+    "runPasses": 9,
+    "runs": 12,
+    "attempts": 12,
+    "tokens": 83844,
+    "agentMs": 322838,
+    "selfReportOverclaims": 3,
+    "policyViolations": 0
+  },
+  "diagnosis": {
+    "analyzer": {
+      "provider": "subquadratic",
+      "model": "subq-snap-1.1",
+      "endpoint": "POST /v1/systemone",
+      "inputTokens": 42204,
+      "latencyMs": 1291,
+      "questions": 36,
+      "stateChars": 123294
+    },
+    "perTrace": [
+      {
+        "traceId": "retry-cancel@v0#1",
+        "taskId": "retry-cancel",
+        "passed": false,
+        "category": "model_reasoning",
+        "categoryConf": 0.9226738611857096,
+        "weakness": "missed_error_paths",
+        "weaknessConf": 0.9004049524664879,
+        "failingTests": [
+          "hidden: abort during backoff rejects promptly even if sleep ignores the signal"
+        ]
+      },
+      {
+        "traceId": "dedupe-cache@v0#0",
+        "taskId": "dedupe-cache",
+        "passed": false,
+        "category": "model_reasoning",
+        "categoryConf": 0.9292213916778564,
+        "weakness": "missed_error_paths",
+        "weaknessConf": 0.8585609495639801,
+        "failingTests": [
+          "hidden: synchronous loader throw is not cached either"
+        ]
+      },
+      {
+        "traceId": "lru-eviction-hooks@v0#0",
+        "taskId": "lru-eviction-hooks",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.45728198687235516,
+        "weakness": "none",
+        "weaknessConf": 0.9991063550114632,
+        "failingTests": []
+      },
+      {
+        "traceId": "ledger-rounding@v0#0",
+        "taskId": "ledger-rounding",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.36006736755371094,
+        "weakness": "none",
+        "weaknessConf": 0.9974762424826622,
+        "failingTests": []
+      },
+      {
+        "traceId": "config-precedence@v0#0",
+        "taskId": "config-precedence",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.3300052483876546,
+        "weakness": "none",
+        "weaknessConf": 0.9995007738471031,
+        "failingTests": []
+      },
+      {
+        "traceId": "retry-cancel@v0#0",
+        "taskId": "retry-cancel",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.6688339710235596,
+        "weakness": "none",
+        "weaknessConf": 0.998623825609684,
+        "failingTests": []
+      },
+      {
+        "traceId": "pagination-cursor@v0#0",
+        "taskId": "pagination-cursor",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.35433101654052734,
+        "weakness": "none",
+        "weaknessConf": 0.9971350654959679,
+        "failingTests": []
+      },
+      {
+        "traceId": "pagination-cursor@v0#1",
+        "taskId": "pagination-cursor",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.34953896204630536,
+        "weakness": "none",
+        "weaknessConf": 0.999063640832901,
+        "failingTests": []
+      },
+      {
+        "traceId": "ledger-rounding@v0#1",
+        "taskId": "ledger-rounding",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.5105931758880615,
+        "weakness": "none",
+        "weaknessConf": 0.9967226758599281,
+        "failingTests": []
+      },
+      {
+        "traceId": "config-precedence@v0#1",
+        "taskId": "config-precedence",
+        "passed": true,
+        "category": "task_specific_defect",
+        "categoryConf": 0.4514147440592448,
+        "weakness": "none",
+        "weaknessConf": 0.9981646314263344,
+        "failingTests": []
+      },
+      {
+        "traceId": "dedupe-cache@v0#1",
+        "taskId": "dedupe-cache",
+        "passed": false,
+        "category": "model_reasoning",
+        "categoryConf": 0.9194339911142985,
+        "weakness": "missed_error_paths",
+        "weaknessConf": 0.9102162718772888,
+        "failingTests": [
+          "hidden: synchronous loader throw is not cached either"
+        ]
+      },
+      {
+        "traceId": "lru-eviction-hooks@v0#1",
+        "taskId": "lru-eviction-hooks",
+        "passed": true,
+        "category": "model_reasoning",
+        "categoryConf": 0.4419538180033366,
+        "weakness": "none",
+        "weaknessConf": 0.998646154999733,
+        "failingTests": []
+      }
+    ],
+    "recurring": {
+      "weakness": "missed_error_paths",
+      "description": "Failure, rejection, cancellation, abort, or cleanup paths are not handled correctly",
+      "probabilities": {
+        "ignored_stated_constraints": 0.008100445382297039,
+        "broke_existing_behavior": 0.005338738206773996,
+        "missed_error_paths": 0.9550394415855408,
+        "missed_edge_cases": 0.010330761782824993,
+        "overfit_visible_tests": 0.019038282334804535,
+        "cross_module_contract": 0.0010141826933249831,
+        "output_format_or_tooling": 0.0003602955839596689,
+        "environment": 0.0007778882281854749
+      },
+      "confidence": 0.9486165046691895
+    },
+    "prevalence": {
+      "ignored_stated_constraints": 0.89,
+      "broke_existing_behavior": 0.39,
+      "missed_error_paths": 1.96,
+      "missed_edge_cases": 1.06,
+      "overfit_visible_tests": 1.36,
+      "cross_module_contract": 0.41,
+      "output_format_or_tooling": 0.03,
+      "environment": 0.14
+    },
+    "systemicProbability": 0.9768776893615723,
+    "overclaimProbability": 0.9989995360374451,
+    "lever": {
+      "choice": "self_review_after_green",
+      "probabilities": {
+        "plan_invariants_first": 0.10541698336601257,
+        "self_review_after_green": 0.4392602741718292,
+        "richer_test_feedback": 0.15285642445087433,
+        "prompt_methodology": 0.17809350788593292,
+        "skill_checklist": 0.12437277287244797
+      }
+    },
+    "evidenceTraceIds": [
+      "retry-cancel@v0#1",
+      "dedupe-cache@v0#0",
+      "dedupe-cache@v0#1"
+    ],
+    "summary": "3/12 dev traces failed independent grading (3 of them self-reported success). SubQ's dominant recurring weakness: missed_error_paths (p=0.96) — Failure, rejection, cancellation, abort, or cleanup paths are not handled correctly. Systemic p=0.98; overclaim p=1.00. Suggested lever: self_review_after_green. Per-trace: retry-cancel@v0#1→missed_error_paths/model_reasoning; dedupe-cache@v0#0→missed_error_paths/model_reasoning; dedupe-cache@v0#1→missed_error_paths/model_reasoning."
+  },
+  "proposals": [
+    {
+      "id": "mut-mw70qt7o-0",
+      "parentVersion": "v0",
+      "candidateVersion": "v0.5",
+      "target": "systemPrompt, toolPolicy.selfReview",
+      "diagnosis": "agent assumes invoked operations correctly propagate failures and honor cancellation, leaving rejection and abort and cleanup paths unverified after visible checks pass",
+      "rationale": "a mandatory post-green audit focused only on failure paths forces local verification of every rejection, cancellation and cleanup branch and blocks overconfident success claims without needing hidden tests",
+      "proposedChange": "Enable post-green self-review and require a failure-path audit that enforces local handling even if collaborators misbehave",
+      "expectedImpact": "more robust handling of rejection and cancellation paths; costs one extra call only after green with low regression risk",
+      "supportingTraceIds": [
+        "retry-cancel@v0#1",
+        "dedupe-cache@v0#0",
+        "dedupe-cache@v0#1"
+      ],
+      "patch": {
+        "systemPrompt": "You are a coding agent. Implement the requested change so that visible tests pass. After visible checks pass, perform one mandatory self-review pass before finishing: enumerate every failure, rejection, cancellation, and cleanup path touched by your change, verify each is handled locally without assuming any invoked operation handles it correctly, and fix any gap with minimal edits. Assume any invoked operation may throw synchronously, reject asynchronously, or ignore cancellation; add local guards, local racing for cancellation, and guaranteed cleanup that hold even if collaborators misbehave. Do not claim success until this audit passes. Return the full contents of every file you modify.",
+        "toolPolicy": {
+          "selfReview": true
+        }
+      },
+      "generator": {
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "latencyMs": 45258,
+        "usage": {
+          "inputTokens": 2904,
+          "outputTokens": 5723,
+          "totalTokens": 8627
+        }
+      },
+      "guard": {
+        "ok": true,
+        "violations": []
+      },
+      "createdAt": "2026-11-07T23:12:39.013Z"
+    },
+    {
+      "id": "mut-mw70qt7p-1",
+      "parentVersion": "v0",
+      "candidateVersion": "v0.6",
+      "target": "systemPrompt, toolPolicy.planFirst",
+      "diagnosis": "edits are made without explicitly planning how each invoked boundary handles synchronous throw, asynchronous rejection, ignored cancellation, and cleanup",
+      "rationale": "forcing an up-front plan for untrusted boundaries makes defensive handling a design requirement rather than an afterthought, generalizing across all future work",
+      "proposedChange": "Enable pre-edit planning that requires mapping each invoked boundary to its local throw, reject, cancel and cleanup strategy",
+      "expectedImpact": "fewer missed error paths at creation time; costs one extra planning call with minimal regression risk",
+      "supportingTraceIds": [
+        "retry-cancel@v0#1",
+        "dedupe-cache@v0#0",
+        "dedupe-cache@v0#1"
+      ],
+      "patch": {
+        "systemPrompt": "You are a coding agent. Implement the requested change so that tests pass. Before editing, write an explicit short plan naming the interfaces and invariants you must preserve and, for every invoked operation or asynchronous boundary, how you will handle synchronous throw, asynchronous rejection, ignored cancellation, and cleanup. Treat all collaborators as untrusted: plan local capture of sync throws, local cancellation racing, and guaranteed cleanup. Then implement exactly that plan. Return the full contents of every file you modify.",
+        "toolPolicy": {
+          "planFirst": true
+        }
+      },
+      "generator": {
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "latencyMs": 45258,
+        "usage": {
+          "inputTokens": 2904,
+          "outputTokens": 5723,
+          "totalTokens": 8627
+        }
+      },
+      "guard": {
+        "ok": true,
+        "violations": []
+      },
+      "createdAt": "2026-11-07T23:12:39.013Z"
+    },
+    {
+      "id": "mut-mw70qt7p-2",
+      "parentVersion": "v0",
+      "candidateVersion": "v0.7",
+      "target": "systemPrompt, skills",
+      "diagnosis": "agent lacks reusable defensive idioms and repeatedly delegates error and cancellation responsibility to helpers",
+      "rationale": "a persistent skill encoding untrusted-invocation, local cancellation racing, and guaranteed cleanup gives concrete reusable patterns to apply on every ticket, persisting beyond a single reminder",
+      "proposedChange": "Add a defensive failure-handling skill with concrete patterns and require consulting it before editing and before finishing",
+      "expectedImpact": "consistent defensive coding across tickets with no extra calls; risk is low if prompt enforcement is explicit",
+      "supportingTraceIds": [
+        "retry-cancel@v0#1",
+        "dedupe-cache@v0#0",
+        "dedupe-cache@v0#1"
+      ],
+      "patch": {
+        "systemPrompt": "You are a coding agent. Implement the requested change so that tests pass. You must consult the defensive_error_paths skill before editing and again before finishing, applying its invocation, cancellation, and cleanup patterns to every boundary you touch. Do not trust invoked operations to throw, reject, or respect cancellation correctly; enforce handling locally. Return the full contents of every file you modify.",
+        "skills": {
+          "defensive_error_paths": "Defensive failure handling - apply to every change: 1. Untrusted invocation: wrap every invoked operation so both synchronous throws and asynchronous rejections are captured and handled on the caller side; never assume it returns a well-formed async value. 2. Untrusted cancellation: never delegate cancellation to a helper; keep a local cancellation race and listener that settles promptly even if the helper ignores the signal, and ensure resources are released. 3. Guaranteed cleanup: release tracking state and resources with finally-style guarantees so both success and failure leave no stale entries. 4. Failure isolation: never persist failure results as if they were successes; share in-flight failures with current waiters but allow future attempts. Consult before editing and re-apply before finishing."
+        }
+      },
+      "generator": {
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "latencyMs": 45258,
+        "usage": {
+          "inputTokens": 2904,
+          "outputTokens": 5723,
+          "totalTokens": 8627
+        }
+      },
+      "guard": {
+        "ok": true,
+        "violations": []
+      },
+      "createdAt": "2026-11-07T23:12:39.014Z"
+    }
+  ],
+  "reviews": {
+    "mut-mw70qt7o-0": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "report": {
+        "risk": "high",
+        "overfittingConcerns": "The prompt is heavily over-indexed on the specific failure modes of retry-cancel and dedupe-cache. Forcing the model to assume every collaborator misbehaves and to locally race every cancellation will lead to excessive defensive bloat, boilerplate error handling, and broken API contracts in tasks that require clean error bubbling or standard idiomatic patterns.",
+        "overlookedAssumptions": "1. Assumes that 'toolPolicy.selfReview' is a valid, recognized configuration option rather than an unparsed no-op. 2. Assumes local error handling and racing is always desirable; in many software architectures, operations are designed to fail fast and let errors propagate to higher-level orchestrators. 3. Assumes returning full contents of every modified file will not exceed context windows or trigger truncation on larger files.",
+        "suggestedAdversarialChecks": [
+          "Run tests on tasks with strict error-propagation contracts (e.g., functions expected to rethrow or bubble specific errors up to the caller) to verify the model doesn't swallow or intercept expected exceptions.",
+          "Evaluate on high-throughput or lightweight tasks to check if defensive wrappers (e.g., redundant Promise.race, AbortController allocations, and nested try/catch blocks) cause performance regressions or memory leaks.",
+          "Evaluate on tasks modifying large legacy files (>1,000 LOC) to check if the 'Return full contents of every file' instruction causes token truncation or partial generation failures."
+        ]
+      }
+    },
+    "mut-mw70qt7p-1": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "report": {
+        "risk": "high",
+        "overfittingConcerns": "The prompt injects extreme, hyper-specific paranoia tailored directly to the failed retry-cancel and dedupe-cache benchmarks ('local cancellation racing', 'treat all collaborators as untrusted'). This will likely cause the model to wrap simple operations in defensive boilerplate, swallow expected exceptions that callers rely on, or mismanage API contracts in standard tasks that expect exceptions to bubble up.",
+        "overlookedAssumptions": "1. Assumes upfront planning prevents runtime logic errors without addressing the root overclaim issue (p=1.00), completely ignoring the suggested lever 'self_review_after_green'. 2. Assumes collaborators should be untrusted; in many codebases, internal modules rely on standard error propagation rather than aggressive local capture. 3. Requiring full contents of every modified file along with extensive upfront planning risks context window bloat, output token truncation, and degraded performance on large files.",
+        "suggestedAdversarialChecks": [
+          "Tasks where callers expect specific unhandled exceptions to bubble up (verify the agent does not catch/swallow them defensively).",
+          "High-throughput or low-overhead async workflows where wrapping every boundary in cancellation racing introduces race conditions or significant latency overhead.",
+          "Large multi-file edits to check if returning full file contents triggers context exhaustion or truncation bugs.",
+          "Tasks requiring verification of post-green behavior (checking if false-positive overclaims still pass undetected)."
+        ]
+      }
+    },
+    "mut-mw70qt7p-2": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "report": {
+        "risk": "high",
+        "overfittingConcerns": "The patch is hyper-tailored to the two specific failing benchmarks (`retry-cancel` and `dedupe-cache`). Directive rules like 'never persist failure results... share in-flight failures with current waiters but allow future attempts' directly mirror dedupe-cache requirements, while 'never delegate cancellation to a helper' mirrors retry-cancel. Imposing these hardcoded architectural patterns globally will corrupt normal, idiomatic codebases where negative caching is desired or where helpers manage their own abort lifecycles.",
+        "overlookedAssumptions": "Assumes every invoked boundary requires defensive local wrapping and local cancellation races. Applying 'untrusted invocation' to every call creates severe code bloat, potentially masks errors or swallows specific exception types upstream callers depend on, and can lead to unhandled promise rejections if helper promises reject after a local race settles. Furthermore, the patch completely ignores the suggested lever (`self_review_after_green`) and fails to address the root cause of the 1.00 overclaim rate (agent falsely self-reporting success without executing or verifying error path tests).",
+        "suggestedAdversarialChecks": [
+          "Run on a task specifying negative caching (e.g., memoizing 404s or failed lookups to prevent downstream thundering herd) to verify if rule 4 incorrectly prevents caching failures.",
+          "Evaluate on tasks requiring exact custom error propagation and stack preservation to check if blanket untrusted invocation wrapping alters error types or hides original stacks.",
+          "Test on tasks with large multi-thousand-line source files to check if the strict requirement to 'Return the full contents of every file you modify' causes context exhaustion or incomplete code output.",
+          "Test cancellation handling where helper abort cleanup is asynchronous to verify that a prompt caller-side race does not abandon unmanaged dangling background processes."
+        ]
+      }
+    }
+  },
+  "parentVal": {
+    "evalId": "evo-2026-11-07T23-11-20-iup6--v0--val",
+    "totals": {
+      "tasksPassedAllReps": 6,
+      "passRate": 1,
+      "runPasses": 12,
+      "runs": 12,
+      "attempts": 12,
+      "tokens": 71364,
+      "agentMs": 439099,
+      "selfReportOverclaims": 0,
+      "policyViolations": 0
+    },
+    "perTask": {
+      "csv-dialect-compat": "2/2",
+      "event-ordering": "2/2",
+      "permission-inheritance": "2/2",
+      "resource-cleanup": "2/2",
+      "scheduler-priority": "2/2",
+      "serialization-migration": "2/2"
+    }
+  },
+  "candidateVals": [
+    {
+      "version": "v0.5",
+      "evalId": "evo-2026-11-07T23-11-20-iup6--v0.5--val",
+      "totals": {
+        "tasksPassedAllReps": 6,
+        "passRate": 1,
+        "runPasses": 12,
+        "runs": 12,
+        "attempts": 24,
+        "tokens": 200566,
+        "agentMs": 1034862,
+        "selfReportOverclaims": 0,
+        "policyViolations": 0
+      },
+      "perTask": {
+        "csv-dialect-compat": "2/2",
+        "event-ordering": "2/2",
+        "permission-inheritance": "2/2",
+        "resource-cleanup": "2/2",
+        "scheduler-priority": "2/2",
+        "serialization-migration": "2/2"
+      }
+    },
+    {
+      "version": "v0.6",
+      "evalId": "evo-2026-11-07T23-11-20-iup6--v0.6--val",
+      "totals": {
+        "tasksPassedAllReps": 6,
+        "passRate": 1,
+        "runPasses": 12,
+        "runs": 12,
+        "attempts": 12,
+        "tokens": 82287,
+        "agentMs": 697077,
+        "selfReportOverclaims": 0,
+        "policyViolations": 0
+      },
+      "perTask": {
+        "csv-dialect-compat": "2/2",
+        "event-ordering": "2/2",
+        "permission-inheritance": "2/2",
+        "resource-cleanup": "2/2",
+        "scheduler-priority": "2/2",
+        "serialization-migration": "2/2"
+      }
+    },
+    {
+      "version": "v0.7",
+      "evalId": "evo-2026-11-07T23-11-20-iup6--v0.7--val",
+      "totals": {
+        "tasksPassedAllReps": 5,
+        "passRate": 0.9166666666666666,
+        "runPasses": 11,
+        "runs": 12,
+        "attempts": 14,
+        "tokens": 134398,
+        "agentMs": 805719,
+        "selfReportOverclaims": 0,
+        "policyViolations": 0
+      },
+      "perTask": {
+        "csv-dialect-compat": "2/2",
+        "event-ordering": "2/2",
+        "permission-inheritance": "2/2",
+        "resource-cleanup": "1/2",
+        "scheduler-priority": "2/2",
+        "serialization-migration": "2/2"
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "candidate": "v0.5",
+      "parent": "v0",
+      "decision": "REJECT",
+      "reasons": [
+        "no improvement on validation: 12/12 vs parent 12/12"
+      ],
+      "parentScore": 12,
+      "candidateScore": 12,
+      "runs": 12,
+      "newlyPassing": [],
+      "regressions": [],
+      "tokenDelta": 129202
+    },
+    {
+      "candidate": "v0.6",
+      "parent": "v0",
+      "decision": "REJECT",
+      "reasons": [
+        "no improvement on validation: 12/12 vs parent 12/12"
+      ],
+      "parentScore": 12,
+      "candidateScore": 12,
+      "runs": 12,
+      "newlyPassing": [],
+      "regressions": [],
+      "tokenDelta": 10923
+    },
+    {
+      "candidate": "v0.7",
+      "parent": "v0",
+      "decision": "REJECT",
+      "reasons": [
+        "no improvement on validation: 11/12 vs parent 12/12",
+        "regressions on: resource-cleanup"
+      ],
+      "parentScore": 12,
+      "candidateScore": 11,
+      "runs": 12,
+      "newlyPassing": [],
+      "regressions": [
+        "resource-cleanup"
+      ],
+      "tokenDelta": 63034
+    }
+  ],
+  "promoted": null,
+  "finishedAt": "2026-11-07T23:15:16.627Z"
+}

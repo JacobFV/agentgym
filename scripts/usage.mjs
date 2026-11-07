@@ -8,4 +8,4 @@ for (const r of rows) {
   if (r.error) { a.errors++; continue; }
   a.calls++; a.inputTokens += r.usage?.inputTokens ?? 0; a.outputTokens += r.usage?.outputTokens ?? 0; a.ms += r.latencyMs ?? 0;
 }
-console.table(Object.fromEntries(Object.entries(agg).map(([k, a]) => [k, { ...a, avgLatencyMs: Math.round(a.ms / Math.max(1, a.calls)), ms: undefined }])));
+console.table(Object.fromEntries(Object.entries(agg).map(([k, { ms, ...a }]) => [k, { ...a, avgLatencyMs: Math.round(ms / Math.max(1, a.calls)) }])));

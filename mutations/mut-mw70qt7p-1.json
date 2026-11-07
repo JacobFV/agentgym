@@ -1,0 +1,68 @@
+{
+  "proposal": {
+    "id": "mut-mw70qt7p-1",
+    "parentVersion": "v0",
+    "candidateVersion": "v0.6",
+    "target": "systemPrompt, toolPolicy.planFirst",
+    "diagnosis": "edits are made without explicitly planning how each invoked boundary handles synchronous throw, asynchronous rejection, ignored cancellation, and cleanup",
+    "rationale": "forcing an up-front plan for untrusted boundaries makes defensive handling a design requirement rather than an afterthought, generalizing across all future work",
+    "proposedChange": "Enable pre-edit planning that requires mapping each invoked boundary to its local throw, reject, cancel and cleanup strategy",
+    "expectedImpact": "fewer missed error paths at creation time; costs one extra planning call with minimal regression risk",
+    "supportingTraceIds": [
+      "retry-cancel@v0#1",
+      "dedupe-cache@v0#0",
+      "dedupe-cache@v0#1"
+    ],
+    "patch": {
+      "systemPrompt": "You are a coding agent. Implement the requested change so that tests pass. Before editing, write an explicit short plan naming the interfaces and invariants you must preserve and, for every invoked operation or asynchronous boundary, how you will handle synchronous throw, asynchronous rejection, ignored cancellation, and cleanup. Treat all collaborators as untrusted: plan local capture of sync throws, local cancellation racing, and guaranteed cleanup. Then implement exactly that plan. Return the full contents of every file you modify.",
+      "toolPolicy": {
+        "planFirst": true
+      }
+    },
+    "generator": {
+      "provider": "meta",
+      "model": "muse-spark-1.3",
+      "latencyMs": 45258,
+      "usage": {
+        "inputTokens": 2904,
+        "outputTokens": 5723,
+        "totalTokens": 8627
+      }
+    },
+    "guard": {
+      "ok": true,
+      "violations": []
+    },
+    "createdAt": "2026-11-07T23:12:39.013Z"
+  },
+  "decision": {
+    "candidate": "v0.6",
+    "parent": "v0",
+    "decision": "REJECT",
+    "reasons": [
+      "no improvement on validation: 12/12 vs parent 12/12"
+    ],
+    "parentScore": 12,
+    "candidateScore": 12,
+    "runs": 12,
+    "newlyPassing": [],
+    "regressions": [],
+    "tokenDelta": 10923
+  },
+  "review": {
+    "provider": "gemini",
+    "model": "gemini-3.8-flash",
+    "report": {
+      "risk": "high",
+      "overfittingConcerns": "The prompt injects extreme, hyper-specific paranoia tailored directly to the failed retry-cancel and dedupe-cache benchmarks ('local cancellation racing', 'treat all collaborators as untrusted'). This will likely cause the model to wrap simple operations in defensive boilerplate, swallow expected exceptions that callers rely on, or mismanage API contracts in standard tasks that expect exceptions to bubble up.",
+      "overlookedAssumptions": "1. Assumes upfront planning prevents runtime logic errors without addressing the root overclaim issue (p=1.00), completely ignoring the suggested lever 'self_review_after_green'. 2. Assumes collaborators should be untrusted; in many codebases, internal modules rely on standard error propagation rather than aggressive local capture. 3. Requiring full contents of every modified file along with extensive upfront planning risks context window bloat, output token truncation, and degraded performance on large files.",
+      "suggestedAdversarialChecks": [
+        "Tasks where callers expect specific unhandled exceptions to bubble up (verify the agent does not catch/swallow them defensively).",
+        "High-throughput or low-overhead async workflows where wrapping every boundary in cancellation racing introduces race conditions or significant latency overhead.",
+        "Large multi-file edits to check if returning full file contents triggers context exhaustion or truncation bugs.",
+        "Tasks requiring verification of post-green behavior (checking if false-positive overclaims still pass undetected)."
+      ]
+    }
+  },
+  "evaluation": "evo-2026-11-07T23-11-20-iup6--v0.6--val"
+}
