@@ -98,7 +98,7 @@ Everything in `src/`, `tasks/`, `tests/`, `ui/` and `scripts/`, plus all fixture
 - fetch.ai integration: skipped for time.
 - Docker isolation (`ISOLATION=docker`) is implemented but was not exercised. All recorded runs used the Node permission-model subprocess sandbox.
 - One evolution iteration per run. Multi-iteration lineage is supported (`--iterations n`) but was not run.
-- The UI was checked visually at 1440px only. The live "run evolution" button was not exercised from the UI; all runs were launched from the CLI.
+- The UI was checked visually at 1440px only (a responsive breakpoint exists but is untested). The live "run evolution" button was not exercised from the UI; all runs were launched from the CLI.
 
 ## limitations (honest)
 

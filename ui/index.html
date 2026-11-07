@@ -5,324 +5,216 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>agentgym</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg:#0c0d0e; --panel:#131416; --panel2:#17191b; --line:#24272a; --line2:#2e3236;
-    --fg:#e8e6e1; --fg2:#b9b6ae; --dim:#7c7a74;
-    --ok:#4fd18b; --ok-bg:#10261b; --bad:#ff6b5e; --bad-bg:#2a1311; --warn:#f0b54a; --warn-bg:#2a2010; --acc:#e8e6e1;
-    --sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --bg: #f7f7f8; --card: #ffffff; --line: #e6e6ea; --line-2: #f0f0f3;
+    --fg: #111114; --fg-2: #55565e; --fg-3: #8b8c95;
+    --ok: #16794c; --ok-bg: #e9f6ef; --bad: #b42318; --bad-bg: #fdecea; --warn: #9a6700; --warn-bg: #fff6dd;
+    --acc: #111114; --bar: #111114;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   }
-  * { box-sizing:border-box; }
-  html, body { background:var(--bg); }
-  body { margin:0; color:var(--fg); font:14px/1.5 var(--sans); -webkit-font-smoothing:antialiased; }
-  .mono, pre, code { font-family:var(--mono); }
-  .num { font-variant-numeric:tabular-nums; font-family:var(--mono); }
-  .ok { color:var(--ok); } .bad { color:var(--bad); } .warn { color:var(--warn); } .dim { color:var(--dim); } .fg2 { color:var(--fg2); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px 48px; }
+  .mono { font-family: var(--mono); font-size: 12.5px; }
+  .muted { color: var(--fg-2); } .faint { color: var(--fg-3); }
+  .num { font-variant-numeric: tabular-nums; }
 
-  /* header */
-  header { display:flex; align-items:center; gap:20px; padding:16px 24px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
-  .brand { display:flex; flex-direction:column; gap:2px; min-width:0; }
-  h1 { font-size:22px; margin:0; font-weight:800; letter-spacing:-.02em; }
-  .tag { color:var(--fg2); font-size:13px; }
-  .mode { font:600 13px/1 var(--mono); padding:9px 12px; border-radius:6px; letter-spacing:.04em; border:1px solid; white-space:nowrap; }
-  .mode::before { content:""; display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; background:currentColor; vertical-align:1px; }
-  .mode.replay { background:var(--warn-bg); color:var(--warn); border-color:#4a3812; }
-  .mode.live { background:var(--ok-bg); color:var(--ok); border-color:#1d4a32; }
-  .mode.live::before { animation:pulse 1.2s infinite; }
-  @keyframes pulse { 50% { opacity:.25; } }
-  .spacer { flex:1; }
-  #current { font:500 13px var(--mono); color:var(--fg2); }
-  .runwrap { display:flex; flex-direction:column; align-items:flex-end; gap:3px; }
-  button { background:var(--fg); color:#0c0d0e; border:0; padding:10px 16px; font:700 14px var(--sans); border-radius:6px; cursor:pointer; }
-  button:disabled { opacity:.35; cursor:default; }
-  .note { font-size:11px; color:var(--dim); }
+  header { display: flex; align-items: center; gap: 16px; padding: 22px 0; }
+  .brand { font-weight: 700; font-size: 17px; letter-spacing: -.01em; }
+  .tagline { color: var(--fg-3); font-size: 13px; }
+  .spacer { flex: 1; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--fg-2); white-space: nowrap; }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fg-3); }
+  .badge.live .dot { background: var(--ok); animation: pulse 1.2s infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  button { font: inherit; font-weight: 600; font-size: 13px; background: var(--acc); color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; cursor: pointer; }
+  button:disabled { opacity: .35; cursor: default; }
 
-  /* sponsor strip + pipeline */
-  .strip { display:grid; grid-template-columns:1fr; gap:10px; padding:12px 24px; border-bottom:1px solid var(--line); }
-  #providers { display:flex; gap:8px; flex-wrap:wrap; }
-  .prov { display:flex; flex-direction:column; padding:6px 10px; border:1px solid var(--line); border-radius:6px; background:var(--panel); min-width:0; }
-  .prov .role { font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
-  .prov .who { font-weight:600; font-size:13px; }
-  .prov .who .m { font:500 12px var(--mono); color:var(--fg2); margin-left:6px; }
-  .prov.cfg { border-style:dashed; }
-  #pipe { display:flex; gap:0; list-style:none; margin:0; padding:0; min-width:0; }
-  #pipe li { flex:1; position:relative; padding:6px 12px 6px 14px; border:1px solid var(--line); margin-left:-1px; background:var(--panel); min-width:0; }
-  #pipe li:first-child { border-radius:6px 0 0 6px; margin-left:0; } #pipe li:last-child { border-radius:0 6px 6px 0; }
-  #pipe .s { font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
-  #pipe .t { font-weight:600; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  #pipe .d { font:500 12px var(--mono); color:var(--fg2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  #pipe li.done { border-top:2px solid var(--fg2); }
-  #pipe li.active { border-top:2px solid var(--ok); background:var(--panel2); }
-  #pipe li.active .s { color:var(--ok); }
-  #pipe li.gate-reject { border-top:2px solid var(--bad); } #pipe li.gate-reject .d { color:var(--bad); }
-  #pipe li.gate-promote { border-top:2px solid var(--ok); } #pipe li.gate-promote .d { color:var(--ok); }
+  .grid { display: grid; gap: 16px; }
+  .kpis { grid-template-columns: repeat(4, 1fr); }
+  .two { grid-template-columns: 1.55fr 1fr; align-items: start; }
+  .half { grid-template-columns: 1fr 1fr; align-items: start; }
+  @media (max-width: 900px) { .kpis { grid-template-columns: 1fr 1fr; } .two, .half { grid-template-columns: 1fr; } header { flex-wrap: wrap; } }
+  section { margin-top: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+  .card h3 { margin: 0 0 14px; font-size: 13px; font-weight: 600; display: flex; align-items: baseline; gap: 8px; }
+  .card h3 .faint { font-weight: 400; font-size: 12px; }
 
-  /* columns */
-  main { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1.35fr) minmax(0,1.1fr); gap:16px; padding:16px 24px 24px; }
-  @media (min-width:1200px) { main { height:calc(100vh - var(--top, 160px)); } main > section { overflow:auto; } }
-  @media (max-width:1199px) { main { grid-template-columns:1fr; } .strip { grid-template-columns:1fr; gap:10px; } }
-  @media (max-width:640px) { header, .strip { padding-left:16px; padding-right:16px; } main { padding:12px 16px 16px; } #pipe { flex-wrap:wrap; } #pipe li { flex:1 1 45%; margin:0 0 -1px -1px; border-radius:0 !important; } .runwrap { align-items:flex-start; } }
-  section { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; min-width:0; }
-  section::-webkit-scrollbar { width:8px; } section::-webkit-scrollbar-thumb { background:var(--line2); border-radius:4px; }
-  .colhead { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin:0 0 12px; }
-  h2 { font-size:11px; text-transform:uppercase; color:var(--dim); margin:0; letter-spacing:.1em; font-weight:600; }
-  h2 .by { text-transform:none; letter-spacing:0; color:var(--fg2); font-weight:500; }
-  .sub { margin-top:20px; }
-  .kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-bottom:12px; }
-  .kpi { background:var(--panel2); padding:10px 12px; }
-  .kpi .v { font:600 22px/1.1 var(--mono); font-variant-numeric:tabular-nums; }
-  .kpi .l { font-size:11px; color:var(--dim); margin-top:2px; }
-  .meta { font:500 12px var(--mono); color:var(--dim); }
+  .kpi .label { font-size: 12px; color: var(--fg-3); font-weight: 500; }
+  .kpi .value { font-size: 26px; font-weight: 600; letter-spacing: -.02em; margin-top: 4px; }
+  .kpi .sub { font-size: 12.5px; color: var(--fg-2); margin-top: 2px; }
 
-  /* traces */
-  .trace { display:grid; grid-template-columns:48px minmax(0,1fr); gap:2px 10px; padding:7px 0; border-bottom:1px solid var(--line); align-items:baseline; }
-  .trace:last-child { border-bottom:0; }
-  .chip { font:700 11px/1 var(--mono); padding:4px 0; border-radius:4px; text-align:center; letter-spacing:.04em; }
-  .chip.pass { color:var(--ok); background:var(--ok-bg); } .chip.fail { color:var(--bad); background:var(--bad-bg); }
-  .trace .id { font:500 13px var(--mono); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .trace .why { grid-column:2; font-size:12px; color:var(--fg2); }
-  .trace .why b { color:var(--bad); font-weight:600; font-family:var(--mono); }
-  pre { white-space:pre-wrap; word-break:break-word; margin:0; background:#0e0f10; padding:10px 12px; border-radius:6px; border:1px solid var(--line); font-size:12px; line-height:1.55; color:var(--fg2); }
-  #log { max-height:320px; overflow:auto; min-height:120px; }
+  .steps { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line); border-radius: 12px; background: var(--card); overflow: hidden; }
+  .step { padding: 12px 16px; border-right: 1px solid var(--line-2); }
+  .step:last-child { border-right: 0; }
+  .step .n { font-size: 11px; color: var(--fg-3); font-weight: 500; }
+  .step .t { font-weight: 600; font-size: 13px; }
+  .step .d { font-size: 12px; color: var(--fg-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .step.active { background: #fafafa; box-shadow: inset 0 -2px 0 var(--acc); }
+  @media (max-width: 900px) { .steps { grid-template-columns: 1fr; } .step { border-right: 0; border-bottom: 1px solid var(--line-2); } }
 
-  /* diagnosis */
-  .weak { padding:14px; border:1px solid var(--line); border-left:3px solid var(--warn); border-radius:8px; background:var(--panel2); }
-  .weak .k { font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; }
-  .weak .w { font:600 20px/1.2 var(--mono); color:var(--warn); margin:4px 0; word-break:break-word; }
-  .weak .desc { color:var(--fg2); font-size:13px; }
-  .probs { margin-top:12px; display:grid; gap:8px; }
-  .prob { display:grid; grid-template-columns:minmax(0,1fr) 56px; gap:2px 10px; align-items:center; font-size:12px; }
-  .prob .n { font-family:var(--mono); color:var(--fg2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .prob .p { text-align:right; font:600 12px var(--mono); font-variant-numeric:tabular-nums; }
-  .bar { grid-column:1 / -1; height:6px; background:#1e2023; border-radius:3px; overflow:hidden; }
-  .bar > i { display:block; height:100%; background:var(--fg2); border-radius:3px; }
-  .prob.top .bar > i { background:var(--warn); } .prob.top .p, .prob.top .n { color:var(--warn); }
-  .triple { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-top:12px; }
-  .triple > div { background:var(--panel2); padding:10px 12px; min-width:0; }
-  .triple .v { font:600 18px/1.2 var(--mono); font-variant-numeric:tabular-nums; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .triple .l { font-size:11px; color:var(--dim); }
-  .ev { margin-top:10px; font-size:12px; color:var(--dim); }
-  .tid { display:inline-block; font:500 11px var(--mono); color:var(--fg2); border:1px solid var(--line2); border-radius:4px; padding:1px 6px; margin:2px 4px 0 0; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: right; padding: 9px 8px; border-bottom: 1px solid var(--line-2); }
+  th:first-child, td:first-child { text-align: left; padding-left: 0; }
+  th:last-child, td:last-child { padding-right: 0; }
+  th { font-size: 12px; font-weight: 500; color: var(--fg-3); }
+  th .v { display: block; color: var(--fg); font-weight: 600; font-size: 13px; }
+  tr.total td { font-weight: 600; font-size: 15px; border-bottom: 1px solid var(--line); }
+  tr.meta td { color: var(--fg-3); font-size: 12.5px; border-bottom: 0; padding-top: 6px; padding-bottom: 2px; }
+  .cell-ok { color: var(--fg); } .cell-part { color: var(--warn); font-weight: 600; } .cell-bad { color: var(--bad); font-weight: 600; }
 
-  /* mutations */
-  .card { border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin:10px 0; background:var(--panel2); }
-  .card .top { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
-  .ver { font:700 15px var(--mono); }
-  .pill { font:500 11px var(--mono); color:var(--fg2); border:1px solid var(--line2); border-radius:4px; padding:1px 6px; }
-  .pill.bad { color:var(--bad); border-color:#5a2420; } .pill.warn { color:var(--warn); border-color:#4a3812; } .pill.ok { color:var(--ok); border-color:#1d4a32; }
-  .change { font-size:15px; font-weight:600; margin:8px 0 6px; line-height:1.4; }
-  .kv { font-size:12.5px; color:var(--fg2); margin-top:4px; } .kv .k { color:var(--dim); font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; margin-right:6px; }
-  .review { margin-top:10px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:12px; color:var(--fg2); }
-  details { margin-top:8px; } summary { cursor:pointer; font:500 12px var(--mono); color:var(--dim); }
-  details pre { margin-top:6px; max-height:240px; overflow:auto; }
+  .pill { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); } .pill.bad { background: var(--bad-bg); color: var(--bad); } .pill.warn { background: var(--warn-bg); color: var(--warn); } .pill.neutral { background: var(--line-2); color: var(--fg-2); }
 
-  /* validation + decision */
-  table.val { width:100%; border-collapse:collapse; font-size:13px; }
-  table.val th, table.val td { padding:6px 8px; border-bottom:1px solid var(--line); text-align:right; white-space:nowrap; }
-  table.val th:first-child, table.val td:first-child { text-align:left; white-space:normal; }
-  table.val thead th { font:700 13px var(--mono); color:var(--fg); }
-  table.val thead th .r { display:block; font:500 10px var(--sans); color:var(--dim); text-transform:uppercase; letter-spacing:.08em; }
-  table.val td { font-family:var(--mono); font-variant-numeric:tabular-nums; }
-  table.val td:first-child { font-size:12px; color:var(--fg2); }
-  table.val tr.total td { font-size:20px; font-weight:700; border-bottom:1px solid var(--line2); }
-  table.val tr.total td:first-child { font:600 11px var(--sans); text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
-  table.val tr.small td { font-size:12px; color:var(--dim); }
-  .verdict { border:1px solid; border-radius:10px; padding:16px; margin-bottom:10px; }
-  .verdict.reject { border-color:#5a2420; background:var(--bad-bg); } .verdict.promote { border-color:#1d4a32; background:var(--ok-bg); }
-  .verdict .row1 { display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-  .verdict .word { font:800 34px/1 var(--sans); letter-spacing:-.02em; }
-  .verdict.reject .word { color:var(--bad); } .verdict.promote .word { color:var(--ok); }
-  .verdict .score { font:600 16px var(--mono); font-variant-numeric:tabular-nums; color:var(--fg); }
-  .verdict .reasons { margin-top:8px; font-size:13px; color:var(--fg2); }
-  .final { padding:12px 14px; border-radius:8px; border:1px solid var(--line2); font-size:14px; font-weight:600; }
-  .hist { display:grid; grid-template-columns:auto auto minmax(0,1fr); gap:10px; padding:6px 0; border-bottom:1px solid var(--line); font-size:12px; align-items:baseline; }
-  .hist .e { font-family:var(--mono); color:var(--fg2); } .hist .r { color:var(--dim); overflow:hidden; text-overflow:ellipsis; }
-  .empty { color:var(--dim); font-size:13px; }
+  .decision { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-2); align-items: flex-start; }
+  .decision:last-child { border-bottom: 0; }
+  .decision .ver { font-weight: 600; width: 44px; flex: none; }
+  .decision .why { font-size: 13px; color: var(--fg-2); }
+  .outcome { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: var(--line-2); font-size: 13px; }
+
+  .bar-row { display: grid; grid-template-columns: 190px 1fr 48px; gap: 12px; align-items: center; padding: 5px 0; font-size: 13px; }
+  .bar { height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--bar); border-radius: 3px; }
+  .bar-row.top { font-weight: 600; }
+  .stats { display: flex; gap: 24px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line-2); font-size: 13px; }
+  .stats b { font-size: 16px; display: block; }
+
+  .mut { border-top: 1px solid var(--line-2); padding: 12px 0; }
+  .mut:first-of-type { border-top: 0; padding-top: 0; }
+  .mut .head { display: flex; gap: 10px; align-items: center; }
+  .mut .title { font-weight: 500; margin: 4px 0 2px; }
+  .mut details { margin-top: 6px; font-size: 13px; color: var(--fg-2); }
+  .mut summary { cursor: pointer; color: var(--fg-3); font-size: 12.5px; }
+  pre { white-space: pre-wrap; word-break: break-word; margin: 8px 0 0; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; font: 12px/1.5 var(--mono); max-height: 260px; overflow: auto; }
+
+  .trace { display: grid; grid-template-columns: 52px 1fr; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line-2); font-size: 13px; }
+  .trace:last-child { border-bottom: 0; }
+  #log { min-height: 80px; max-height: 300px; margin: 0; }
+  footer { margin-top: 20px; font-size: 12px; color: var(--fg-3); display: flex; gap: 18px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
-<header id="hdr">
-  <div class="brand">
-    <h1>agentgym</h1>
-    <span class="tag">coding agents improve software. agentgym improves the coding agents.</span>
-  </div>
-  <span id="mode" class="mode replay">REPLAY</span>
-  <span class="spacer"></span>
-  <span id="current"></span>
-  <div class="runwrap">
-    <button id="run">run evolution</button>
-    <span class="note">real paid API run · ~15 min</span>
-  </div>
-</header>
-<div class="strip" id="strip">
-  <div id="providers"></div>
-  <ol id="pipe"></ol>
+<div class="wrap">
+  <header>
+    <span class="brand">agentgym</span>
+    <span class="tagline">coding agents improve software. agentgym improves the coding agents.</span>
+    <span class="spacer"></span>
+    <span id="mode" class="badge"><span class="dot"></span><span id="modeText">replay</span></span>
+    <span id="current" class="badge"></span>
+    <button id="run" title="Starts a real evolution run against the sponsor APIs (~10–15 min)">Run evolution</button>
+  </header>
+
+  <div class="grid kpis" id="kpis"></div>
+  <section><div class="steps" id="steps"></div></section>
+
+  <section class="grid two">
+    <div class="card"><h3>Validation <span class="faint">unseen tasks · independent grader · passing runs</span></h3><div id="evals"></div></div>
+    <div class="card"><h3>Promotion gate <span class="faint">strict gain · zero regressions</span></h3><div id="decision"></div></div>
+  </section>
+
+  <section class="grid half">
+    <div class="card"><h3>Failure diagnosis <span class="faint" id="diagMeta"></span></h3><div id="diag"></div></div>
+    <div class="card"><h3>Mutations <span class="faint" id="mutMeta"></span></h3><div id="muts"></div></div>
+  </section>
+
+  <section class="grid half">
+    <div class="card"><h3>Dev traces <span class="faint" id="tracesMeta"></span></h3><div id="tasks"></div></div>
+    <div class="card"><h3>Event stream <span class="faint">/api/events</span></h3><pre id="log" class="mono">No live run. Showing the last recorded run.</pre></div>
+  </section>
+
+  <footer id="providers"></footer>
+  <div id="history" hidden></div>
 </div>
-<main>
-  <section>
-    <div class="colhead"><h2>1 · coding agent traces</h2></div>
-    <div id="tasks"></div>
-    <div class="colhead sub"><h2>live event stream</h2><span class="meta">/api/events</span></div>
-    <pre id="log">(no live run — showing last recorded run)</pre>
-  </section>
-  <section>
-    <div class="colhead"><h2>2 · failure diagnosis <span class="by">· Subquadratic</span></h2></div>
-    <div id="diag"></div>
-    <div class="colhead sub"><h2>3 · generated mutations <span class="by">· Meta</span></h2></div>
-    <div id="muts"></div>
-  </section>
-  <section>
-    <div class="colhead"><h2>4 · validation · independent grader</h2><span class="meta">held-out split</span></div>
-    <div id="evals"></div>
-    <div class="colhead sub"><h2>5 · gate decision</h2></div>
-    <div id="decision"></div>
-    <div class="colhead sub"><h2>version history</h2></div>
-    <div id="history"></div>
-  </section>
-</main>
 <script>
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pct = (p) => (p * 100).toFixed(1) + "%";
-const live = { step: -1, detail: {} };
-let last = null;
+const frac = (s) => s.split("/").map(Number);
+let liveStep = -1;
 
-const STEPS = ["dev run", "SubQ diagnosis", "Meta mutation", "validation", "gate"];
-function pipe(r, running) {
+function steps(r, running) {
   const d = r?.diagnosis;
   const best = r ? Math.max(...r.candidateVals.map((c) => c.totals.runPasses)) : 0;
-  const promoted = r?.promoted;
-  const replayDetail = r ? [
-    `${r.devTotals.runPasses}/${r.devTotals.runs} pass · ${r.devTotals.selfReportOverclaims} overclaim`,
-    `${d.recurring.weakness} p=${(d.recurring.probabilities[d.recurring.weakness] ?? 0).toFixed(2)}`,
-    `${r.proposals.length} candidate${r.proposals.length === 1 ? "" : "s"}`,
-    `parent ${r.parentVal.totals.runPasses}/${r.parentVal.totals.runs} · best ${best}/${r.parentVal.totals.runs}`,
-    promoted ? `PROMOTE ${promoted}` : `REJECT · ${r.parent} kept`,
-  ] : STEPS.map(() => "—");
-  $("pipe").innerHTML = STEPS.map((s, i) => {
-    let cls = "", det = replayDetail[i];
-    if (running) {
-      cls = i < live.step ? "done" : i === live.step ? "active" : "";
-      det = live.detail[i] || (i <= live.step ? "running…" : "waiting");
-    } else if (r) {
-      cls = i === 4 ? (promoted ? "gate-promote" : "gate-reject") : "done";
-    }
-    return `<li class="${cls}"><div class="s">${i + 1} · ${running ? (i < live.step ? "done" : i === live.step ? "now" : "next") : ""}</div><div class="t">${s}</div><div class="d" title="${esc(det)}">${esc(det)}</div></li>`;
-  }).join("");
-}
-
-function provCards(r, providers) {
-  const used = [];
-  if (r) {
-    used.push({ role: "coder", who: r.coder.label || r.coder.id, m: r.coder.model });
-    used.push({ role: "analyzer", who: "Subquadratic", m: r.diagnosis.analyzer.model });
-    used.push({ role: "mutator", who: r.mutator.label || r.mutator.id, m: r.mutator.model });
-    const rv = Object.values(r.reviews || {})[0];
-    if (rv) used.push({ role: "reviewer", who: rv.provider === "gemini" ? "Gemini" : rv.provider, m: rv.model });
-  }
-  const cfg = (providers || []).filter((p) => p.provider !== "none");
-  const missing = cfg.filter((p) => p.provider === "MISSING");
-  const cfgHtml = cfg.filter((p) => p.provider !== "MISSING").map((p) => `<div class="prov cfg" title="${esc(p.label)}"><span class="role">${esc(p.role)} · configured now</span><span class="who">${esc(p.provider)}<span class="m">${esc(p.model)}</span>${p.provider === "claude-cli" ? ' <span class="warn">dev adapter, not sponsor</span>' : ""}</span></div>`);
-  if (missing.length) cfgHtml.push(`<div class="prov cfg" title="${esc(missing.map((p) => p.label).join("\n"))}"><span class="role">configured now</span><span class="who warn">no API key: ${esc(missing.map((p) => p.role).join(", "))}</span></div>`);
-  return used.map((u) => `<div class="prov"><span class="role">${esc(u.role)} · this run</span><span class="who">${esc(u.who)}<span class="m">${esc(u.m)}</span></span></div>`).join("") +
-    (!r || cfg.some((p) => p.provider === "MISSING" || p.provider === "claude-cli") ? cfgHtml.join("") : "");
+  const items = [
+    ["Dev run", r ? `${r.devTotals.runPasses}/${r.devTotals.runs} pass · ${r.devTotals.selfReportOverclaims} overclaimed` : "—"],
+    ["SubQ diagnosis", d ? `${d.recurring.weakness} · ${pct(d.recurring.probabilities[d.recurring.weakness])}` : "—"],
+    ["Meta mutation", r ? `${r.proposals.length} candidates` : "—"],
+    ["Validation", r ? `parent ${r.parentVal.totals.runPasses}/${r.parentVal.totals.runs} · best ${best}/${r.parentVal.totals.runs}` : "—"],
+    ["Gate", r ? (r.promoted ? `promoted ${r.promoted}` : `no promotion · ${r.parent} kept`) : "—"],
+  ];
+  $("steps").innerHTML = items.map(([t, d], i) => `<div class="step ${running && i === liveStep ? "active" : ""}"><div class="n">${i + 1}</div><div class="t">${t}</div><div class="d">${running && i >= liveStep ? (i === liveStep ? "running…" : "pending") : esc(d)}</div></div>`).join("");
 }
 
 function render({ record: r, versions: v, providers, running }) {
-  last = { record: r, versions: v, providers, running };
   $("run").disabled = running;
-  $("current").textContent = v?.current ? `current agent: ${v.current.version}` : "";
-  $("providers").innerHTML = provCards(r, providers);
-  pipe(r, running);
-  sizeMain();
-  if (!r) { $("diag").innerHTML = '<span class="empty">no runs yet</span>'; return; }
-  $("mode").textContent = running ? "LIVE · evolution running" : `REPLAY · ${r.runId}`;
-  $("mode").className = "mode " + (running ? "live" : "replay");
-  const d = r.diagnosis, t = r.devTotals;
+  $("mode").className = "badge" + (running ? " live" : "");
+  $("modeText").textContent = running ? "live run" : r ? `replay · ${r.runId}` : "no runs yet";
+  $("current").textContent = v?.current ? `current agent ${v.current.version}` : "";
+  $("providers").innerHTML = `<span>Configured for next run:</span>` + (providers || []).map((p) => `<span>${esc(p.role)} · ${esc(p.provider)} <span class="mono">${esc(p.model)}</span>${p.provider === "claude-cli" ? " (dev adapter, not a sponsor)" : ""}</span>`).join("") + `<span>replayed runs are recorded executions, not fresh ones</span>`;
+  steps(r, running);
+  if (!r) return;
+  const d = r.diagnosis;
+  const best = r.candidateVals.reduce((a, c) => (c.totals.runPasses > (a?.totals.runPasses ?? -1) ? c : a), null);
 
-  const traces = [...d.perTrace].sort((a, b) => a.passed - b.passed || a.traceId.localeCompare(b.traceId));
-  $("tasks").innerHTML = `<div class="kpis">
-      <div class="kpi"><div class="v">${t.runPasses}/${t.runs}</div><div class="l">${esc(r.parent)} passed on dev</div></div>
-      <div class="kpi"><div class="v ${t.runs - t.runPasses ? "bad" : ""}">${t.runs - t.runPasses}</div><div class="l">failed hidden tests</div></div>
-      <div class="kpi"><div class="v ${t.selfReportOverclaims ? "warn" : ""}">${t.selfReportOverclaims}</div><div class="l">claimed success, failed</div></div>
-    </div>` +
-    traces.map((x) => `<div class="trace"><span class="chip ${x.passed ? "pass" : "fail"}">${x.passed ? "PASS" : "FAIL"}</span><span class="id" title="${esc(x.traceId)}">${esc(x.traceId)}</span>${x.passed ? "" : `<div class="why"><b>${esc(x.weakness)}</b> · ${esc((x.failingTests || []).join(" | "))}</div>`}</div>`).join("");
+  $("kpis").innerHTML = [
+    ["Dev pass rate", `${r.devTotals.runPasses}/${r.devTotals.runs}`, `${r.parent} · ${esc(r.coder.model)}`],
+    ["Overclaimed success", `${r.devTotals.selfReportOverclaims}`, `of ${r.devTotals.runs - r.devTotals.runPasses} failures said “done”`],
+    ["Recurring weakness", pct(d.recurring.probabilities[d.recurring.weakness]), esc(d.recurring.weakness)],
+    ["Decision", r.promoted ? "Promote" : "Reject", r.promoted ? `${esc(r.promoted)} is current` : `${r.decisions.length} candidates · ${esc(r.parent)} kept`],
+  ].map(([l, val, s]) => `<div class="card kpi"><div class="label">${l}</div><div class="value num">${val}</div><div class="sub">${s}</div></div>`).join("");
+
+  const cols = [{ version: r.parent, role: "parent", totals: r.parentVal.totals, perTask: r.parentVal.perTask }, ...r.candidateVals.map((c) => ({ ...c, role: "candidate" }))];
+  const tasks = Object.keys(r.parentVal.perTask);
+  const cell = (s, parent) => { const [a, b] = frac(s); const [pa] = frac(parent); const cls = a === b ? "cell-ok" : a === 0 ? "cell-bad" : "cell-part"; return `<td class="num ${cls}${a < pa ? " cell-bad" : ""}">${s}</td>`; };
+  $("evals").innerHTML = `<table><thead><tr><th>Task</th>${cols.map((c) => `<th><span class="v">${esc(c.version)}</span>${c.role}</th>`).join("")}</tr></thead><tbody>
+    ${tasks.map((t) => `<tr><td class="mono">${esc(t)}</td>${cols.map((c) => cell(c.perTask[t], r.parentVal.perTask[t])).join("")}</tr>`).join("")}
+    <tr class="total"><td>Passed</td>${cols.map((c) => `<td class="num">${c.totals.runPasses}/${c.totals.runs}</td>`).join("")}</tr>
+    <tr class="meta"><td>Tokens</td>${cols.map((c) => `<td class="num">${c.totals.tokens.toLocaleString()}</td>`).join("")}</tr>
+    <tr class="meta"><td>Attempts</td>${cols.map((c) => `<td class="num">${c.totals.attempts}</td>`).join("")}</tr></tbody></table>`;
+
+  $("decision").innerHTML = r.decisions.map((x) => `<div class="decision"><span class="ver">${esc(x.candidate)}</span><div><span class="pill ${x.decision === "PROMOTE" ? "ok" : "bad"}">${x.decision === "PROMOTE" ? "Promote" : "Reject"}</span> <span class="num muted" style="font-size:13px">&nbsp;${Number.isNaN(x.candidateScore) ? "guard" : `${x.candidateScore}/${x.runs}`} vs ${x.parentScore}/${x.runs || r.parentVal.totals.runs}</span><div class="why">${esc(x.reasons.map((s) => s.replace(/^no improvement on validation: .*/, "No improvement over parent").replace(/^regressions on: /, "Regressed: ")).join(" · "))}</div></div></div>`).join("") +
+    `<div class="outcome">${r.promoted ? `<b>${esc(r.promoted)}</b> promoted. ${esc(r.parent)} is kept for rollback.` : `Nothing promoted. <b>${esc(r.parent)}</b> stays current, and every candidate is saved under <span class="mono">versions/</span>.`}</div>`;
 
   const probs = Object.entries(d.recurring.probabilities).sort((a, b) => b[1] - a[1]).slice(0, 4);
-  const a = d.analyzer;
-  $("diag").innerHTML = `<div class="meta" style="margin-bottom:10px">${esc(a.model)} · ${esc(a.endpoint)} · <span class="num">${a.inputTokens.toLocaleString()}</span> input tokens · ${a.questions} typed questions · ${a.latencyMs}ms</div>
-    <div class="weak"><div class="k">recurring weakness</div><div class="w">${esc(d.recurring.weakness)}</div><div class="desc">${esc(d.recurring.description)}</div></div>
-    <div class="probs">${probs.map(([k, p], i) => `<div class="prob ${i === 0 ? "top" : ""}"><span class="n">${esc(k)}</span><span class="p">${pct(p)}</span><div class="bar"><i style="width:${(p * 100).toFixed(1)}%"></i></div></div>`).join("")}</div>
-    <div class="triple">
-      <div><div class="v">${d.systemicProbability.toFixed(2)}</div><div class="l">systemic p</div></div>
-      <div><div class="v ${d.overclaimProbability > 0.5 ? "warn" : ""}">${d.overclaimProbability.toFixed(2)}</div><div class="l">overclaim p</div></div>
-      <div><div class="v" style="font-size:13px" title="${esc(d.lever.choice)}">${esc(d.lever.choice)}</div><div class="l">suggested lever</div></div>
-    </div>
-    <div class="ev">evidence traces: ${d.evidenceTraceIds.length ? d.evidenceTraceIds.map((x) => `<span class="tid">${esc(x)}</span>`).join("") : "—"}</div>`;
+  $("diagMeta").textContent = `Subquadratic ${d.analyzer.model} · ${d.analyzer.inputTokens.toLocaleString()} tokens · ${d.analyzer.questions} questions`;
+  $("diag").innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px">Most likely recurring weakness across all ${d.perTrace.length} dev traces:</div>` +
+    probs.map(([k, p], i) => `<div class="bar-row ${i === 0 ? "top" : ""}"><span class="mono">${esc(k)}</span><div class="bar"><i style="width:${p * 100}%;${i ? "opacity:.25" : ""}"></i></div><span class="num" style="text-align:right">${pct(p)}</span></div>`).join("") +
+    `<div class="stats"><div><b class="num">${d.systemicProbability.toFixed(2)}</b><span class="faint">systemic</span></div><div><b class="num">${d.overclaimProbability.toFixed(2)}</b><span class="faint">overclaim</span></div><div><b class="mono" style="font-size:13px">${esc(d.lever.choice)}</b><span class="faint">suggested lever</span></div></div>` +
+    `<div class="faint" style="font-size:12px;margin-top:12px">Evidence: <span class="mono">${esc(d.evidenceTraceIds.join(", ") || "—")}</span></div>`;
 
-  $("muts").innerHTML = `<div class="meta">${esc(r.mutator.label)} · ${esc(r.mutator.model)} · ${r.proposals.length} proposal${r.proposals.length === 1 ? "" : "s"}</div>` + r.proposals.map((p) => {
-    const rv = (r.reviews || {})[p.id];
-    const rep = rv?.report;
-    return `<div class="card"><div class="top"><span class="ver">${esc(p.candidateVersion)}</span><span class="pill">${esc(p.target)}</span>${p.guard?.ok === false ? '<span class="pill bad">GUARD REJECTED</span>' : '<span class="pill">guard ok</span>'}</div>
-      <div class="change">${esc(p.proposedChange)}</div>
-      <div class="kv"><span class="k">why</span>${esc(p.rationale)}</div>
-      <div class="kv"><span class="k">expected</span>${esc(p.expectedImpact)}</div>
-      ${rep ? `<div class="review"><span class="pill ${rep.risk === "high" ? "bad" : rep.risk === "medium" ? "warn" : "ok"}">risk ${esc(rep.risk)}</span> <span class="meta">review · ${esc(rv.provider)} ${esc(rv.model)}</span><div style="margin-top:6px">${esc(rep.overfittingConcerns)}</div></div>` : ""}
-      <details><summary>patch</summary><pre>${esc(JSON.stringify(p.patch, null, 2))}</pre></details></div>`;
+  $("mutMeta").textContent = `Meta ${r.mutator.model}`;
+  const decOf = (ver) => r.decisions.find((x) => x.candidate === ver);
+  $("muts").innerHTML = r.proposals.map((p) => {
+    const dec = decOf(p.candidateVersion); const rev = r.reviews?.[p.id]?.report;
+    return `<div class="mut"><div class="head"><b>${esc(p.candidateVersion)}</b><span class="pill ${dec?.decision === "PROMOTE" ? "ok" : "bad"}">${dec?.decision === "PROMOTE" ? "Promoted" : "Rejected"}</span>${p.guard.ok ? "" : '<span class="pill warn">Guard blocked</span>'}${rev ? `<span class="pill ${rev.risk === "high" ? "warn" : "neutral"}">Gemini: ${esc(rev.risk)} risk</span>` : ""}</div>
+      <div class="title">${esc(p.proposedChange)}</div><div class="faint mono">${esc(p.target)}</div>
+      <details><summary>Rationale, review, patch</summary><p><b>Why.</b> ${esc(p.rationale)}</p><p><b>Expected.</b> ${esc(p.expectedImpact)}</p>${rev ? `<p><b>Gemini review.</b> ${esc(rev.overfittingConcerns || "")}</p>` : ""}<pre>${esc(JSON.stringify(p.patch, null, 2))}</pre></details></div>`;
   }).join("");
 
-  const rows = [{ version: r.parent, totals: r.parentVal.totals, perTask: r.parentVal.perTask, parent: true }, ...r.candidateVals];
-  const tasks = [...new Set(rows.flatMap((e) => Object.keys(e.perTask)))];
-  const cls = (s) => !s ? "dim" : s.startsWith("0/") ? "bad" : s.split("/")[0] === s.split("/")[1] ? "ok" : "warn";
-  $("evals").innerHTML = `<table class="val"><thead><tr><th></th>${rows.map((e) => `<th>${esc(e.version)}<span class="r">${e.parent ? "parent" : "candidate"}</span></th>`).join("")}</tr></thead><tbody>
-    <tr class="total"><td>passed</td>${rows.map((e) => `<td>${e.totals.runPasses}/${e.totals.runs}</td>`).join("")}</tr>
-    ${tasks.map((k) => `<tr><td>${esc(k)}</td>${rows.map((e) => `<td class="${cls(e.perTask[k])}">${esc(e.perTask[k] ?? "—")}</td>`).join("")}</tr>`).join("")}
-    <tr class="small"><td>tokens</td>${rows.map((e) => `<td>${e.totals.tokens.toLocaleString()}</td>`).join("")}</tr>
-    <tr class="small"><td>attempts</td>${rows.map((e) => `<td>${e.totals.attempts}</td>`).join("")}</tr>
-    <tr class="small"><td>overclaims</td>${rows.map((e) => `<td>${e.totals.selfReportOverclaims}</td>`).join("")}</tr>
-  </tbody></table>`;
-
-  $("decision").innerHTML = r.decisions.map((x) => {
-    const pr = x.decision === "PROMOTE";
-    return `<div class="verdict ${pr ? "promote" : "reject"}"><div class="row1"><span class="word">${x.decision}</span><span class="score">${esc(x.candidate)} ${x.candidateScore ?? "?"}/${x.runs ?? "?"} <span class="dim">vs</span> ${esc(x.parent)} ${x.parentScore ?? "?"}/${x.runs ?? "?"}</span></div>
-      <div class="reasons">${esc(x.reasons.join("; "))}${x.tokenDelta != null ? ` · <span class="num">${x.tokenDelta > 0 ? "+" : ""}${x.tokenDelta.toLocaleString()}</span> tokens` : ""}</div></div>`;
-  }).join("") +
-    `<div class="final">${r.promoted ? `<span class="ok">promoted ${esc(r.promoted)}</span> <span class="dim">· parent ${esc(r.parent)} preserved for rollback</span>` : `<span class="warn">no promotion</span> <span class="dim">· ${esc(r.parent)} stays current, candidates discarded</span>`}</div>`;
-
-  $("history").innerHTML = (v?.history || []).slice(-8).reverse().map((h) => `<div class="hist"><span class="e">${esc(h.event)}</span><b class="mono">${esc(h.version)}</b><span class="r" title="${esc(h.reason || h.runId || "")}">${esc(h.reason || h.runId || "")}${h.t ? ` · ${esc(h.t.slice(5, 16).replace("T", " "))}` : ""}</span></div>`).join("") || '<span class="empty">no history</span>';
+  const tr = [...d.perTrace].sort((a, b) => a.passed - b.passed);
+  $("tracesMeta").textContent = `${r.parent} · Meta ${r.coder.model}`;
+  $("tasks").innerHTML = tr.map((t) => `<div class="trace"><span><span class="pill ${t.passed ? "ok" : "bad"}">${t.passed ? "Pass" : "Fail"}</span></span><div><span class="mono">${esc(t.traceId)}</span>${t.passed ? "" : `<div class="muted" style="font-size:12.5px">${esc((t.failingTests[0] || "").replace(/^hidden: /, "hidden test: "))}</div>`}</div></div>`).join("");
 }
-
-function sizeMain() { document.documentElement.style.setProperty("--top", ($("hdr").offsetHeight + $("strip").offsetHeight) + "px"); }
-addEventListener("resize", sizeMain);
 
 async function refresh() { render(await (await fetch("/api/latest")).json()); }
-$("run").onclick = async () => { $("log").textContent = ""; await fetch("/api/evolve", { method: "POST" }); $("mode").textContent = "LIVE · evolution running"; $("mode").className = "mode live"; $("run").disabled = true; live.step = 0; live.detail = {}; if (last) pipe(last.record, true); };
-
-function advance(e) {
-  let s = -1;
-  if (e.type === "eval_start") s = e.split === "dev" ? 0 : 3;
-  else if (e.type === "llm_start" && e.role === "analyzer") s = 1;
-  else if (e.type === "llm_start" && e.role === "mutator") s = 2;
-  else if (e.type === "log") { const m = /\[(\d)\/5\]/.exec(e.msg || ""); if (m) s = Math.min(+m[1] - 1, 4); }
-  if (e.type === "eval_end" && e.totals) live.detail[e.split === "dev" ? 0 : 3] = `${e.version}: ${e.totals.runPasses}/${e.totals.runs}`;
-  if (e.type === "llm_end" && e.role === "analyzer") live.detail[1] = `${e.model} · ${e.latencyMs}ms`;
-  if (e.type === "llm_end" && e.role === "mutator") live.detail[2] = `${e.model} · ${e.latencyMs}ms`;
-  if (s > live.step) live.step = s;
-  if (last && (s >= 0 || e.type === "eval_end" || e.type === "llm_end")) pipe(last.record, true);
-}
-
+$("run").onclick = async () => {
+  $("log").textContent = ""; liveStep = 0;
+  await fetch("/api/evolve", { method: "POST" }); refresh();
+};
 const es = new EventSource("/api/events");
 es.onmessage = (m) => {
   const e = JSON.parse(m.data);
-  advance(e);
-  const line = e.type === "log" ? e.msg : e.type === "task_graded" ? `graded ${e.taskId}@${e.version}#${e.rep}: ${e.passed ? "PASS" : "FAIL"}${e.selfReported && !e.passed ? " (agent claimed success)" : ""} ${(e.failing || []).join(" | ")}` :
-    e.type === "llm_end" ? `${e.role} ← ${e.provider} [${e.model}] ${e.latencyMs}ms ${JSON.stringify(e.usage || {})}` :
-    e.type === "attempt_end" ? `${e.traceId} attempt ${e.attempt}: visible ${e.visiblePassed ? "green" : "red"}` : e.type === "error" ? `ERROR ${e.msg}` : null;
-  if (line) { $("log").textContent += `[${(e.t || "").slice(11, 19)}] ${line}\n`; $("log").scrollTop = 1e9; }
-  if (e.type === "evolution_end" || e.type === "error") setTimeout(refresh, 300);
+  if (e.type === "eval_start" && e.split === "dev") liveStep = 0;
+  if (e.type === "llm_start" && e.role === "analyzer") liveStep = 1;
+  if (e.type === "llm_start" && e.role === "mutator") liveStep = 2;
+  if (e.type === "eval_start" && e.split === "val") liveStep = 3;
+  const line = e.type === "log" ? e.msg.trim() : e.type === "task_graded" ? `graded ${e.taskId}@${e.version}#${e.rep}: ${e.passed ? "PASS" : "FAIL"}${e.selfReported && !e.passed ? " (agent claimed success)" : ""}` :
+    e.type === "llm_end" ? `${e.role} ← ${e.provider} ${e.model} · ${e.latencyMs}ms` : e.type === "error" ? `ERROR ${e.msg}` : null;
+  if (line) { const l = $("log"); if (l.textContent.startsWith("No live run")) l.textContent = ""; l.textContent += `${e.t.slice(11, 19)}  ${line}\n`; l.scrollTop = 1e9; }
+  if (["eval_start", "llm_start"].includes(e.type)) refresh();
+  if (e.type === "evolution_end" || e.type === "error") { liveStep = -1; setTimeout(refresh, 300); }
 };
 refresh();
 </script>
