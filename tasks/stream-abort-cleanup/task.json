@@ -1,0 +1,9 @@
+{
+  "id": "stream-abort-cleanup",
+  "split": "final",
+  "title": "pump(): report written count, support AbortSignal, clean up exactly once",
+  "description": "pump(source, sink, opts) copies chunks from an async source (an object with async next() and return(), see sources.mjs) into a sink (write(chunk), close(), abort(err)). Callers now need it to resolve with { written } (number of chunks written), and it must honour opts.signal. Cleanup contract: on success sink.close() is called exactly once and sink.abort() never; on any failure (source.next rejects, sink.write throws or rejects, or the signal aborts) source.return() is called exactly once, sink.abort(err) is called exactly once, sink.close() is never called, and pump rejects with the ORIGINAL error (signal.reason for aborts) - even if source.return() or sink.abort() themselves throw or reject during cleanup; those cleanup errors must not become unhandled rejections. An abort must take effect immediately, even while a source.next() call is pending and never settles, and an already-aborted signal must reject without reading or writing anything. After an abort no further write() calls may happen.",
+  "timeoutMs": 20000,
+  "invariants": ["source.return called exactly once on failure", "sink.abort called exactly once on failure, close never", "original error preserved when cleanup throws", "abort interrupts a hanging next()", "no writes after abort", "no unhandled rejections"],
+  "failureCategory": "async-cancellation-resource-cleanup"
+}

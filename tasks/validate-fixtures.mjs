@@ -20,7 +20,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const TASKS_DIR = dirname(fileURLToPath(import.meta.url));
-const SPLITS = new Set(['dev', 'val', 'test']);
+const SPLITS = new Set(['dev', 'val', 'test', 'final']);
 
 function runTests(ws, pattern = 'test/**/*.test.mjs', timeoutMs = 20000) {
   const args = [
