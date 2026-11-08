@@ -11,7 +11,9 @@
     "demo": "tsx src/cli.ts demo",
     "providers": "tsx src/cli.ts providers",
     "ui": "tsx src/server.ts",
-    "usage": "node scripts/usage.mjs"
+    "usage": "node scripts/usage.mjs",
+    "experiment": "tsx src/cli.ts experiment",
+    "controls": "tsx src/cli.ts controls"
   },
   "engines": {
     "node": ">=22"

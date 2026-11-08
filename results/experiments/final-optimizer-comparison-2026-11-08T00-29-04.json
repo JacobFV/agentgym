@@ -1,0 +1,212 @@
+{
+  "id": "final-optimizer-comparison-2026-11-08T00-29-04",
+  "commit": "f4680f3",
+  "createdAt": "2026-11-08T00:29:04.149Z",
+  "question": "same coder model, different harness: does the harness change independently graded outcomes?",
+  "coder": {
+    "provider": "meta",
+    "model": "muse-spark-1.1"
+  },
+  "split": "final",
+  "taskIds": [
+    "stream-abort-cleanup"
+  ],
+  "reps": 6,
+  "versions": [
+    "v0",
+    "v0.6",
+    "v0.r1-s1",
+    "v0.o3"
+  ],
+  "configs": [
+    {
+      "version": "v0",
+      "parent": null,
+      "createdAt": "2026-11-07T22:49:23.178Z",
+      "createdBy": "human:seed",
+      "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify.",
+      "skills": {},
+      "toolPolicy": {
+        "maxAttempts": 2,
+        "planFirst": false,
+        "selfReview": false,
+        "fullTestOutputOnRetry": false
+      }
+    },
+    {
+      "version": "v0.6",
+      "parent": "v0",
+      "createdAt": "2026-11-07T23:13:07.057Z",
+      "createdBy": "mutation:mut-mw70qt7p-1",
+      "systemPrompt": "You are a coding agent. Implement the requested change so that tests pass. Before editing, write an explicit short plan naming the interfaces and invariants you must preserve and, for every invoked operation or asynchronous boundary, how you will handle synchronous throw, asynchronous rejection, ignored cancellation, and cleanup. Treat all collaborators as untrusted: plan local capture of sync throws, local cancellation racing, and guaranteed cleanup. Then implement exactly that plan. Return the full contents of every file you modify.",
+      "skills": {},
+      "toolPolicy": {
+        "maxAttempts": 2,
+        "planFirst": true,
+        "selfReview": false,
+        "fullTestOutputOnRetry": false
+      }
+    },
+    {
+      "version": "v0.r1-s1",
+      "parent": "v0",
+      "createdAt": "2026-11-08T00:18:20.461Z",
+      "createdBy": "control:random",
+      "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify.",
+      "skills": {},
+      "toolPolicy": {
+        "maxAttempts": 2,
+        "planFirst": false,
+        "selfReview": true,
+        "fullTestOutputOnRetry": false
+      }
+    },
+    {
+      "version": "v0.o3",
+      "parent": "v0",
+      "createdAt": "2026-11-08T00:18:45.144Z",
+      "createdBy": "control:oneshot",
+      "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify.",
+      "skills": {},
+      "toolPolicy": {
+        "maxAttempts": 2,
+        "planFirst": true,
+        "selfReview": true,
+        "fullTestOutputOnRetry": true
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "version": "v0",
+      "split": "final",
+      "tasks": 1,
+      "repsPerTask": 6,
+      "runs": 6,
+      "heldOutPassRate": 1,
+      "passAt1": 1,
+      "tasksSolvedEveryRep": 1,
+      "tokensTotal": 100781,
+      "tokensPerTask": 16797,
+      "tokensPerSuccess": 16797,
+      "modelCallsPerTask": 1.5,
+      "latencyPerTaskMs": 95502,
+      "visiblePassHiddenFailRate": 0,
+      "costPerSuccess": null,
+      "perTask": {
+        "stream-abort-cleanup": "6/6"
+      },
+      "evalId": "exp-2026-11-08T00-25-37-7nre--v0--final"
+    },
+    {
+      "version": "v0.6",
+      "split": "final",
+      "tasks": 1,
+      "repsPerTask": 6,
+      "runs": 6,
+      "heldOutPassRate": 0.8333333333333334,
+      "passAt1": 0.8333333333333334,
+      "tasksSolvedEveryRep": 0,
+      "tokensTotal": 126426,
+      "tokensPerTask": 21071,
+      "tokensPerSuccess": 25285,
+      "modelCallsPerTask": 2.17,
+      "latencyPerTaskMs": 122040,
+      "visiblePassHiddenFailRate": 0.16666666666666666,
+      "costPerSuccess": null,
+      "perTask": {
+        "stream-abort-cleanup": "5/6"
+      },
+      "evalId": "exp-2026-11-08T00-25-37-7nre--v0.6--final"
+    },
+    {
+      "version": "v0.r1-s1",
+      "split": "final",
+      "tasks": 1,
+      "repsPerTask": 6,
+      "runs": 6,
+      "heldOutPassRate": 0.8333333333333334,
+      "passAt1": 0.8333333333333334,
+      "tasksSolvedEveryRep": 0,
+      "tokensTotal": 173650,
+      "tokensPerTask": 28942,
+      "tokensPerSuccess": 34730,
+      "modelCallsPerTask": 2.33,
+      "latencyPerTaskMs": 155574,
+      "visiblePassHiddenFailRate": 0,
+      "costPerSuccess": null,
+      "perTask": {
+        "stream-abort-cleanup": "5/6"
+      },
+      "evalId": "exp-2026-11-08T00-25-37-7nre--v0.r1-s1--final"
+    },
+    {
+      "version": "v0.o3",
+      "split": "final",
+      "tasks": 1,
+      "repsPerTask": 6,
+      "runs": 6,
+      "heldOutPassRate": 1,
+      "passAt1": 1,
+      "tasksSolvedEveryRep": 1,
+      "tokensTotal": 204453,
+      "tokensPerTask": 34076,
+      "tokensPerSuccess": 34076,
+      "modelCallsPerTask": 3.33,
+      "latencyPerTaskMs": 154196,
+      "visiblePassHiddenFailRate": 0,
+      "costPerSuccess": null,
+      "perTask": {
+        "stream-abort-cleanup": "6/6"
+      },
+      "evalId": "exp-2026-11-08T00-25-37-7nre--v0.o3--final"
+    }
+  ],
+  "paired": [
+    {
+      "baseline": "v0",
+      "candidate": "v0.6",
+      "tasks": 1,
+      "meanPassRateDiff": -0.167,
+      "bootstrap95": [
+        -0.167,
+        -0.167
+      ],
+      "tasksBetter": 0,
+      "tasksWorse": 1,
+      "tasksTied": 0,
+      "tokenRatio": 1.25,
+      "note": "n=1 tasks x 6 reps; bootstrap over tasks only; not a significance claim"
+    },
+    {
+      "baseline": "v0",
+      "candidate": "v0.r1-s1",
+      "tasks": 1,
+      "meanPassRateDiff": -0.167,
+      "bootstrap95": [
+        -0.167,
+        -0.167
+      ],
+      "tasksBetter": 0,
+      "tasksWorse": 1,
+      "tasksTied": 0,
+      "tokenRatio": 1.72,
+      "note": "n=1 tasks x 6 reps; bootstrap over tasks only; not a significance claim"
+    },
+    {
+      "baseline": "v0",
+      "candidate": "v0.o3",
+      "tasks": 1,
+      "meanPassRateDiff": 0,
+      "bootstrap95": [
+        0,
+        0
+      ],
+      "tasksBetter": 0,
+      "tasksWorse": 0,
+      "tasksTied": 1,
+      "tokenRatio": 2.03,
+      "note": "n=1 tasks x 6 reps; bootstrap over tasks only; not a significance claim"
+    }
+  ]
+}

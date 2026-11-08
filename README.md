@@ -57,6 +57,19 @@ Role routing is set in `.env`: `CODER_PROVIDER`, `MUTATOR_PROVIDER`, `VERIFIER_P
 
 SubQ Snap 1.1 is a *decisions* model, not a chat model. It takes up to 384K tokens of state and up to 128 typed questions (`choice` / `score` / `noul`) and returns calibrated probabilities. agentgym puts **every dev trace in one call**: tickets, original source, each attempt's reasoning and edits, visible results, final source, and the grader's hidden-test failures. It then asks per-trace questions (failure category: model reasoning vs tool vs environment vs task-specific, plus which weakness) and collection-level questions (dominant *recurring* weakness, prevalence of each weakness, is it systemic, does the agent overclaim, which intervention lever). The answers are cross-trace judgments that no single failure would show. Every answer is linked back to trace ids as evidence.
 
+## headline experiment: can a frozen model learn a better way to work?
+
+**Answer from our runs: not on this benchmark.** Fixed coder model (Meta `muse-spark-1.1`); the harness is the only variable. We compared agentgym's selected harness against random search and a one-shot LLM redesign, all selected on dev at an equal budget (18 graded runs per candidate). On the locked held-out task (fault-injection, 6 reps each) the scores were: original v0 **6/6** at 16.8K tokens/task; agentgym v0.6 5/6 at 1.25× tokens; random 5/6 at 1.72×; one-shot 6/6 at 2.03×. No evolved harness beat the original, and every one cost more. The held-out set is only **1 task** (5 planned tasks were not finished in time), so this is anecdotal.
+
+- Protocol, pre-registered before the final runs: [`docs/EXPERIMENT.md`](docs/EXPERIMENT.md) (commit `be8899b`; final corpus frozen at `f4680f3`).
+- Findings and a diagnosis of the negative result: [`docs/FINDINGS.md`](docs/FINDINGS.md).
+- Raw records: `results/experiments/`.
+- Reproduce:
+  ```bash
+  META_CODER_MODEL=muse-spark-1.1 npm run controls -- --parent v0 --n 3 --reps 3 --split dev
+  META_CODER_MODEL=muse-spark-1.1 npm run experiment -- --split final --versions v0,v0.6,v0.r1-s1,v0.o3 --reps 6
+  ```
+
 ## demo video
 
 [`docs/agentgym-demo.mp4`](docs/agentgym-demo.mp4) is a 60s walkthrough of a real recorded run. Scripts are in [`DEMO.md`](DEMO.md).
