@@ -4,6 +4,10 @@ All numbers come from recorded runs in `results/evolutions/` (see `RESULTS.md`).
 
 ## one-minute video
 
+`docs/agentgym-demo.mp4` is 60s and caption-only, built from the live UI rendering a real recorded run. The UI tells one story in three beats: **Caught** (3/3 failures the agent swore were fixed), **Diagnosed** (SubQ, 96% error/cancel paths), **Verified** (0/3 fixes shipped, because none beat the original on unseen tasks and one broke a task). Use `npm run ui` and open `http://localhost:4317/?scale=1.3` on a projector.
+
+Suggested voice-over if recording live:
+
 | time | screen | voice-over |
 |---|---|---|
 | 0:00–0:10 | title / UI header | "Coding agents repeat the same mistakes, and they say they're done when they aren't. agentgym makes the agent improve its own methodology, and proves it." |

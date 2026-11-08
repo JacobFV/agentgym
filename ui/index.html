@@ -5,216 +5,156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>agentgym</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #f7f7f8; --card: #ffffff; --line: #e6e6ea; --line-2: #f0f0f3;
-    --fg: #111114; --fg-2: #55565e; --fg-3: #8b8c95;
-    --ok: #16794c; --ok-bg: #e9f6ef; --bad: #b42318; --bad-bg: #fdecea; --warn: #9a6700; --warn-bg: #fff6dd;
-    --acc: #111114; --bar: #111114;
+    --bg: #fbfaf7; --card: #ffffff; --line: #ebe8e1; --fg: #0f0f10; --fg-2: #5b5a57; --fg-3: #9a978f;
+    --red: #e5484d; --red-bg: #fff0f0; --amber: #f5a524; --amber-bg: #fff7e6; --green: #12a150; --green-bg: #eafaf0;
     --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px 48px; }
-  .mono { font-family: var(--mono); font-size: 12.5px; }
-  .muted { color: var(--fg-2); } .faint { color: var(--fg-3); }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
   .num { font-variant-numeric: tabular-nums; }
+  .mono { font-family: var(--mono); font-size: 13px; }
 
-  header { display: flex; align-items: center; gap: 16px; padding: 22px 0; }
-  .brand { font-weight: 700; font-size: 17px; letter-spacing: -.01em; }
-  .tagline { color: var(--fg-3); font-size: 13px; }
+  nav { display: flex; align-items: center; gap: 14px; padding: 22px 0; }
+  .brand { font-weight: 800; font-size: 18px; letter-spacing: -.02em; }
   .spacer { flex: 1; }
-  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--fg-2); white-space: nowrap; }
-  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fg-3); }
-  .badge.live .dot { background: var(--ok); animation: pulse 1.2s infinite; }
-  @keyframes pulse { 50% { opacity: .3; } }
-  button { font: inherit; font-weight: 600; font-size: 13px; background: var(--acc); color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; cursor: pointer; }
-  button:disabled { opacity: .35; cursor: default; }
+  .chip { font-size: 12.5px; color: var(--fg-2); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-3); }
+  .chip.live .dot { background: var(--green); animation: pulse 1.2s infinite; }
+  @keyframes pulse { 50% { opacity: .25; } }
+  button { font: inherit; font-size: 14px; font-weight: 600; background: var(--fg); color: #fff; border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer; }
+  button:disabled { opacity: .3; cursor: default; }
 
-  .grid { display: grid; gap: 16px; }
-  .kpis { grid-template-columns: repeat(4, 1fr); }
-  .two { grid-template-columns: 1.55fr 1fr; align-items: start; }
-  .half { grid-template-columns: 1fr 1fr; align-items: start; }
-  @media (max-width: 900px) { .kpis { grid-template-columns: 1fr 1fr; } .two, .half { grid-template-columns: 1fr; } header { flex-wrap: wrap; } }
-  section { margin-top: 16px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
-  .card h3 { margin: 0 0 14px; font-size: 13px; font-weight: 600; display: flex; align-items: baseline; gap: 8px; }
-  .card h3 .faint { font-weight: 400; font-size: 12px; }
+  .hero { padding: 48px 0 36px; }
+  .eyebrow { font-size: 14px; font-weight: 600; color: var(--fg-3); letter-spacing: .02em; }
+  h1 { font-size: clamp(36px, 5.2vw, 62px); line-height: 1.05; letter-spacing: -.035em; font-weight: 800; margin: 12px 0 0; max-width: 1000px; }
+  h1 .red { color: var(--red); } h1 .green { color: var(--green); }
 
-  .kpi .label { font-size: 12px; color: var(--fg-3); font-weight: 500; }
-  .kpi .value { font-size: 26px; font-weight: 600; letter-spacing: -.02em; margin-top: 4px; }
-  .kpi .sub { font-size: 12.5px; color: var(--fg-2); margin-top: 2px; }
+  .story { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px) { .story { grid-template-columns: 1fr; } nav .faint { display: none; } }
+  .beat { border: 1px solid var(--line); border-radius: 24px; padding: 28px 28px 24px; }
+  .beat .step { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+  .beat .big { font-size: 88px; font-weight: 800; letter-spacing: -.05em; line-height: 1; margin: 18px 0 12px; }
+  .beat .what { font-size: 19px; font-weight: 600; line-height: 1.3; letter-spacing: -.01em; }
+  .beat .who { margin-top: 18px; font-size: 13px; color: var(--fg-2); opacity: .75; }
+  .beat.caught { background: var(--red-bg); border-color: #ffd9d9; } .beat.caught .step, .beat.caught .big { color: var(--red); }
+  .beat.diag { background: var(--amber-bg); border-color: #ffe7b3; } .beat.diag .step { color: #b7791f; } .beat.diag .big { color: #c27c0e; }
+  .beat.verdict { background: var(--green-bg); border-color: #c8f0d6; } .beat.verdict .step, .beat.verdict .big { color: var(--green); }
 
-  .steps { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line); border-radius: 12px; background: var(--card); overflow: hidden; }
-  .step { padding: 12px 16px; border-right: 1px solid var(--line-2); }
-  .step:last-child { border-right: 0; }
-  .step .n { font-size: 11px; color: var(--fg-3); font-weight: 500; }
-  .step .t { font-weight: 600; font-size: 13px; }
-  .step .d { font-size: 12px; color: var(--fg-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .step.active { background: #fafafa; box-shadow: inset 0 -2px 0 var(--acc); }
-  @media (max-width: 900px) { .steps { grid-template-columns: 1fr; } .step { border-right: 0; border-bottom: 1px solid var(--line-2); } }
-
-  table { width: 100%; border-collapse: collapse; }
-  th, td { text-align: right; padding: 9px 8px; border-bottom: 1px solid var(--line-2); }
+  .evidence { border-top: 1px solid var(--line); margin-top: 36px; padding: 24px 0 60px; }
+  .evidence summary { cursor: pointer; font-weight: 600; font-size: 15px; list-style: none; display: flex; align-items: center; gap: 10px; }
+  .evidence summary::-webkit-details-marker { display: none; }
+  .evidence summary::before { content: "+"; display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); font-weight: 500; }
+  .evidence[open] summary::before { content: "–"; }
+  .ev-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; margin-top: 20px; align-items: start; }
+  @media (max-width: 860px) { .ev-grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; }
+  .card h4 { margin: 0 0 12px; font-size: 12px; color: var(--fg-3); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 8px 6px; text-align: right; border-bottom: 1px solid #f3f1ec; }
   th:first-child, td:first-child { text-align: left; padding-left: 0; }
-  th:last-child, td:last-child { padding-right: 0; }
-  th { font-size: 12px; font-weight: 500; color: var(--fg-3); }
-  th .v { display: block; color: var(--fg); font-weight: 600; font-size: 13px; }
-  tr.total td { font-weight: 600; font-size: 15px; border-bottom: 1px solid var(--line); }
-  tr.meta td { color: var(--fg-3); font-size: 12.5px; border-bottom: 0; padding-top: 6px; padding-bottom: 2px; }
-  .cell-ok { color: var(--fg); } .cell-part { color: var(--warn); font-weight: 600; } .cell-bad { color: var(--bad); font-weight: 600; }
-
-  .pill { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
-  .pill.ok { background: var(--ok-bg); color: var(--ok); } .pill.bad { background: var(--bad-bg); color: var(--bad); } .pill.warn { background: var(--warn-bg); color: var(--warn); } .pill.neutral { background: var(--line-2); color: var(--fg-2); }
-
-  .decision { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-2); align-items: flex-start; }
-  .decision:last-child { border-bottom: 0; }
-  .decision .ver { font-weight: 600; width: 44px; flex: none; }
-  .decision .why { font-size: 13px; color: var(--fg-2); }
-  .outcome { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: var(--line-2); font-size: 13px; }
-
-  .bar-row { display: grid; grid-template-columns: 190px 1fr 48px; gap: 12px; align-items: center; padding: 5px 0; font-size: 13px; }
-  .bar { height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; }
-  .bar > i { display: block; height: 100%; background: var(--bar); border-radius: 3px; }
-  .bar-row.top { font-weight: 600; }
-  .stats { display: flex; gap: 24px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line-2); font-size: 13px; }
-  .stats b { font-size: 16px; display: block; }
-
-  .mut { border-top: 1px solid var(--line-2); padding: 12px 0; }
-  .mut:first-of-type { border-top: 0; padding-top: 0; }
-  .mut .head { display: flex; gap: 10px; align-items: center; }
-  .mut .title { font-weight: 500; margin: 4px 0 2px; }
-  .mut details { margin-top: 6px; font-size: 13px; color: var(--fg-2); }
-  .mut summary { cursor: pointer; color: var(--fg-3); font-size: 12.5px; }
-  pre { white-space: pre-wrap; word-break: break-word; margin: 8px 0 0; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; font: 12px/1.5 var(--mono); max-height: 260px; overflow: auto; }
-
-  .trace { display: grid; grid-template-columns: 52px 1fr; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line-2); font-size: 13px; }
-  .trace:last-child { border-bottom: 0; }
-  #log { min-height: 80px; max-height: 300px; margin: 0; }
-  footer { margin-top: 20px; font-size: 12px; color: var(--fg-3); display: flex; gap: 18px; flex-wrap: wrap; }
+  th { font-size: 12px; color: var(--fg-3); font-weight: 500; line-height: 1.3; }
+  th b { color: var(--fg); }
+  tr.total td { font-weight: 700; border-bottom: 0; }
+  .bad { color: var(--red); font-weight: 700; }
+  .cand { padding: 10px 0; border-bottom: 1px solid #f3f1ec; font-size: 14px; }
+  .cand:last-child { border-bottom: 0; }
+  .tag { font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-right: 6px; }
+  .tag.r { background: var(--red-bg); color: var(--red); } .tag.g { background: var(--green-bg); color: var(--green); } .tag.a { background: var(--amber-bg); color: #b7791f; }
+  .muted { color: var(--fg-2); } .faint { color: var(--fg-3); font-size: 13px; }
+  pre { white-space: pre-wrap; margin: 16px 0 0; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; font: 12px/1.5 var(--mono); max-height: 220px; overflow: auto; }
+  pre:empty { display: none; }
+  footer { font-size: 12.5px; color: var(--fg-3); margin-top: 18px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
+  <nav>
     <span class="brand">agentgym</span>
-    <span class="tagline">coding agents improve software. agentgym improves the coding agents.</span>
+    <span class="faint">coding agents improve software. agentgym improves the coding agents.</span>
     <span class="spacer"></span>
-    <span id="mode" class="badge"><span class="dot"></span><span id="modeText">replay</span></span>
-    <span id="current" class="badge"></span>
+    <span id="mode" class="chip"><span class="dot"></span><span id="modeText">replay</span></span>
     <button id="run" title="Starts a real evolution run against the sponsor APIs (~10–15 min)">Run evolution</button>
-  </header>
+  </nav>
 
-  <div class="grid kpis" id="kpis"></div>
-  <section><div class="steps" id="steps"></div></section>
-
-  <section class="grid two">
-    <div class="card"><h3>Validation <span class="faint">unseen tasks · independent grader · passing runs</span></h3><div id="evals"></div></div>
-    <div class="card"><h3>Promotion gate <span class="faint">strict gain · zero regressions</span></h3><div id="decision"></div></div>
+  <section class="hero">
+    <div class="eyebrow" id="eyebrow">Latest run</div>
+    <h1 id="headline">Loading…</h1>
   </section>
 
-  <section class="grid half">
-    <div class="card"><h3>Failure diagnosis <span class="faint" id="diagMeta"></span></h3><div id="diag"></div></div>
-    <div class="card"><h3>Mutations <span class="faint" id="mutMeta"></span></h3><div id="muts"></div></div>
-  </section>
+  <section class="story" id="story"></section>
 
-  <section class="grid half">
-    <div class="card"><h3>Dev traces <span class="faint" id="tracesMeta"></span></h3><div id="tasks"></div></div>
-    <div class="card"><h3>Event stream <span class="faint">/api/events</span></h3><pre id="log" class="mono">No live run. Showing the last recorded run.</pre></div>
-  </section>
-
-  <footer id="providers"></footer>
-  <div id="history" hidden></div>
+  <details class="evidence">
+    <summary>See the evidence</summary>
+    <div class="ev-grid">
+      <div class="card"><h4>New, unseen tasks · passing runs</h4><div id="evals"></div></div>
+      <div class="card"><h4>Proposed fixes</h4><div id="muts"></div></div>
+    </div>
+    <pre id="log"></pre>
+    <footer id="footer"></footer>
+  </details>
 </div>
 <script>
 const $ = (id) => document.getElementById(id);
+// ?scale=1.5 enlarges everything for projectors / recordings
+const _scale = Number(new URLSearchParams(location.search).get("scale")); if (_scale > 0) document.body.style.zoom = _scale;
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const pct = (p) => (p * 100).toFixed(1) + "%";
-const frac = (s) => s.split("/").map(Number);
-let liveStep = -1;
+const human = (w) => ({ missed_error_paths: "unhandled error & cancel paths", ignored_stated_constraints: "ignored requirements", broke_existing_behavior: "breaking existing behavior", missed_edge_cases: "missed edge cases", overfit_visible_tests: "stopping at green tests", cross_module_contract: "cross-module contracts", output_format_or_tooling: "tool use", environment: "environment" }[w] || w);
 
-function steps(r, running) {
-  const d = r?.diagnosis;
-  const best = r ? Math.max(...r.candidateVals.map((c) => c.totals.runPasses)) : 0;
-  const items = [
-    ["Dev run", r ? `${r.devTotals.runPasses}/${r.devTotals.runs} pass · ${r.devTotals.selfReportOverclaims} overclaimed` : "—"],
-    ["SubQ diagnosis", d ? `${d.recurring.weakness} · ${pct(d.recurring.probabilities[d.recurring.weakness])}` : "—"],
-    ["Meta mutation", r ? `${r.proposals.length} candidates` : "—"],
-    ["Validation", r ? `parent ${r.parentVal.totals.runPasses}/${r.parentVal.totals.runs} · best ${best}/${r.parentVal.totals.runs}` : "—"],
-    ["Gate", r ? (r.promoted ? `promoted ${r.promoted}` : `no promotion · ${r.parent} kept`) : "—"],
-  ];
-  $("steps").innerHTML = items.map(([t, d], i) => `<div class="step ${running && i === liveStep ? "active" : ""}"><div class="n">${i + 1}</div><div class="t">${t}</div><div class="d">${running && i >= liveStep ? (i === liveStep ? "running…" : "pending") : esc(d)}</div></div>`).join("");
-}
-
-function render({ record: r, versions: v, providers, running }) {
+function render({ record: r, running }) {
   $("run").disabled = running;
-  $("mode").className = "badge" + (running ? " live" : "");
-  $("modeText").textContent = running ? "live run" : r ? `replay · ${r.runId}` : "no runs yet";
-  $("current").textContent = v?.current ? `current agent ${v.current.version}` : "";
-  $("providers").innerHTML = `<span>Configured for next run:</span>` + (providers || []).map((p) => `<span>${esc(p.role)} · ${esc(p.provider)} <span class="mono">${esc(p.model)}</span>${p.provider === "claude-cli" ? " (dev adapter, not a sponsor)" : ""}</span>`).join("") + `<span>replayed runs are recorded executions, not fresh ones</span>`;
-  steps(r, running);
-  if (!r) return;
+  $("mode").className = "chip" + (running ? " live" : "");
+  $("modeText").textContent = running ? "Live run in progress" : r ? "Replay of a recorded run" : "No runs yet";
+  if (!r) { $("headline").textContent = "No runs yet. Press Run evolution."; return; }
   const d = r.diagnosis;
-  const best = r.candidateVals.reduce((a, c) => (c.totals.runPasses > (a?.totals.runPasses ?? -1) ? c : a), null);
+  const fails = r.devTotals.runs - r.devTotals.runPasses;
+  const over = r.devTotals.selfReportOverclaims;
+  const weak = d.recurring.weakness;
+  const p = d.recurring.probabilities[weak];
+  const n = r.proposals.length;
+  const promoted = r.promoted;
+  const regressions = r.decisions.filter((x) => x.regressions?.length).length;
 
-  $("kpis").innerHTML = [
-    ["Dev pass rate", `${r.devTotals.runPasses}/${r.devTotals.runs}`, `${r.parent} · ${esc(r.coder.model)}`],
-    ["Overclaimed success", `${r.devTotals.selfReportOverclaims}`, `of ${r.devTotals.runs - r.devTotals.runPasses} failures said “done”`],
-    ["Recurring weakness", pct(d.recurring.probabilities[d.recurring.weakness]), esc(d.recurring.weakness)],
-    ["Decision", r.promoted ? "Promote" : "Reject", r.promoted ? `${esc(r.promoted)} is current` : `${r.decisions.length} candidates · ${esc(r.parent)} kept`],
-  ].map(([l, val, s]) => `<div class="card kpi"><div class="label">${l}</div><div class="value num">${val}</div><div class="sub">${s}</div></div>`).join("");
+  $("eyebrow").textContent = `Latest run · coding agent ${r.parent} on Meta ${r.coder.model}`;
+  $("headline").innerHTML = promoted
+    ? `The agent <span class="red">said “done”</span> when it wasn’t. agentgym found why, fixed it, and <span class="green">proved the fix</span>.`
+    : `The agent <span class="red">said “done” ${over}×</span> when it wasn’t. agentgym found why, and <span class="green">refused to ship</span> an unproven fix.`;
 
-  const cols = [{ version: r.parent, role: "parent", totals: r.parentVal.totals, perTask: r.parentVal.perTask }, ...r.candidateVals.map((c) => ({ ...c, role: "candidate" }))];
+  $("story").innerHTML = `
+    <div class="beat caught"><div class="step">1 · Caught</div><div class="big num">${over}/${fails}</div>
+      <div class="what">failures the agent swore were fixed</div><div class="who">independent grader · hidden tests</div></div>
+    <div class="beat diag"><div class="step">2 · Diagnosed</div><div class="big num">${Math.round(p * 100)}%</div>
+      <div class="what">confident the root cause is ${esc(human(weak))}</div><div class="who">Subquadratic SubQ Snap · ${d.perTrace.length} traces, one read</div></div>
+    <div class="beat verdict"><div class="step">3 · Verified</div><div class="big num">${promoted ? 1 : 0}/${n}</div>
+      <div class="what">${promoted ? `fix shipped: ${esc(promoted)}` : `fixes shipped. None beat the original on new tasks${regressions ? `, ${regressions} broke one` : ""}.`}</div><div class="who">Meta writes fixes · the gate decides</div></div>`;
+
+  const cols = [{ version: r.parent, role: "original", totals: r.parentVal.totals, perTask: r.parentVal.perTask }, ...r.candidateVals.map((c) => ({ ...c, role: "fix" }))];
   const tasks = Object.keys(r.parentVal.perTask);
-  const cell = (s, parent) => { const [a, b] = frac(s); const [pa] = frac(parent); const cls = a === b ? "cell-ok" : a === 0 ? "cell-bad" : "cell-part"; return `<td class="num ${cls}${a < pa ? " cell-bad" : ""}">${s}</td>`; };
-  $("evals").innerHTML = `<table><thead><tr><th>Task</th>${cols.map((c) => `<th><span class="v">${esc(c.version)}</span>${c.role}</th>`).join("")}</tr></thead><tbody>
-    ${tasks.map((t) => `<tr><td class="mono">${esc(t)}</td>${cols.map((c) => cell(c.perTask[t], r.parentVal.perTask[t])).join("")}</tr>`).join("")}
-    <tr class="total"><td>Passed</td>${cols.map((c) => `<td class="num">${c.totals.runPasses}/${c.totals.runs}</td>`).join("")}</tr>
-    <tr class="meta"><td>Tokens</td>${cols.map((c) => `<td class="num">${c.totals.tokens.toLocaleString()}</td>`).join("")}</tr>
-    <tr class="meta"><td>Attempts</td>${cols.map((c) => `<td class="num">${c.totals.attempts}</td>`).join("")}</tr></tbody></table>`;
+  $("evals").innerHTML = `<table><thead><tr><th></th>${cols.map((c) => `<th><b>${esc(c.version)}</b><br>${c.role}</th>`).join("")}</tr></thead><tbody>
+    ${tasks.map((t) => `<tr><td class="mono">${esc(t)}</td>${cols.map((c) => { const [a] = c.perTask[t].split("/").map(Number); const [pa] = r.parentVal.perTask[t].split("/").map(Number); return `<td class="num ${a < pa ? "bad" : ""}">${c.perTask[t]}</td>`; }).join("")}</tr>`).join("")}
+    <tr class="total"><td>Total</td>${cols.map((c) => `<td class="num">${c.totals.runPasses}/${c.totals.runs}</td>`).join("")}</tr></tbody></table>`;
 
-  $("decision").innerHTML = r.decisions.map((x) => `<div class="decision"><span class="ver">${esc(x.candidate)}</span><div><span class="pill ${x.decision === "PROMOTE" ? "ok" : "bad"}">${x.decision === "PROMOTE" ? "Promote" : "Reject"}</span> <span class="num muted" style="font-size:13px">&nbsp;${Number.isNaN(x.candidateScore) ? "guard" : `${x.candidateScore}/${x.runs}`} vs ${x.parentScore}/${x.runs || r.parentVal.totals.runs}</span><div class="why">${esc(x.reasons.map((s) => s.replace(/^no improvement on validation: .*/, "No improvement over parent").replace(/^regressions on: /, "Regressed: ")).join(" · "))}</div></div></div>`).join("") +
-    `<div class="outcome">${r.promoted ? `<b>${esc(r.promoted)}</b> promoted. ${esc(r.parent)} is kept for rollback.` : `Nothing promoted. <b>${esc(r.parent)}</b> stays current, and every candidate is saved under <span class="mono">versions/</span>.`}</div>`;
-
-  const probs = Object.entries(d.recurring.probabilities).sort((a, b) => b[1] - a[1]).slice(0, 4);
-  $("diagMeta").textContent = `Subquadratic ${d.analyzer.model} · ${d.analyzer.inputTokens.toLocaleString()} tokens · ${d.analyzer.questions} questions`;
-  $("diag").innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px">Most likely recurring weakness across all ${d.perTrace.length} dev traces:</div>` +
-    probs.map(([k, p], i) => `<div class="bar-row ${i === 0 ? "top" : ""}"><span class="mono">${esc(k)}</span><div class="bar"><i style="width:${p * 100}%;${i ? "opacity:.25" : ""}"></i></div><span class="num" style="text-align:right">${pct(p)}</span></div>`).join("") +
-    `<div class="stats"><div><b class="num">${d.systemicProbability.toFixed(2)}</b><span class="faint">systemic</span></div><div><b class="num">${d.overclaimProbability.toFixed(2)}</b><span class="faint">overclaim</span></div><div><b class="mono" style="font-size:13px">${esc(d.lever.choice)}</b><span class="faint">suggested lever</span></div></div>` +
-    `<div class="faint" style="font-size:12px;margin-top:12px">Evidence: <span class="mono">${esc(d.evidenceTraceIds.join(", ") || "—")}</span></div>`;
-
-  $("mutMeta").textContent = `Meta ${r.mutator.model}`;
-  const decOf = (ver) => r.decisions.find((x) => x.candidate === ver);
-  $("muts").innerHTML = r.proposals.map((p) => {
-    const dec = decOf(p.candidateVersion); const rev = r.reviews?.[p.id]?.report;
-    return `<div class="mut"><div class="head"><b>${esc(p.candidateVersion)}</b><span class="pill ${dec?.decision === "PROMOTE" ? "ok" : "bad"}">${dec?.decision === "PROMOTE" ? "Promoted" : "Rejected"}</span>${p.guard.ok ? "" : '<span class="pill warn">Guard blocked</span>'}${rev ? `<span class="pill ${rev.risk === "high" ? "warn" : "neutral"}">Gemini: ${esc(rev.risk)} risk</span>` : ""}</div>
-      <div class="title">${esc(p.proposedChange)}</div><div class="faint mono">${esc(p.target)}</div>
-      <details><summary>Rationale, review, patch</summary><p><b>Why.</b> ${esc(p.rationale)}</p><p><b>Expected.</b> ${esc(p.expectedImpact)}</p>${rev ? `<p><b>Gemini review.</b> ${esc(rev.overfittingConcerns || "")}</p>` : ""}<pre>${esc(JSON.stringify(p.patch, null, 2))}</pre></details></div>`;
+  $("muts").innerHTML = r.proposals.map((pr) => {
+    const dec = r.decisions.find((x) => x.candidate === pr.candidateVersion);
+    const rev = r.reviews?.[pr.id]?.report;
+    const why = !pr.guard.ok ? "blocked by guard" : dec?.regressions?.length ? `broke ${dec.regressions.join(", ")}` : dec?.decision === "PROMOTE" ? "beat the original" : "no gain over original";
+    return `<div class="cand"><span class="tag ${dec?.decision === "PROMOTE" ? "g" : "r"}">${dec?.decision === "PROMOTE" ? "Shipped" : "Rejected"}</span><b>${esc(pr.candidateVersion)}</b> <span class="faint">· ${esc(why)}</span>${rev?.risk === "high" ? ` <span class="tag a">Gemini: overfit risk</span>` : ""}<div class="muted" style="margin-top:4px">${esc(pr.proposedChange)}</div></div>`;
   }).join("");
 
-  const tr = [...d.perTrace].sort((a, b) => a.passed - b.passed);
-  $("tracesMeta").textContent = `${r.parent} · Meta ${r.coder.model}`;
-  $("tasks").innerHTML = tr.map((t) => `<div class="trace"><span><span class="pill ${t.passed ? "ok" : "bad"}">${t.passed ? "Pass" : "Fail"}</span></span><div><span class="mono">${esc(t.traceId)}</span>${t.passed ? "" : `<div class="muted" style="font-size:12.5px">${esc((t.failingTests[0] || "").replace(/^hidden: /, "hidden test: "))}</div>`}</div></div>`).join("");
+  $("footer").innerHTML = `${esc(r.runId)} · SubQ ${esc(d.analyzer.model)} read ${d.analyzer.inputTokens.toLocaleString()} tokens · Meta ${esc(r.mutator.model)} wrote ${n} fixes · Gemini reviewed them · every model call logged in <span class="mono">results/llm-calls.jsonl</span> · replays are recorded runs, not fresh executions`;
 }
 
 async function refresh() { render(await (await fetch("/api/latest")).json()); }
-$("run").onclick = async () => {
-  $("log").textContent = ""; liveStep = 0;
-  await fetch("/api/evolve", { method: "POST" }); refresh();
-};
+$("run").onclick = async () => { $("log").textContent = ""; await fetch("/api/evolve", { method: "POST" }); document.querySelector(".evidence").open = true; refresh(); };
 const es = new EventSource("/api/events");
 es.onmessage = (m) => {
   const e = JSON.parse(m.data);
-  if (e.type === "eval_start" && e.split === "dev") liveStep = 0;
-  if (e.type === "llm_start" && e.role === "analyzer") liveStep = 1;
-  if (e.type === "llm_start" && e.role === "mutator") liveStep = 2;
-  if (e.type === "eval_start" && e.split === "val") liveStep = 3;
-  const line = e.type === "log" ? e.msg.trim() : e.type === "task_graded" ? `graded ${e.taskId}@${e.version}#${e.rep}: ${e.passed ? "PASS" : "FAIL"}${e.selfReported && !e.passed ? " (agent claimed success)" : ""}` :
-    e.type === "llm_end" ? `${e.role} ← ${e.provider} ${e.model} · ${e.latencyMs}ms` : e.type === "error" ? `ERROR ${e.msg}` : null;
-  if (line) { const l = $("log"); if (l.textContent.startsWith("No live run")) l.textContent = ""; l.textContent += `${e.t.slice(11, 19)}  ${line}\n`; l.scrollTop = 1e9; }
-  if (["eval_start", "llm_start"].includes(e.type)) refresh();
-  if (e.type === "evolution_end" || e.type === "error") { liveStep = -1; setTimeout(refresh, 300); }
+  const line = e.type === "log" ? e.msg.trim() : e.type === "task_graded" ? `graded ${e.taskId}@${e.version}#${e.rep}: ${e.passed ? "PASS" : "FAIL"}${e.selfReported && !e.passed ? " (agent claimed success)" : ""}` : e.type === "error" ? `ERROR ${e.msg}` : null;
+  if (line) { $("log").textContent += `${e.t.slice(11, 19)}  ${line}\n`; $("log").scrollTop = 1e9; }
+  if (e.type === "evolution_end" || e.type === "error") setTimeout(refresh, 300);
 };
 refresh();
 </script>
