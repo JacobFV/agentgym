@@ -38,3 +38,14 @@ Suggested voice-over if recording live:
 - *Why not show a big improvement?* Strong coders saturate small validation sets. We report that instead of tuning tests after seeing results. The gate is the product.
 - *Is SubQ just a classifier?* Snap is a decisions model. We use it for what it's best at: calibrated, typed judgments over a huge context (all traces at once). Meta writes the free-text mutation.
 - *Could the mutator cheat?* It can only touch whitelisted config fields. Tests, grader, gate and budget are outside its reach, and patches naming benchmark files or tasks are rejected.
+
+## 60-second narrative: "can a frozen model learn a better way to work?" (experiment results)
+
+- **0:00** "Everyone benchmarks models. We benchmark and evolve the harness around a model with frozen weights: Meta muse-spark-1.1."
+- **0:10** "agentgym finds recurring failures with Subquadratic SubQ Snap: all 12 traces in one call, error/cancel paths at 96%. Meta then proposes harness changes, and hidden tests the optimizer never sees grade them."
+- **0:25** "To check the optimizer actually adds something, we raced it against random search and a one-shot LLM redesign, at the same selection budget of 18 graded runs per candidate."
+- **0:40** "On held-out work, the original harness scored 6/6. agentgym's pick scored 5/6 at 1.25× tokens, random 5/6 at 1.7×, and one-shot 6/6 at 2×. Nothing beat the original, and everything cost more."
+- **0:52** "That's a real negative result. The benchmark is saturated, so a frozen model has no headroom to improve here. The gate refused to ship the dev-set 'win', and the held-out data proved it right."
+
+### Final slide: did the framework improve outcomes, by how much, at what cost, compared with what?
+**No.** Δ pass rate vs the original harness on held-out work: agentgym −1/6, random −1/6, one-shot 0/6. Cost: 1.25×, 1.72× and 2.03× tokens respectively. That's n=1 held-out task × 6 reps: anecdotal, with no significance claimed. Protocol and raw records: `docs/EXPERIMENT.md`, `docs/FINDINGS.md`, `results/experiments/`.
