@@ -1,0 +1,238 @@
+{
+  "id": "controls-selection-2026-11-08T00-21-47",
+  "commit": "726f1f2",
+  "createdAt": "2026-11-08T00:21:47.293Z",
+  "coder": {
+    "provider": "meta",
+    "model": "muse-spark-1.1"
+  },
+  "mutator": {
+    "provider": "meta",
+    "model": "muse-spark-1.3"
+  },
+  "parent": "v0",
+  "split": "dev",
+  "reps": 3,
+  "candidates": [
+    {
+      "method": "random",
+      "version": "v0.r1-s1",
+      "description": "random: selfReview=true",
+      "patch": {
+        "toolPolicy": {
+          "selfReview": true
+        }
+      },
+      "metrics": {
+        "version": "v0.r1-s1",
+        "split": "dev",
+        "tasks": 6,
+        "repsPerTask": 3,
+        "runs": 18,
+        "heldOutPassRate": 0.8888888888888888,
+        "passAt1": 0.8888888888888888,
+        "tasksSolvedEveryRep": 5,
+        "tokensTotal": 314837,
+        "tokensPerTask": 17491,
+        "tokensPerSuccess": 19677,
+        "modelCallsPerTask": 2,
+        "latencyPerTaskMs": 125185,
+        "visiblePassHiddenFailRate": 0.1111111111111111,
+        "costPerSuccess": null,
+        "perTask": {
+          "config-precedence": "3/3",
+          "dedupe-cache": "1/3",
+          "ledger-rounding": "3/3",
+          "lru-eviction-hooks": "3/3",
+          "pagination-cursor": "3/3",
+          "retry-cancel": "3/3"
+        },
+        "evalId": "ctl-2026-11-08T00-18-20-e5y8--v0.r1-s1--dev"
+      }
+    },
+    {
+      "method": "random",
+      "version": "v0.r2-s1",
+      "description": "random: selfReview=true",
+      "patch": {
+        "toolPolicy": {
+          "selfReview": true
+        }
+      },
+      "metrics": {
+        "version": "v0.r2-s1",
+        "split": "dev",
+        "tasks": 6,
+        "repsPerTask": 3,
+        "runs": 18,
+        "heldOutPassRate": 0.8333333333333334,
+        "passAt1": 0.8333333333333334,
+        "tasksSolvedEveryRep": 5,
+        "tokensTotal": 326221,
+        "tokensPerTask": 18123,
+        "tokensPerSuccess": 21748,
+        "modelCallsPerTask": 2,
+        "latencyPerTaskMs": 134801,
+        "visiblePassHiddenFailRate": 0.16666666666666666,
+        "costPerSuccess": null,
+        "perTask": {
+          "config-precedence": "3/3",
+          "dedupe-cache": "0/3",
+          "ledger-rounding": "3/3",
+          "lru-eviction-hooks": "3/3",
+          "pagination-cursor": "3/3",
+          "retry-cancel": "3/3"
+        },
+        "evalId": "ctl-2026-11-08T00-18-20-e5y8--v0.r2-s1--dev"
+      }
+    },
+    {
+      "method": "random",
+      "version": "v0.r3-s1",
+      "description": "random: planFirst=true, fullTestOutputOnRetry=true, +skill:read-callers-first",
+      "patch": {
+        "toolPolicy": {
+          "planFirst": true,
+          "fullTestOutputOnRetry": true
+        },
+        "skills": {
+          "read-callers-first": "Before editing a function, read all of its callers and usages so your change keeps every call site working."
+        }
+      },
+      "metrics": {
+        "version": "v0.r3-s1",
+        "split": "dev",
+        "tasks": 6,
+        "repsPerTask": 3,
+        "runs": 18,
+        "heldOutPassRate": 0.8333333333333334,
+        "passAt1": 0.8333333333333334,
+        "tasksSolvedEveryRep": 4,
+        "tokensTotal": 241683,
+        "tokensPerTask": 13427,
+        "tokensPerSuccess": 16112,
+        "modelCallsPerTask": 2,
+        "latencyPerTaskMs": 90556,
+        "visiblePassHiddenFailRate": 0.16666666666666666,
+        "costPerSuccess": null,
+        "perTask": {
+          "config-precedence": "3/3",
+          "dedupe-cache": "1/3",
+          "ledger-rounding": "3/3",
+          "lru-eviction-hooks": "3/3",
+          "pagination-cursor": "3/3",
+          "retry-cancel": "2/3"
+        },
+        "evalId": "ctl-2026-11-08T00-18-20-e5y8--v0.r3-s1--dev"
+      }
+    },
+    {
+      "method": "oneshot",
+      "version": "v0.o1",
+      "description": "Replace system prompt with a minimal, interface-preserving, general-rule implementation directive.",
+      "patch": {
+        "systemPrompt": "You are a disciplined maintenance engineer for JavaScript repositories. Implement exactly the change requested in the ticket and nothing more. Preserve all existing interfaces, exports, and behavior except where the ticket explicitly requires a change. Implement the general rule from the ticket, not special cases for visible examples. Handle relevant edge cases including empty, missing, boundary, and error paths consistent with surrounding repo conventions. Keep the diff minimal, match existing style, and do not refactor unrelated code. Return the full contents of every file you modify."
+      },
+      "metrics": {
+        "version": "v0.o1",
+        "split": "dev",
+        "tasks": 6,
+        "repsPerTask": 3,
+        "runs": 18,
+        "heldOutPassRate": 0.8333333333333334,
+        "passAt1": 0.8333333333333331,
+        "tasksSolvedEveryRep": 4,
+        "tokensTotal": 120184,
+        "tokensPerTask": 6677,
+        "tokensPerSuccess": 8012,
+        "modelCallsPerTask": 1,
+        "latencyPerTaskMs": 57577,
+        "visiblePassHiddenFailRate": 0.16666666666666666,
+        "costPerSuccess": null,
+        "perTask": {
+          "config-precedence": "3/3",
+          "dedupe-cache": "2/3",
+          "ledger-rounding": "3/3",
+          "lru-eviction-hooks": "3/3",
+          "pagination-cursor": "3/3",
+          "retry-cancel": "1/3"
+        },
+        "evalId": "ctl-2026-11-08T00-18-20-e5y8--v0.o1--dev"
+      }
+    },
+    {
+      "method": "oneshot",
+      "version": "v0.o2",
+      "description": "Add a general robustness checklist skill for hidden-test generalization.",
+      "patch": {
+        "skills": {
+          "robustness_check": "Use for every ticket before finalizing: infer the general contract from the ticket description rather than only observed examples. Survey other usages of code you touch to preserve compatible behavior. Enumerate missing, empty, boundary, and failure inputs and handle them per surrounding conventions without hardcoding expected outputs. Keep the change minimal and confirm no unrelated behavior shifts."
+        }
+      },
+      "metrics": {
+        "version": "v0.o2",
+        "split": "dev",
+        "tasks": 6,
+        "repsPerTask": 3,
+        "runs": 18,
+        "heldOutPassRate": 0.7222222222222222,
+        "passAt1": 0.7222222222222222,
+        "tasksSolvedEveryRep": 4,
+        "tokensTotal": 133013,
+        "tokensPerTask": 7390,
+        "tokensPerSuccess": 10232,
+        "modelCallsPerTask": 1,
+        "latencyPerTaskMs": 65370,
+        "visiblePassHiddenFailRate": 0.2777777777777778,
+        "costPerSuccess": null,
+        "perTask": {
+          "config-precedence": "3/3",
+          "dedupe-cache": "0/3",
+          "ledger-rounding": "3/3",
+          "lru-eviction-hooks": "3/3",
+          "pagination-cursor": "3/3",
+          "retry-cancel": "1/3"
+        },
+        "evalId": "ctl-2026-11-08T00-18-20-e5y8--v0.o2--dev"
+      }
+    },
+    {
+      "method": "oneshot",
+      "version": "v0.o3",
+      "description": "Enable planning before edits, self-review after visible tests pass, and full test output on retry.",
+      "patch": {
+        "toolPolicy": {
+          "planFirst": true,
+          "selfReview": true,
+          "fullTestOutputOnRetry": true
+        }
+      },
+      "metrics": {
+        "version": "v0.o3",
+        "split": "dev",
+        "tasks": 6,
+        "repsPerTask": 3,
+        "runs": 18,
+        "heldOutPassRate": 0.9444444444444444,
+        "passAt1": 0.9444444444444445,
+        "tasksSolvedEveryRep": 5,
+        "tokensTotal": 414629,
+        "tokensPerTask": 23035,
+        "tokensPerSuccess": 24390,
+        "modelCallsPerTask": 3,
+        "latencyPerTaskMs": 135958,
+        "visiblePassHiddenFailRate": 0.05555555555555555,
+        "costPerSuccess": null,
+        "perTask": {
+          "config-precedence": "3/3",
+          "dedupe-cache": "3/3",
+          "ledger-rounding": "3/3",
+          "lru-eviction-hooks": "3/3",
+          "pagination-cursor": "3/3",
+          "retry-cancel": "2/3"
+        },
+        "evalId": "ctl-2026-11-08T00-18-20-e5y8--v0.o3--dev"
+      }
+    }
+  ]
+}

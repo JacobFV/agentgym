@@ -1,0 +1,7 @@
+benchmark bench-2026-11-07T23-11-57-d3j8: split=test tasks=3 reps=2 coder=Meta Model API [muse-spark-1.1]
+
+v0 on test: 6/6 runs passed (independent grading), overclaims=0
+  PASS integration-failure 2/2  
+  PASS rate-limiter 2/2  
+  PASS shared-util-invariants 2/2  
+  evidence: results/evaluations/bench-2026-11-07T23-11-57-d3j8--v0--test.json

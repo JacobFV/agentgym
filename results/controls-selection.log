@@ -1,0 +1,17 @@
+random v0.r1-s1: random: selfReview=true
+random v0.r2-s1: random: selfReview=true
+random v0.r3-s1: random: planFirst=true, fullTestOutputOnRetry=true, +skill:read-callers-first
+oneshot v0.o1: Replace system prompt with a minimal, interface-preserving, general-rule implementation directive.
+oneshot v0.o2: Add a general robustness checklist skill for hidden-test generalization.
+oneshot v0.o3: Enable planning before edits, self-review after visible tests pass, and full test output on retry.
+┌─────────┬────────────┬───────┬───────┬─────────────┬──────┬────────────────────┬────────────────────┬─────────────────────┬─────────────┬───────────────┬──────────────────┬───────────────────┬──────────────────┬───────────────────────────┬────────────────┐
+│ (index) │ version    │ split │ tasks │ repsPerTask │ runs │ heldOutPassRate    │ passAt1            │ tasksSolvedEveryRep │ tokensTotal │ tokensPerTask │ tokensPerSuccess │ modelCallsPerTask │ latencyPerTaskMs │ visiblePassHiddenFailRate │ costPerSuccess │
+├─────────┼────────────┼───────┼───────┼─────────────┼──────┼────────────────────┼────────────────────┼─────────────────────┼─────────────┼───────────────┼──────────────────┼───────────────────┼──────────────────┼───────────────────────────┼────────────────┤
+│ 0       │ 'v0.r1-s1' │ 'dev' │ 6     │ 3           │ 18   │ 0.8888888888888888 │ 0.8888888888888888 │ 5                   │ 314837      │ 17491         │ 19677            │ 2                 │ 125185           │ 0.1111111111111111        │ null           │
+│ 1       │ 'v0.r2-s1' │ 'dev' │ 6     │ 3           │ 18   │ 0.8333333333333334 │ 0.8333333333333334 │ 5                   │ 326221      │ 18123         │ 21748            │ 2                 │ 134801           │ 0.16666666666666666       │ null           │
+│ 2       │ 'v0.r3-s1' │ 'dev' │ 6     │ 3           │ 18   │ 0.8333333333333334 │ 0.8333333333333334 │ 4                   │ 241683      │ 13427         │ 16112            │ 2                 │ 90556            │ 0.16666666666666666       │ null           │
+│ 3       │ 'v0.o1'    │ 'dev' │ 6     │ 3           │ 18   │ 0.8333333333333334 │ 0.8333333333333331 │ 4                   │ 120184      │ 6677          │ 8012             │ 1                 │ 57577            │ 0.16666666666666666       │ null           │
+│ 4       │ 'v0.o2'    │ 'dev' │ 6     │ 3           │ 18   │ 0.7222222222222222 │ 0.7222222222222222 │ 4                   │ 133013      │ 7390          │ 10232            │ 1                 │ 65370            │ 0.2777777777777778        │ null           │
+│ 5       │ 'v0.o3'    │ 'dev' │ 6     │ 3           │ 18   │ 0.9444444444444444 │ 0.9444444444444445 │ 5                   │ 414629      │ 23035         │ 24390            │ 3                 │ 135958           │ 0.05555555555555555       │ null           │
+└─────────┴────────────┴───────┴───────┴─────────────┴──────┴────────────────────┴────────────────────┴─────────────────────┴─────────────┴───────────────┴──────────────────┴───────────────────┴──────────────────┴───────────────────────────┴────────────────┘
+raw record: /Users/vibestartup/Code/agentgym/results/experiments/controls-selection-2026-11-08T00-21-47.json

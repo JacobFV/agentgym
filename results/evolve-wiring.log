@@ -1,0 +1,53 @@
+
+=== AGENTGYM EVOLUTION evo-2026-11-07T22-50-28 ===
+parent v0 | coder claude-cli dev adapter (haiku) — NOT a sponsor provider [haiku] | analyzer subquadratic [subq-snap-1.1] | mutator claude-cli dev adapter (haiku) — NOT a sponsor provider [haiku]
+dev=config-precedence,dedupe-cache,retry-cancel val=event-ordering,resource-cleanup,serialization-migration reps=1 (test split untouched)
+
+[1/5] running v0 on dev split...
+      dev: 3/3 passed independent grading (0 self-reported success but failed)
+
+[2/5] SubQ Snap analyzing 3 dev traces...
+      0/3 dev traces failed independent grading (0 of them self-reported success). SubQ's dominant recurring weakness: ignored_stated_constraints (p=0.56) — The ticket explicitly stated a requirement/constraint that the final code does not implement. Systemic p=0.10; overclaim p=0.00. Suggested lever: self_review_after_green. Per-trace: none failed.
+
+[3/5] claude-cli dev adapter (haiku) — NOT a sponsor provider generating 2 mutations...
+      v0.1: Enable a post-green self-review pass and have the system prompt require listing every explicit requirement in the ticket and confirming each one is implemented in the final code, with edits limited to closing gaps. 
+      v0.2: Enable an explicit pre-edit plan and instruct the agent to list each stated constraint and invariant, the code location that will satisfy it, and the error paths it must cover, before editing. 
+
+[4/5] validation: v0 + 2 candidates on 3 unseen tasks x1...
+
+[5/5] promotion gate
+      v0.1: REJECT — no improvement on validation: 3/3 vs parent 3/3
+      v0.2: REJECT — no improvement on validation: 3/3 vs parent 3/3
+
+NO PROMOTION — v0 remains current
+
+AGENT EVOLUTION RUN evo-2026-11-07T22-50-28
+
+coder:    claude-cli dev adapter (haiku) — NOT a sponsor provider [haiku]
+analyzer: subquadratic subq-snap-1.1 POST /v1/systemone (11596 input tokens, 18 typed questions)
+mutator:  claude-cli dev adapter (haiku) — NOT a sponsor provider [haiku]
+
+baseline: v0
+dev: 3/3 passed independent grading; 0 overclaimed success
+diagnosis: 0/3 dev traces failed independent grading (0 of them self-reported success). SubQ's dominant recurring weakness: ignored_stated_constraints (p=0.56) — The ticket explicitly stated a requirement/constraint that the final code does not implement. Systemic p=0.10; overclaim p=0.00. Suggested lever: self_review_after_green. Per-trace: none failed.
+mutation proposals generated: 2
+
+validation (unseen tasks):
+  v0       3/3  {"event-ordering":"1/1","resource-cleanup":"1/1","serialization-migration":"1/1"}
+  v0.1     3/3  {"event-ordering":"1/1","resource-cleanup":"1/1","serialization-migration":"1/1"}  tokens=54512
+  v0.2     3/3  {"event-ordering":"1/1","resource-cleanup":"1/1","serialization-migration":"1/1"}  tokens=39179
+
+v0.1: REJECT
+  change: Enable a post-green self-review pass and have the system prompt require listing every explicit requirement in the ticket and confirming each one is implemented in the final code, with edits limited to closing gaps.
+  why:    no improvement on validation: 3/3 vs parent 3/3
+v0.2: REJECT
+  change: Enable an explicit pre-edit plan and instruct the agent to list each stated constraint and invariant, the code location that will satisfy it, and the error paths it must cover, before editing.
+  why:    no improvement on validation: 3/3 vs parent 3/3
+
+result: NO PROMOTION — v0 preserved
+
+evidence:
+  results/evolutions/evo-2026-11-07T22-50-28.json
+  results/runs/evo-2026-11-07T22-50-28/ (traces + diagnosis)
+  mutations/mut-mw6zz1ak-0.json, mutations/mut-mw6zz1ak-1.json
+  results/llm-calls.jsonl (every provider call: provider, model, tokens, latency)

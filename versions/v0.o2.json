@@ -1,0 +1,16 @@
+{
+  "version": "v0.o2",
+  "parent": "v0",
+  "createdAt": "2026-11-08T00:18:45.144Z",
+  "createdBy": "control:oneshot",
+  "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify.",
+  "skills": {
+    "robustness_check": "Use for every ticket before finalizing: infer the general contract from the ticket description rather than only observed examples. Survey other usages of code you touch to preserve compatible behavior. Enumerate missing, empty, boundary, and failure inputs and handle them per surrounding conventions without hardcoding expected outputs. Keep the change minimal and confirm no unrelated behavior shifts."
+  },
+  "toolPolicy": {
+    "maxAttempts": 2,
+    "planFirst": false,
+    "selfReview": false,
+    "fullTestOutputOnRetry": false
+  }
+}

@@ -1,0 +1,37 @@
+benchmark bench-2026-11-07T23-15-35-h6m7: split=dev tasks=6 reps=3 coder=Meta Model API [muse-spark-1.1]
+
+v0 on dev: 15/18 runs passed (independent grading), overclaims=3
+  PASS config-precedence 3/3  
+  FLAKY dedupe-cache 2/3  hidden: synchronous loader throw is not cached either
+  PASS ledger-rounding 3/3  
+  PASS lru-eviction-hooks 3/3  
+  PASS pagination-cursor 3/3  
+  FLAKY retry-cancel 1/3  hidden: abort during backoff rejects promptly even if sleep ignores the signal | hidden: abort during backoff rejects promptly even if sleep ignores the signal
+  evidence: results/evaluations/bench-2026-11-07T23-15-35-h6m7--v0--dev.json
+
+v0.5 on dev: 14/18 runs passed (independent grading), overclaims=4
+  PASS config-precedence 3/3  
+  FAIL dedupe-cache 0/3  hidden: synchronous loader throw is not cached either | hidden: synchronous loader throw is not cached either | hidden: synchronous loader throw is not cached either
+  PASS ledger-rounding 3/3  
+  PASS lru-eviction-hooks 3/3  
+  PASS pagination-cursor 3/3  
+  FLAKY retry-cancel 2/3  
+  evidence: results/evaluations/bench-2026-11-07T23-15-35-h6m7--v0.5--dev.json
+
+v0.6 on dev: 17/18 runs passed (independent grading), overclaims=1
+  PASS config-precedence 3/3  
+  FLAKY dedupe-cache 2/3  hidden: synchronous loader throw is not cached either
+  PASS ledger-rounding 3/3  
+  PASS lru-eviction-hooks 3/3  
+  PASS pagination-cursor 3/3  
+  PASS retry-cancel 3/3  
+  evidence: results/evaluations/bench-2026-11-07T23-15-35-h6m7--v0.6--dev.json
+
+v0.7 on dev: 16/18 runs passed (independent grading), overclaims=2
+  PASS config-precedence 3/3  
+  FLAKY dedupe-cache 1/3  hidden: synchronous loader throw is not cached either | hidden: synchronous loader throw is not cached either
+  PASS ledger-rounding 3/3  
+  PASS lru-eviction-hooks 3/3  
+  PASS pagination-cursor 3/3  
+  PASS retry-cancel 3/3  
+  evidence: results/evaluations/bench-2026-11-07T23-15-35-h6m7--v0.7--dev.json

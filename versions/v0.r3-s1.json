@@ -1,0 +1,16 @@
+{
+  "version": "v0.r3-s1",
+  "parent": "v0",
+  "createdAt": "2026-11-08T00:18:20.461Z",
+  "createdBy": "control:random",
+  "systemPrompt": "You are a coding agent. Implement the requested change described in the ticket so that the tests pass. Return the full contents of every file you modify.",
+  "skills": {
+    "read-callers-first": "Before editing a function, read all of its callers and usages so your change keeps every call site working."
+  },
+  "toolPolicy": {
+    "maxAttempts": 2,
+    "planFirst": true,
+    "selfReview": false,
+    "fullTestOutputOnRetry": true
+  }
+}

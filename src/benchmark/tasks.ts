@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { ROOT } from "../trace/recorder.js";
 
-export type Split = "dev" | "val" | "test";
+export type Split = "dev" | "val" | "test" | "final";
 
 export interface CodingTask {
   id: string;

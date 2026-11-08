@@ -13,6 +13,10 @@ export interface GradedRun {
   rep: number;
   passed: boolean; // INDEPENDENT verdict: visible + hidden tests on a fresh copy
   selfReportedSuccess: boolean;
+  visibleTestsPassed: boolean;
+  modelCalls: number;
+  inputTokens: number;
+  outputTokens: number;
   failingTests: string[];
   pass: number;
   fail: number;
@@ -34,7 +38,7 @@ export interface EvalResult {
   finishedAt: string;
   taskIds: string[];
   perTask: Record<string, { passes: number; reps: number; runs: GradedRun[] }>;
-  totals: { tasksPassedAllReps: number; passRate: number; runPasses: number; runs: number; attempts: number; tokens: number; agentMs: number; selfReportOverclaims: number; policyViolations: number };
+  totals: { tasksPassedAllReps: number; passRate: number; runPasses: number; runs: number; attempts: number; tokens: number; agentMs: number; selfReportOverclaims: number; policyViolations: number; modelCalls?: number; inputTokens?: number; outputTokens?: number };
   tracesFile: string;
 }
 
@@ -71,10 +75,13 @@ export async function evaluateConfig(config: AgentConfig, tasks: CodingTask[], c
     const ws = join(RESULTS, "workspaces", opts.runId, config.version, `${t.id}-r${rep}`);
     const trace = await runAgent(t, config, coder, join(ws, "agent"), rep);
     const g = await grade(t, trace, join(ws, "grade"));
-    const tokens = trace.attempts.reduce((s, a) => s + (((a.llm.usage as any)?.inputTokens ?? 0) + ((a.llm.usage as any)?.outputTokens ?? 0)), 0);
+    // full accounting: includes planFirst / selfReview calls, not just edit attempts
+    const tokens = trace.compute.inputTokens + trace.compute.outputTokens;
     const gr: GradedRun = {
       traceId: trace.traceId, taskId: t.id, rep, passed: g.passed && trace.policyViolations.length === 0,
-      selfReportedSuccess: trace.selfReportedSuccess, failingTests: g.failingTests, pass: g.pass, fail: g.fail,
+      selfReportedSuccess: trace.visibleTestsPassed, visibleTestsPassed: trace.visibleTestsPassed,
+      modelCalls: trace.compute.modelCalls, inputTokens: trace.compute.inputTokens, outputTokens: trace.compute.outputTokens,
+      failingTests: g.failingTests, pass: g.pass, fail: g.fail,
       attempts: trace.attempts.length, tokens, agentMs: trace.durationMs, policyViolations: trace.policyViolations,
       gradeOutputHead: g.output.slice(0, 3000), error: trace.error,
     };
@@ -99,6 +106,9 @@ export async function evaluateConfig(config: AgentConfig, tasks: CodingTask[], c
       agentMs: graded.reduce((s, g) => s + g.agentMs, 0),
       selfReportOverclaims: graded.filter((g) => g.selfReportedSuccess && !g.passed).length,
       policyViolations: graded.reduce((s, g) => s + g.policyViolations.length, 0),
+      modelCalls: graded.reduce((s, g) => s + g.modelCalls, 0),
+      inputTokens: graded.reduce((s, g) => s + g.inputTokens, 0),
+      outputTokens: graded.reduce((s, g) => s + g.outputTokens, 0),
     },
     tracesFile,
   };

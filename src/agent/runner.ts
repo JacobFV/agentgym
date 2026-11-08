@@ -28,7 +28,12 @@ export interface AgentRunTrace {
   rep: number;
   attempts: AttemptTrace[];
   finalFiles: Record<string, string>;
+  /** observation only: the agent's final edit made the VISIBLE tests pass. This is not a model claim of correctness. */
+  visibleTestsPassed: boolean;
+  /** @deprecated alias of visibleTestsPassed kept for older result files */
   selfReportedSuccess: boolean;
+  /** ALL model calls the harness made for this task, including planFirst and selfReview calls. */
+  compute: { modelCalls: number; inputTokens: number; outputTokens: number; llmLatencyMs: number };
   policyViolations: string[];
   durationMs: number;
   error?: string;
@@ -51,7 +56,14 @@ export async function runAgent(task: CodingTask, config: AgentConfig, coder: Pro
   const system = renderSystemPrompt(config) + "\n\n" + RESPONSE_FORMAT;
   const trace: AgentRunTrace = {
     traceId, taskId: task.id, configVersion: config.version, rep, attempts: [], finalFiles: {},
-    selfReportedSuccess: false, policyViolations: [], durationMs: 0,
+    selfReportedSuccess: false, visibleTestsPassed: false, policyViolations: [], durationMs: 0,
+    compute: { modelCalls: 0, inputTokens: 0, outputTokens: 0, llmLatencyMs: 0 },
+  };
+  const account = (r: { usage: any; latencyMs: number }) => {
+    trace.compute.modelCalls++;
+    trace.compute.inputTokens += r.usage?.inputTokens ?? 0;
+    trace.compute.outputTokens += r.usage?.outputTokens ?? 0;
+    trace.compute.llmLatencyMs += r.latencyMs;
   };
   let plan: string | undefined;
   let lastTest: TestResult | null = null;
@@ -64,6 +76,7 @@ export async function runAgent(task: CodingTask, config: AgentConfig, coder: Pro
         system: renderSystemPrompt(config),
         user: `# Ticket\n${task.description}\n\n# Repository\n${filesBlock(files)}\n\nBefore editing, write a concise plan: list the public interfaces involved, the invariants and existing behaviors that must be preserved, every requirement/constraint stated in the ticket, and the edge cases (errors, concurrency, empty/invalid input, ordering, compatibility). Plain text, no code.`,
       }, { ...ctx, step: "plan" });
+      account(r);
       plan = r.text;
     }
 
@@ -83,6 +96,7 @@ export async function runAgent(task: CodingTask, config: AgentConfig, coder: Pro
       }
       emit({ type: "attempt_start", ...ctx, attempt, phase: isReview ? "self_review" : "edit" });
       const r = await callLLM("coder", coder, { system, user, json: true, maxTokens: 12000 }, { ...ctx, step: `attempt-${attempt}` });
+      account(r);
       let parsed: { reasoning?: string; files?: Record<string, string> } = {};
       let parseError: string | undefined;
       try { parsed = parseJsonLoose(r.text); } catch (e) { parseError = (e as Error).message; }
@@ -110,7 +124,8 @@ export async function runAgent(task: CodingTask, config: AgentConfig, coder: Pro
   } catch (e) {
     trace.error = String(e);
   }
-  trace.selfReportedSuccess = !!lastTest?.passed;
+  trace.visibleTestsPassed = !!lastTest?.passed;
+  trace.selfReportedSuccess = trace.visibleTestsPassed;
   trace.finalFiles = Object.fromEntries(Object.entries(files).filter(([p]) => p.startsWith("src/")));
   trace.durationMs = Date.now() - t0;
   return trace;
